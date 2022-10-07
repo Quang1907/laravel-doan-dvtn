@@ -68,7 +68,7 @@
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-3 mt-3 text-right">
-                            @can('create', App\Models\Post::class)
+                            @can( 'create', App\Models\Post::class )
                                 <a href="{{ route('post.create') }}" class="btn btn-success"><i
                                         class="fa-solid fa-plus"></i></a>
                             @endcan

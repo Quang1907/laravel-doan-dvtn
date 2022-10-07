@@ -2,15 +2,15 @@
 @section('title', 'Đăng nhập')
 
 @section('content')
-    <form class="space-y-6 w-1/2 m-auto my-5" action="{{ route('login.checkLogin') }}" method="post">
+    <form class="space-y-6 w-1/2 m-auto my-5" action="{{ route('account.checkLogin') }}" method="post">
         @csrf
         <div class="text-3xl font-semibold text-center">Đăng nhập</div>
         @error('message')
-        <div class="text">
-            <span class="text-red-500 text-center" role="alert">
-                <strong>{{ $message }}</strong>
-            </span>
-        </div>
+            <div class="text">
+                <span class="text-red-500 text-center" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            </div>
         @enderror
         <div>
             <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Tài khoản</label>

@@ -3,9 +3,11 @@
 @section('content')
     <div class="container">
         <div class="card">
-            <div class="card-header d-flex justify-content-between">
-                <h2>List User</h2>
-                <a href="{{ route('user.create') }}" class="btn btn-success h-100">Create new user</a>
+            <div class="card-header">
+                <div class="d-flex justify-content-between">
+                    <h2>List User</h2>
+                    <a href="{{ route('user.create') }}" class="btn btn-success h-100">Create new user</a>
+                </div>
             </div>
             @if (\Session::has('message'))
                 <div class="alert alert-success text-center">

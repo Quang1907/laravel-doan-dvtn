@@ -26,8 +26,8 @@ class UserService {
             if ( $user['is_active'] == false ) {
                 return back()->withErrors(['message' => "Tài khoản của bạn chưa được kích hoạt"]);
             }
-
-            Auth::login( $user );
+            $remember = !empty($request->remember) ?? false;
+            Auth::login( $user, $remember );
 
             $request->session()->regenerate();
             return redirect()->intended('admin/category');
@@ -57,6 +57,28 @@ class UserService {
         if ( $request->password == $request->confirm_password ) {
             $request['password'] = hash( "sha256", $request->password );
             $this->userReponsitory->create( $request->all() );
+            return Alert::toast('Vui lòng đợi. Tài khoản của bạn sẽ được duyệt sau ít phút.', 'success');
         }
+    }
+
+    public function updatePassword( Request $request ) {
+        $old_password = hash( "sha256", $request->old_password );
+
+        if( auth()->user()->password == $old_password ) {
+            $data[ 'password' ] = hash( "sha256", $request->password );
+            $user = $this->userReponsitory->findbyEmail( auth()->user()->email );
+            $this->userReponsitory->updatePassword( $data, $user );
+            $user = $this->userReponsitory->findbyEmail( auth()->user()->email );
+            Auth::login( $user );
+            return redirect()->route( "profile" )->with( "message", "Cập nhật mật khẩu thành công");
+        }
+
+        return back()->withErrors( "Mật khẩu cũ không đúng." );
+    }
+
+    public function updatetInfo( Request $request ){
+        $user = $this->userReponsitory->findbyId( auth()->user()->id );
+        $this->userReponsitory->update( $request->all(), $user );
+        return Alert::toast('Cập nhật thông tin thành công', 'success');
     }
 }

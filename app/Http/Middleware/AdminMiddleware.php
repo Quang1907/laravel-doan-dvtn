@@ -16,9 +16,10 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if ( empty($request->user()) ||  $request->user()->admin == true  ) {
-            return redirect()->route( "login" );
+        if ( empty( $request->user() ) ||  !$request->user()->admin  ) {
+            return redirect()->route( "home" );
         }
+
         return $next($request);
     }
 }

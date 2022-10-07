@@ -26,8 +26,8 @@
             <x-account.label name="confirm_password" label="Nhập lại mật khẩu" />
         </div>
         <div class="relative z-0 mb-6 w-full group">
-            <x-account.input value="phoneNumber" type="tel" name="phoneNumber"/>
-            <x-account.label name="phoneNumber" label="Số điện thoại (0708050907)" />
+            <x-account.input value="phonenumber" type="tel" name="phonenumber"/>
+            <x-account.label name="phonenumber" label="Số điện thoại (0708050907)" />
         </div>
         <div class="grid md:grid-cols-3 md:gap-6">
             <div class="relative z-0 mb-6 w-full group">

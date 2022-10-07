@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\auth;
+namespace App\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -29,7 +29,7 @@ class UserRegisterRequest extends FormRequest
             "birthday" => "required",
             "password" => "required|min:6",
             "confirm_password" => "required|same:password",
-            "phoneNumber" => "required|max:10",
+            "phonenumber" => "required|max:10",
             "province" => "required",
             "district" => "required",
             "ward" => "required",
@@ -51,8 +51,8 @@ class UserRegisterRequest extends FormRequest
             "password.password" => "không đúng định dạng",
             "confirm_password.required" => "vui lòng không để trống",
             "confirm_password.same" => "không chính xác",
-            "phoneNumber.required" => "vui lòng không để trống",
-            "phoneNumber.max" => "phải là 10 số",
+            "phonenumber.required" => "vui lòng không để trống",
+            "phonenumber.max" => "phải là 10 số",
             "province.required" => " ",
             "district.required" => " ",
             "ward.required" => " ",

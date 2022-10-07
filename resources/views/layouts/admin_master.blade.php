@@ -36,7 +36,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
         @include( 'layouts.inc.footer' )
 
-
         <!-- jQuery -->
         {{-- <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script> --}}
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -54,7 +53,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
         <script src="https://malsup.github.io/jquery.form.js"></script>
 
         @yield( "script" )

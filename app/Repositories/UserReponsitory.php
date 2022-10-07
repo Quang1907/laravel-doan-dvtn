@@ -17,6 +17,9 @@ class UserReponsitory {
         return $this->user->where( "email", $email )->first();
     }
 
+    public function findbyId( $id ) {
+        return $this->user->where( "id", $id )->first();
+    }
 
     public function all() {
         return $this->user->all();
@@ -27,6 +30,10 @@ class UserReponsitory {
     }
 
     public function update( $attributes, User $user ) {
+        return $user->update( $attributes );
+    }
+
+    public function updatePassword( $attributes, User $user  ) {
         return $user->update( $attributes );
     }
 }

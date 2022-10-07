@@ -9,7 +9,7 @@
 
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('login.checkLogin') }}">
+                    <form method="POST" action="{{ route('account.checkLogin') }}">
                         @csrf
 
                         <div class="row mb-3">
