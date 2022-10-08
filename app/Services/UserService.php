@@ -20,12 +20,12 @@ class UserService {
         $password = hash( "sha256", $request->password);
 
         $user = $this->userReponsitory->findbyEmail( $email );
-
         if ( !empty( $user ) && $password == $user['password']  ) {
 
             if ( $user['is_active'] == false ) {
-                return back()->withErrors(['message' => "Tài khoản của bạn chưa được kích hoạt"]);
+                return back()->withErrors(['message' => "Tài khoản của bạn chưa được kích hoạt"])->withInput();
             }
+
             $remember = !empty($request->remember) ?? false;
             Auth::login( $user, $remember );
 
@@ -33,7 +33,7 @@ class UserService {
             return redirect()->intended('admin/category');
         }
 
-        return back()->withErrors(['message' => 'Tài khoản không tồn tại hoặc sai mật khẩu']);
+        return back()->withErrors( ['message' => 'Tài khoản không tồn tại hoặc sai mật khẩu'] )->withInput();
     }
 
     public function allUser() {
@@ -57,7 +57,7 @@ class UserService {
         if ( $request->password == $request->confirm_password ) {
             $request['password'] = hash( "sha256", $request->password );
             $this->userReponsitory->create( $request->all() );
-            return Alert::toast('Vui lòng đợi. Tài khoản của bạn sẽ được duyệt sau ít phút.', 'success');
+            return Alert::toast( 'Vui lòng đợi. Tài khoản của bạn sẽ được duyệt sau ít phút.', 'success' );
         }
     }
 
@@ -67,7 +67,7 @@ class UserService {
         if( auth()->user()->password == $old_password ) {
             $data[ 'password' ] = hash( "sha256", $request->password );
             $user = $this->userReponsitory->findbyEmail( auth()->user()->email );
-            $this->userReponsitory->updatePassword( $data, $user );
+            $this->userReponsitory->update( $data, $user );
             $user = $this->userReponsitory->findbyEmail( auth()->user()->email );
             Auth::login( $user );
             return redirect()->route( "profile" )->with( "message", "Cập nhật mật khẩu thành công");
@@ -80,5 +80,10 @@ class UserService {
         $user = $this->userReponsitory->findbyId( auth()->user()->id );
         $this->userReponsitory->update( $request->all(), $user );
         return Alert::toast('Cập nhật thông tin thành công', 'success');
+    }
+
+    public function confirmInfo( Request $request, User $user ) {
+        $request['password'] = hash( "sha256", $request['password']);
+        return $this->userReponsitory->update( $request->all(), $user );
     }
 }

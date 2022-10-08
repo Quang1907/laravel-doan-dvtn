@@ -13,7 +13,7 @@
                 <img alt="Photo by aldi sigun on Unsplash" src="{{ asset( 'images/avata/man.png' ) }}" class="mx-auto object-cover rounded-full h-24 w-24 bg-white p-1" />
             </span>
             <h2 class="text-2xl mt-5 mx-2 font-bold text-green-700 bg-white rounded px-2 dark:bg-white">
-                {{ strtoupper( \Auth::user()->name ) }}
+                {{ \Auth::user()->name }}
             </h2>
         </div>
         <div class="container m-auto max-w-3xl">

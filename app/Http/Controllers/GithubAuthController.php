@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Exception;
-use Illuminate\Support\Carbon;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 
@@ -34,17 +34,13 @@ class GithubAuthController extends Controller
                     'name' => $user->name,
                     'email' => $user->email,
                     'github_id'=> $user->id,
-                    'birthday' => Carbon::now()->toDateString(),
-                    'password' => hash( "sha256" , 1111111 ),
-                    'address' => "null",
-                    'phonenumber' => "null",
-                    'auth_type'=> 'github',
-                    'password' => encrypt('gitpwd059')
+                    "is_active" => true,
+                    "email_verified_at" => now()->toDateTimeString(),
                 ]);
 
                 Auth::login($gitUser);
 
-                return redirect( '/' );
+                return redirect( 'account/confirm' );
             }
 
         } catch (Exception $e) {

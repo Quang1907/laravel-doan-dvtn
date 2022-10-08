@@ -18,14 +18,20 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('phonenumber', 10);
-            $table->date('birthday');
-            $table->string('address');
-            $table->string('password');
+            $table->string('phonenumber', 10)->nullable();
+            $table->date('birthday')->nullable();
+            $table->string('address')->nullable();
+            $table->string('password')->nullable();
             $table->foreignId( "role_id" )->default( 3 )->constrained();
             $table->boolean("admin")->default(false);
             $table->boolean("is_active")->default(false);
-            $table->boolean("manager")->default(0);
+            $table->boolean("manager")->nullable();
+
+            $table->string( "google_id" )->nullable();
+
+            $table->string('github_id')->nullable();
+            $table->string('auth_type')->nullable();
+
             $table->rememberToken();
             $table->timestamps();
         });

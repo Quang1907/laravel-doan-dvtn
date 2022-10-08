@@ -55,123 +55,82 @@
                 <li class="flex">
                     @guest
                         @if (Route::has('dangnhap'))
-                            <a class="nav-link hover:bg-blue-700 bg-blue-600 text-white py-2 px-3 rounded" href="{{ route( 'dangnhap' ) }}">{{ __('Login') }}</a>
+                            <a class="nav-link hover:bg-blue-700 bg-blue-600 text-white py-2 px-3 rounded" href="{{ route( 'dangnhap' ) }}">{{ __('Đăng nhập') }}</a>
                         @endif
 
-                        @if (Route::has('account.create'))
-                    <li>
-                        <a class="nav-link " href="{{ route('account.create') }}">{{ __('Register') }}</a>
-                    </li>
-                    @endif
-                @else
-                    <div class="flex items-center md:order-2">
-                        <button type="button" id="profileUser"
-                            class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
-                            <img src="{{ asset('images/avata/man.png') }}" alt="" class="w-[40px]">
-                        </button>
-                        <div class="z-50 absolute right-0 md:mt-60 mr-12 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                            id="user-dropdown">
-                            <div class="py-3 px-4">
-                                <span
-                                    class="block text-sm text-gray-900 dark:text-white"> {{ Auth::user()->name }}</span>
-                                <span
-                                    class="block text-sm font-medium text-gray-500 truncate dark:text-gray-400"> {{ Auth::user()->email }}</span>
-                            </div>
-                            <ul class="py-1" aria-labelledby="user-menu-button">
-                                @if ( Auth::user()->admin == true)
-                                    <li>
-                                        <a href="{{ url( 'admin' ) }}"
-                                            class="block py-2 px-4 text-sm text-red-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Trang
-                                            quản lý</a>
-                                    </li>
-                                @endif
-                                <li>
-                                    <a href="{{ route( 'profile' ) }}"
-                                        class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Trang
-                                        cá nhân</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route( 'account.changepassword' ) }}"
-                                        class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Thay đổi mật khẩu</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route( 'account.changeinfo' ) }}"
-                                        class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Thay đổi thông tin</a>
-                                </li>
-                                <li>
-                                    <button
-                                    class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                                    onclick="event.preventDefault();
-                                    document.getElementById('logout-form').submit();">
-                                    Đăng xuất</button>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    {{-- <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            {{ Auth::user()->name }}
-                        </a>
-
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('logout') }}"
-                                onclick="event.preventDefault();
-                                                document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
-                            </a>
-
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                @csrf
-                            </form>
-                        </div>
-                    </li> --}}
-                @endguest
-                {{-- @if (empty($user['id']))
-                        <a href="{{ route('user') }}"
-                            class="block mr-2 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                            Đăng nhập
-                        </a>
+                        {{-- @if (Route::has('account.create'))
+                            <li>
+                                <a class="nav-link " href="{{ route('account.create') }}">{{ __('Register') }}</a>
+                            </li>
+                        @endif --}}
                     @else
                         <div class="flex items-center md:order-2">
                             <button type="button" id="profileUser"
                                 class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
-                                <img src="{{ asset('images/man.png') }}" alt="" class="w-[40px]">
+                                <img src="{{ asset('images/avata/man.png') }}" alt="" class="w-[40px]">
                             </button>
                             <div class="z-50 absolute right-0 md:mt-60 mr-12 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                                 id="user-dropdown">
                                 <div class="py-3 px-4">
                                     <span
-                                        class="block text-sm text-gray-900 dark:text-white">{{ $user['fullName'] }}</span>
+                                        class="block text-sm text-gray-900 dark:text-white"> {{ Auth::user()->name }}</span>
                                     <span
-                                        class="block text-sm font-medium text-gray-500 truncate dark:text-gray-400">{{ $user['email'] }}</span>
+                                        class="block text-sm font-medium text-gray-500 truncate dark:text-gray-400"> {{ Auth::user()->email }}</span>
                                 </div>
                                 <ul class="py-1" aria-labelledby="user-menu-button">
-                                    @if (!empty($user['admin']) && $user['admin'] == true)
+                                    @if ( Auth::user()->admin == true)
                                         <li>
-                                            <a href="{{ route('admin/profile') }}"
+                                            <a href="{{ url( 'admin' ) }}"
                                                 class="block py-2 px-4 text-sm text-red-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Trang
                                                 quản lý</a>
                                         </li>
                                     @endif
                                     <li>
-                                        <a href="{{ route('profile') }}"
+                                        <a href="{{ route( 'profile' ) }}"
                                             class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Trang
                                             cá nhân</a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('logout') }}"
-                                            class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Đăng
-                                            xuất</a>
+                                        <a href="{{ route( 'account.changepassword' ) }}"
+                                            class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Thay đổi mật khẩu</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route( 'account.changeinfo' ) }}"
+                                            class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Thay đổi thông tin</a>
+                                    </li>
+                                    <li>
+                                        <button
+                                        class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                                        onclick="event.preventDefault();
+                                        document.getElementById('logout-form').submit();">
+                                        Đăng xuất</button>
+
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                            @csrf
+                                        </form>
                                     </li>
                                 </ul>
                             </div>
                         </div>
-                    @endif --}}
+                        {{-- <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ Auth::user()->name }}
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();
+                                                    document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
+                                </a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            </div>
+                        </li> --}}
+                    @endguest
                 </li>
             </ul>
         </div>

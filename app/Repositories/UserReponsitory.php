@@ -33,8 +33,5 @@ class UserReponsitory {
         return $user->update( $attributes );
     }
 
-    public function updatePassword( $attributes, User $user  ) {
-        return $user->update( $attributes );
-    }
 }
 

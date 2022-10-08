@@ -24,7 +24,7 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
+            'email' => 'required',
             'password' => 'required',
         ];
     }
@@ -32,7 +32,7 @@ class LoginRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'Name cannot be blank',
+            'email.required' => 'Email cannot be blank',
             'password.required' => 'Passowrd cannot be blank',
         ];
     }

@@ -33,7 +33,7 @@ class GoogleAuthController extends Controller
 
             $finduser = User::where('google_id', $user->id)->first();
 
-            if($finduser){
+            if( $finduser ){
 
                 Auth::login($finduser);
 
@@ -43,16 +43,14 @@ class GoogleAuthController extends Controller
                 $newUser = User::create([
                     'name' => $user->name,
                     'email' => $user->email,
-                    'password' => hash( "sha256" , 1111111 ),
-                    'birthday' => Carbon::now()->toDateString(),
-                    'address' => "null",
-                    'phonenumber' => "null",
                     'google_id'=> $user->id,
+                    "is_active" => true,
+                    "email_verified_at" => now()->toDateTimeString(),
                 ]);
 
                 Auth::login($newUser);
 
-                return redirect()->intended( '/' );
+                return redirect()->intended( 'account/confirm' );
             }
 
         } catch ( Exception $e ) {

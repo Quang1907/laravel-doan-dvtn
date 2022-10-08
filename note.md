@@ -1,6 +1,9 @@
-middleware
+Middleware
 Request
 Controller <=> repository <=> model
-import export
-roles
+Import Export with Excel
+Roles
 Policy
+Scope Model 
+Login Social
+customs page errors
