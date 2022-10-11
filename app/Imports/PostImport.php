@@ -23,32 +23,23 @@ class PostImport implements ToModel, WithHeadingRow, ShouldQueue, WithChunkReadi
 {
     use Importable, Batchable, RemembersChunkOffset;
 
-    // public function collection( Collection $rows ) {
-    //     foreach ( $rows as $post ) {
-    //         Post::create( [
-    //             "title" => $post[ "title" ],
-    //             "content" => $post[ "content" ],
-    //         ] );
-    //     }
-    // }
-
     public function model( array $row ) {
-        $post = Post::create( [
+        return new Post([
             "title" => $row[ "title" ],
             "content" => $row[ "content" ],
-        ] );
+        ]);
 
-        $categoryName = explode( "," ,  $row['category'] );
-        $categoryArr = array();
+        // $categoryName = explode( "," ,  $row['category'] );
+        // $categoryArr = array();
 
-        foreach ( $categoryName as $category ) {
-            $cate = Category::where( "name", "like", "%" . trim( $category ). "%" )->first();
-            if ( !empty( $cate ) ) {
-               array_push( $categoryArr, $cate->id );
-            }
-        }
+        // foreach ( $categoryName as $category ) {
+        //     $cate = Category::where( "name", "like", "%" . trim( $category ). "%" )->first();
+        //     if ( !empty( $cate ) ) {
+        //        array_push( $categoryArr, $cate->id );
+        //     }
+        // }
 
-        $post->categories()->sync(  $categoryArr );
+        // $post->categories()->sync(  $categoryArr );
     }
 
     public function chunkSize(): int

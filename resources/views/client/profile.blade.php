@@ -4,18 +4,10 @@
 @section( "content" )
 <div class=" dark:bg-gray-900 flex flex-wrap items-center justify-center">
     <div class="w-full bg-white dark:bg-gray-800 shadow-lg transform duration-200 easy-in-out">
-
         <div class="h-2/4 sm:h-52 overflow-hidden">
             <img class="w-full" src="https://images.unsplash.com/photo-1638803040283-7a5ffd48dad5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80" alt="Photo by aldi sigun on Unsplash" />
         </div>
-        <div class="flex justify-start px-5 -mt-12">
-            <span clspanss="block relative h-32 w-32">
-                <img alt="Photo by aldi sigun on Unsplash" src="{{ asset( 'images/avata/man.png' ) }}" class="mx-auto object-cover rounded-full h-24 w-24 bg-white p-1" />
-            </span>
-            <h2 class="text-2xl mt-5 mx-2 font-bold text-green-700 bg-white rounded px-2 dark:bg-white">
-                {{ \Auth::user()->name }}
-            </h2>
-        </div>
+        <x-account.profile-avata/>
         <div class="container m-auto max-w-3xl">
             {{-- <div class="hidden">
                 <div class="flex p-4 w-5/6 m-auto mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800 " id="divError" role="alert">
@@ -54,4 +46,16 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section( "script" )
+    <script>
+        $( "#changeAvata" ).click( function () {
+            $( "#inputAvate" ).click();
+        });
+
+        $( "#inputAvate" ).change( function () {
+            $( "#formChangAvata").submit();
+        });
+    </script>
 @endsection

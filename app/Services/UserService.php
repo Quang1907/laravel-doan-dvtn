@@ -5,6 +5,8 @@ use App\Models\User;
 use App\Repositories\UserReponsitory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class UserService {
@@ -56,8 +58,13 @@ class UserService {
     public function register( Request $request ) {
         if ( $request->password == $request->confirm_password ) {
             $request['password'] = hash( "sha256", $request->password );
-            $this->userReponsitory->create( $request->all() );
-            return Alert::toast( 'Vui lòng đợi. Tài khoản của bạn sẽ được duyệt sau ít phút.', 'success' );
+            $request['token'] = strtoupper( Str::random( 5 ) );
+            $customer = $this->userReponsitory->create( $request->all() );
+            Mail::send( "client.auth.email", compact( "customer" ), function ( $email ) use ( $customer ) {
+                $email->subject( "Đoàn viên thanh niên - xác nhận tài khoản" );
+                $email->to( $customer->email, $customer->name );
+            });
+            return $customer;
         }
     }
 
@@ -85,5 +92,26 @@ class UserService {
     public function confirmInfo( Request $request, User $user ) {
         $request['password'] = hash( "sha256", $request['password']);
         return $this->userReponsitory->update( $request->all(), $user );
+    }
+
+    public function vertifyEmail( Request $request, User $user ) {
+        $request->validate( [ "confirm_token" => "required" ] );
+        if ( $request->confirm_token == $user->token ) {
+            $this->userReponsitory->update( [ "email_verified_at" => now()->toDateTimeString() ] , $user );
+            Alert::toast( 'Vui lòng đợi. Tài khoản của bạn sẽ được duyệt sau ít phút.', 'success' );
+            return redirect("");
+        }
+
+        return view( "client.auth.vertify_email", compact( "user" ))->with("message", "Mã không chính xác");
+    }
+
+    public function changeAvata( Request $request, User $user ) {
+        $request->validate( [ "avata" => "required|image|mimes:jpeg,png,jpg,gif,svg|max:2048" ] );
+        $image = $request->file("avata");
+        $fileName = time() . $image->getClientOriginalName();
+        $image->storeAs( "public", $fileName);
+        $data['avata'] = $fileName;
+        $this->userReponsitory->update( $data, $user );
+        return back();
     }
 }

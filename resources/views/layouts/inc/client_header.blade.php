@@ -67,9 +67,18 @@
                         <div class="flex items-center md:order-2">
                             <button type="button" id="profileUser"
                                 class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
-                                <img src="{{ asset('images/avata/man.png') }}" alt="" class="w-[40px]">
+                                @if (  Auth::user()->avata  )
+                                  <img id="avata" alt="Photo by aldi sigun on Unsplash" src="{{ asset( 'storage/' . Auth::user()->avata ) }}" class="mx-auto object-cover rounded-full h-[40px] bg-white w-[40px]" />
+                                @else
+                                    <img id="avata" alt="Photo by aldi sigun on Unsplash" src="{{ asset( "images/avata/man.png") }}" class="mx-auto object-cover rounded-full h-[40px] bg-white w-[40px]" />
+                                @endif
+
                             </button>
-                            <div class="z-50 absolute right-0 md:mt-60 mr-12 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                            <div class="flex justify-start px-5 ">
+                                <span clspanss="block relative">
+                                </span>
+                            </div>
+                            <div class="z-50 absolute right-0 md:mt-[276px] mr-12 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                                 id="user-dropdown">
                                 <div class="py-3 px-4">
                                     <span
@@ -99,14 +108,11 @@
                                             class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Thay đổi thông tin</a>
                                     </li>
                                     <li>
-                                        <button
-                                        class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                                        onclick="event.preventDefault();
-                                        document.getElementById('logout-form').submit();">
-                                        Đăng xuất</button>
-
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                             @csrf
+                                            <button
+                                            class="block py-2 px-4 w-full text-left text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                            Đăng xuất</button>
                                         </form>
                                     </li>
                                 </ul>
@@ -136,23 +142,3 @@
         </div>
     </div>
 </nav>
-
-@section('script')
-    <script>
-        // open profile user
-        $(document).ready(function() {
-            var check = true;
-            $("#user-dropdown").hide();
-            $("#profileUser").click(
-                function() {
-                    if (check) {
-                        $("#user-dropdown").show();
-                    } else {
-                        $("#user-dropdown").hide();
-                    }
-                    check = !check;
-                }
-            )
-        })
-    </script>
-@endsection

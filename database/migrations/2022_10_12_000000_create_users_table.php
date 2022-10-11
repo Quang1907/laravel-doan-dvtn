@@ -21,11 +21,13 @@ class CreateUsersTable extends Migration
             $table->string('phonenumber', 10)->nullable();
             $table->date('birthday')->nullable();
             $table->string('address')->nullable();
+            $table->string("avata")->nullable();
             $table->string('password')->nullable();
             $table->foreignId( "role_id" )->default( 3 )->constrained();
             $table->boolean("admin")->default(false);
             $table->boolean("is_active")->default(false);
             $table->boolean("manager")->nullable();
+            $table->string('token', 5)->nullable();
 
             $table->string( "google_id" )->nullable();
 

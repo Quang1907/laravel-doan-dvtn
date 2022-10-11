@@ -11,23 +11,27 @@ use Illuminate\Support\Facades\Route;
 
 // view
 Route::view( "/", "client.index" )->name( "home" );
-Route::view( "profile", "client.profile" )->name( "profile" )->middleware( "checkInfo" );
+Route::view( "account", "client.profile" )->name( "profile" )->middleware( "checkInfo" );
 
 // account
 Route::view( "dang-nhap", "client.auth.login" )->name( "dangnhap" );
 Route::post( "dang-nhap" , [ AuthController::class,  "checkLogin" ] )->name("account.checkLogin");
 Route::view( "dang-ky" , "client.auth.register" )->name( "dangky" );;
+Route::post( "dang-ky", [ AuthController::class, "register" ] )->name( "account.register");
+Route::view( "vertify/email", "client.auth.vertify_email" )->name("account.vertifyEmail");
+Route::post( "vertify/email/{user}", [ AuthController::class, "vertify" ] )->name( "account.vertify" );
 
-Route::group([ "middleware" =>"auth", "prefix" => "account"],function () {
-    Route::post("store", [ AuthController::class, "store" ] )->name( "account.store");
-    Route::view( "password" ,'client.auth.change_password' )->name( "account.changepassword" );
+Route::group([ "middleware" => "auth", "prefix" => "account"],function () {
+    Route::view( "password" ,'client.auth.change_password' )->name( "account.changepassword" )->middleware( "checkInfo" );
     Route::post( "password" , [ AuthController::class, "password" ] )->name( "account.changePassword" );
-    Route::view( "changeinfo" ,'client.auth.change_info' )->name( "account.changeinfo" );
+    Route::view( "changeinfo" ,'client.auth.change_info' )->name( "account.changeinfo" )->middleware( "checkInfo" );
     Route::post( "changeinfo" , [ AuthController::class, "info" ] )->name( "account.changeinfo" );
     Route::view( "confirm", "client.auth.confirm" );
     Route::post( "confirm/{user}", [ AuthController::class,  "confirm" ] )->name( "account.confirm" );
+    Route::post( "changeAvata/{user}", [ AuthController::class, "changeAvata" ] )->name( "changeAvata" );
 });
 
+// Route::view("check", "client.auth.email");
 // login social
 Route::get( 'auth/google', [ GoogleAuthController::class, 'redirectToGoogle' ] );
 Route::get( 'auth/google/callback', [ GoogleAuthController::class, 'handleGoogleCallback' ] );

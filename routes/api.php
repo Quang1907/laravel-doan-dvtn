@@ -25,4 +25,5 @@ Route::group([ "prefix" => "address" ], function () {
     Route::get( "district", [ ApiAddressController::class, "district" ])->name( "api.district" );
     Route::get( "ward", [ ApiAddressController::class, "ward" ])->name( "api.ward" );
 });
+
 Route::get( "userManager", [ ApiUserManagerController::class, "admin" ])->name( "api.userManager" );

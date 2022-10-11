@@ -9,7 +9,6 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     @yield('css')
-
 </head>
 
 <body>
@@ -21,8 +20,26 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
         integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    @yield('script')
     @include('sweetalert::alert')
+
+    <script>
+        // open profile user
+        $(document).ready(function() {
+            var check = true;
+            $("#user-dropdown").hide();
+            $("#profileUser").click(
+                function() {
+                    if (check) {
+                        $("#user-dropdown").show();
+                    } else {
+                        $("#user-dropdown").hide();
+                    }
+                    check = !check;
+                }
+            )
+        })
+    </script>
+    @yield( 'script' )
 </body>
 
 </html>

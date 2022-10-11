@@ -26,7 +26,7 @@ class UserRegisterRequest extends FormRequest
         return [
             "name" => "required|max:30",
             "email" => "required|email|unique:users",
-            "birthday" => "required",
+            "birthday" => "required|date|date_format:Y-m-d",
             "password" => "required|min:6",
             "confirm_password" => "required|same:password",
             "phonenumber" => "required|max:10",
@@ -46,6 +46,7 @@ class UserRegisterRequest extends FormRequest
             "email.email" => "không đúng định dạng",
             "email.unique" => "đã tồn tại",
             "birthday.required" => "vui lòng không để trống",
+            "birthday.date_format" => "vui lòng kiểm tra lại",
             "password.required" => "vui lòng không để trống",
             "password.min" => "vui lòng không nhỏ hơn 6 ký tự",
             "password.password" => "không đúng định dạng",

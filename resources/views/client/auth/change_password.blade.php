@@ -8,14 +8,7 @@
             <img class="w-full" src="https://images.unsplash.com/photo-1638803040283-7a5ffd48dad5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80" alt="Photo by aldi sigun on Unsplash" />
 
         </div>
-        <div class="flex justify-start px-5 -mt-12">
-            <span clspanss="block relative h-32 w-32">
-                <img alt="Photo by aldi sigun on Unsplash" src="{{ asset( 'images/avata/man.png' ) }}" class="mx-auto object-cover rounded-full h-24 w-24 bg-white p-1" />
-            </span>
-            <h2 class="text-2xl mt-5 mx-2 font-bold text-green-700 bg-white rounded px-2 dark:bg-white">
-                {{ strtoupper( \Auth::user()->name ) }}
-            </h2>
-        </div>
+        <x-account.profile-avata/>
         <div class="container m-auto max-w-3xl">
             <div class="container m-auto max-w-3xl">
                 <x-errors.any />

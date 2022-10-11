@@ -13,7 +13,7 @@ class Category extends Model
 
     public function posts()
     {
-        return $this->belongstoMany(Post::class,  "category_posts", 'category_id',  'posts_id');
+        return $this->belongstoMany( Post::class,  "category_posts", 'category_id',  'posts_id');
     }
 
     public function scopeSearch( $query ) {

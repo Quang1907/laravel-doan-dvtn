@@ -9,6 +9,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\UserRegisterRequest;
 use App\Models\User;
 use App\Services\UserService;
+use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
@@ -18,9 +19,9 @@ class AuthController extends Controller
         $this->userService = $userService;
     }
 
-    public function store( UserRegisterRequest $request ) {
-        $this->userService->register( $request );
-        return redirect()->route( "home" );
+    public function register( UserRegisterRequest $request ) {
+        $user = $this->userService->register( $request );
+        return view( "client.auth.vertify_email", compact( "user" ));
     }
 
     public function password( ChangePasswordRequest $request ) {
@@ -39,5 +40,13 @@ class AuthController extends Controller
     public function confirm( ConfirmInfoRequest $request, User $user ) {
         $this->userService->confirmInfo( $request, $user );
         return redirect("/");
+    }
+
+    public function vertify( Request $request, User $user ) {
+        return $this->userService->vertifyEmail( $request, $user);
+    }
+
+    public function changeAvata( Request $request, User $user ) {
+        return $this->userService->changeAvata( $request, $user );
     }
 }

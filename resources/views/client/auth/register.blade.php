@@ -3,7 +3,7 @@
 
 @section('content')
 <div class="sm:container my-5">
-    <form class="space-y-6 w-1/2 m-auto" method="post" action="{{ route( 'account.store' ) }}">
+    <form class="space-y-6 w-1/2 m-auto" method="post" action="{{ route( 'account.register' ) }}">
         @csrf
         <div class="text-3xl font-semibold text-center">Đăng ký tài khoản</div>
         <div class="relative z-0 mb-6 w-full group">

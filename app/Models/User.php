@@ -25,10 +25,12 @@ class User extends Authenticatable
         'manager',
         'google_id',
         'password',
+        "avata",
         'role_id',
         'github_id',
         'auth_type',
         "is_active",
+        "token",
         "email_verified_at",
     ];
 
