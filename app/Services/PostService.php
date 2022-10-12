@@ -6,8 +6,6 @@ use App\Models\Post;
 use App\Repositories\PostReponsitory;
 use Illuminate\Bus\Batchable;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Bus;
-use Maatwebsite\Excel\Facades\Excel;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class PostService {
@@ -25,8 +23,8 @@ class PostService {
     }
 
     public function paginationPost( ) {
-        $number = 5;
-        return $this->postReponsitory->pagination( $number );
+        $pagination = config( "pagination.post");
+        return $this->postReponsitory->pagination( $pagination );
     }
 
     public function createPost( Request $request ) {
@@ -50,8 +48,5 @@ class PostService {
         $file = $request->file( "upload_file" )->store( "import" );
         $import = new PostImport;
         $import->queue( $file );
-        // $batch = Bus::batch( [
-        //     Excel::queueImport(new PostImport, $file)
-        // ] )->dispatch();
     }
 }

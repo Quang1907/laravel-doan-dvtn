@@ -1,11 +1,11 @@
 <?php
 namespace App\Services;
 
+use App\Jobs\SendEmail;
 use App\Models\User;
 use App\Repositories\UserReponsitory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -46,13 +46,14 @@ class UserService {
 
     public function createUser( Request $request ) {
         $data = $request->all();
-        $data[ "manager" ] = auth()->user()->id ;
+        $data[ "manager" ] = auth()->user()->id;
         $data[ "is_active" ] = true ;
         if ( $data['password'] == $data['confirm_password'] ) {
             $data['password'] = hash( "sha256", $data['password']);
-            return $this->userReponsitory->create( $data );
+            $this->userReponsitory->create( $data );
+            return redirect()->route("user.index")->with( "message", "User created successfully." );
         }
-        return false;
+        return back()->with( "message", "Vui lòng kiểm tra lại" )->withInput();
     }
 
     public function updateUser( Request $request, User $user ) {
@@ -64,10 +65,8 @@ class UserService {
             $request['password'] = hash( "sha256", $request->password );
             $request['token'] = strtoupper( Str::random( 5 ) );
             $user = $this->userReponsitory->create( $request->all() );
-            Mail::send( "client.auth.email", compact( "user" ), function ( $email ) use ( $user ) {
-                $email->subject( "Đoàn viên thanh niên - xác nhận tài khoản" );
-                $email->to( $user->email, $user->name );
-            });
+
+            dispatch( new SendEmail( $user ) );
             return $user;
         }
     }
@@ -151,10 +150,7 @@ class UserService {
         $data['token'] = strtoupper( Str::random( 5 ) );
         $this->userReponsitory->update( $data, $user );
         if ( !empty( $user ) ) {
-            Mail::send( "client.auth.email", compact( "user" ), function ( $email ) use ( $user ) {
-                $email->subject( "Đoàn viên thanh niên - xác nhận tài khoản" );
-                $email->to( $user->email, $user->name );
-            });
+            dispatch( new SendEmail( $user ) );
             return $user;
         }
     }

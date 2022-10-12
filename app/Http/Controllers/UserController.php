@@ -45,8 +45,7 @@ class UserController extends Controller
      */
     public function store( CreateUserRequest $request )
     {
-        $this->userService->createUser( $request );
-        return redirect()->route("user.index")->with( "message", "User created successfully." );
+        return $this->userService->createUser( $request );
     }
 
     /**

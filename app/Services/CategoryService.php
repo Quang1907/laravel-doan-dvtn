@@ -16,8 +16,8 @@ class CategoryService {
     }
 
     public function paginationCategory() {
-        $row = 3;
-        return $this->categoryReponsitory->pagination( $row );
+        $pagination = config( "pagination.category" );
+        return $this->categoryReponsitory->pagination( $pagination );
     }
 
     public function create( Request $request ) {
