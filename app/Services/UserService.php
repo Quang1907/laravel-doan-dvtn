@@ -22,6 +22,7 @@ class UserService {
         $password = hash( "sha256", $request->password);
 
         $user = $this->userReponsitory->findbyEmail( $email );
+
         if ( !empty( $user ) && $password == $user['password']  ) {
 
             if ( $user['is_active'] == false ) {
@@ -38,12 +39,15 @@ class UserService {
         return back()->withErrors( ['message' => 'Tài khoản không tồn tại hoặc sai mật khẩu'] )->withInput();
     }
 
-    public function allUser() {
+    public function listUser() {
         return $this->userReponsitory->all();
+        // return $this->userReponsitory->whereManager( "admin", auth()->user()->id );
     }
 
     public function createUser( Request $request ) {
         $data = $request->all();
+        $data[ "manager" ] = auth()->user()->id ;
+        $data[ "is_active" ] = true ;
         if ( $data['password'] == $data['confirm_password'] ) {
             $data['password'] = hash( "sha256", $data['password']);
             return $this->userReponsitory->create( $data );
@@ -59,26 +63,25 @@ class UserService {
         if ( $request->password == $request->confirm_password ) {
             $request['password'] = hash( "sha256", $request->password );
             $request['token'] = strtoupper( Str::random( 5 ) );
-            $customer = $this->userReponsitory->create( $request->all() );
-            Mail::send( "client.auth.email", compact( "customer" ), function ( $email ) use ( $customer ) {
+            $user = $this->userReponsitory->create( $request->all() );
+            Mail::send( "client.auth.email", compact( "user" ), function ( $email ) use ( $user ) {
                 $email->subject( "Đoàn viên thanh niên - xác nhận tài khoản" );
-                $email->to( $customer->email, $customer->name );
+                $email->to( $user->email, $user->name );
             });
-            return $customer;
+            return $user;
         }
     }
 
     public function updatePassword( Request $request ) {
-        $old_password = hash( "sha256", $request->old_password );
-
-        if( auth()->user()->password == $old_password ) {
+        // $old_password = hash( "sha256", $request->old_password );
+        // if( auth()->user()->password == $old_password ) {
             $data[ 'password' ] = hash( "sha256", $request->password );
             $user = $this->userReponsitory->findbyEmail( auth()->user()->email );
             $this->userReponsitory->update( $data, $user );
             $user = $this->userReponsitory->findbyEmail( auth()->user()->email );
             Auth::login( $user );
             return redirect()->route( "profile" )->with( "message", "Cập nhật mật khẩu thành công");
-        }
+        // }
 
         return back()->withErrors( "Mật khẩu cũ không đúng." );
     }
@@ -113,5 +116,68 @@ class UserService {
         $data['avata'] = $fileName;
         $this->userReponsitory->update( $data, $user );
         return back();
+    }
+
+    public function active( Request $request ) {
+        $request->validate(
+            ["active" => "required"],
+            ["active.required" => "Vui lòng chọn người dùng"]
+        );
+        $setActive = !empty( $request->inactive ) ? 0 : 1;
+
+        $active = $request->active;
+        $activeArr = explode( "," , $active);
+        if ( is_array( $activeArr ) && count( $activeArr ) > 1 ) {
+            foreach ( $activeArr as $id ) {
+                $user = $this->userReponsitory->findbyId( $id  );
+                $this->userReponsitory->update( [ "is_active" =>  $setActive ], $user );
+            }
+        }else{
+            $user = $this->userReponsitory->findbyId( $active  );
+            $this->userReponsitory->update( [ "is_active" =>  $setActive ] , $user );
+        }
+        Alert::toast( "Cập nhật thành công" , "success");
+        return back();
+    }
+
+    public function forgetPassword( Request $request ) {
+        $request->validate( [
+            "email" => "required",
+        ],[
+            "email.required" => "Email khong duoc de trong"
+        ] );
+        $email =  $request->email;
+        $user = $this->userReponsitory->findbyEmail( $email );
+        $data['token'] = strtoupper( Str::random( 5 ) );
+        $this->userReponsitory->update( $data, $user );
+        if ( !empty( $user ) ) {
+            Mail::send( "client.auth.email", compact( "user" ), function ( $email ) use ( $user ) {
+                $email->subject( "Đoàn viên thanh niên - xác nhận tài khoản" );
+                $email->to( $user->email, $user->name );
+            });
+            return $user;
+        }
+    }
+
+    public function vertifyPassword( Request $request, User $user ) {
+        $data[ 'token' ]  =  $request->confirm_token;
+        if ( $data[ 'token' ] == $user->token ) {
+            $this->userReponsitory->update( $data, $user );
+            Auth::login( $user );
+            return redirect()->route( "account.changepassword" );
+        }
+        return back()->with( ["message" => "Nhập mã xác minh không chính xác"] )->withInput();
+    }
+
+    public function softDelete( $user ) {
+        $user = $this->userReponsitory->findbySoftDelete( $user );
+        $this->userReponsitory->userSoftDelete( $user );
+        return Alert::toast( "Tài khoản đã bị xoá vĩnh viễn" , "success");
+    }
+
+    public function restoreDelete( $user ){
+        $user = $this->userReponsitory->findbySoftDelete( $user );
+        $this->userReponsitory->userRestoreDelete( $user );
+        return Alert::toast( "Tài khoản đã được khôi phục" , "success");
     }
 }

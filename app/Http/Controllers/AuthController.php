@@ -49,4 +49,13 @@ class AuthController extends Controller
     public function changeAvata( Request $request, User $user ) {
         return $this->userService->changeAvata( $request, $user );
     }
+
+    public function forget( Request $request ) {
+        $user = $this->userService->forgetPassword( $request );
+        return view( "client.auth.vertify_password", compact( "user" ));
+    }
+
+    public function vertifyPassword( Request $request, User $user ) {
+        return $this->userService->vertifyPassword( $request, $user );
+    }
 }

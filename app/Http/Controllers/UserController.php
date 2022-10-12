@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateUserRequest;
 use App\Models\Role;
 use App\Models\User;
 use App\Services\UserService;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -21,7 +22,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = $this->userService->allUser();
+        $users = $this->userService->listUser();
         return view("admin.user.index", compact("users") );
     }
 
@@ -94,5 +95,19 @@ class UserController extends Controller
     {
         $user->delete();
         return redirect()->route( "user.index" )->with( "message", "User Updated Successfully");
+    }
+
+    public function active( Request $request ) {
+        return $this->userService->active( $request );
+    }
+
+    public function softDelete( $user ) {
+        $this->userService->softDelete(  $user );
+        return back();
+    }
+
+    public function restoreDelete( $user ) {
+        $this->userService->restoreDelete(  $user );
+        return back();
     }
 }

@@ -21,8 +21,16 @@ class UserReponsitory {
         return $this->user->where( "id", $id )->first();
     }
 
+    public function findbySoftDelete( $id ) {
+        return $this->user->onlyTrashed()->where( "id", $id )->first();
+    }
+
     public function all() {
-        return $this->user->all();
+        return $this->user->search()->paginate( 5 );
+    }
+
+    public function whereManager( $field, $condition, $pagination = 5 ){
+        return $this->user->where( $field, $condition )->paginate( $pagination );
     }
 
     public function create( $attributes ) {
@@ -31,6 +39,14 @@ class UserReponsitory {
 
     public function update( $attributes, User $user ) {
         return $user->update( $attributes );
+    }
+
+    public function userSoftDelete( User $user ) {
+        return $user->forceDelete();
+    }
+
+    public function userRestoreDelete( User $user ) {
+        return $user->restore();
     }
 
 }

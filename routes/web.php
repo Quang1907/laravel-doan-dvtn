@@ -9,7 +9,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-// view
+// view clien
 Route::view( "/", "client.index" )->name( "home" );
 Route::view( "account", "client.profile" )->name( "profile" )->middleware( "checkInfo" );
 
@@ -20,6 +20,9 @@ Route::view( "dang-ky" , "client.auth.register" )->name( "dangky" );;
 Route::post( "dang-ky", [ AuthController::class, "register" ] )->name( "account.register");
 Route::view( "vertify/email", "client.auth.vertify_email" )->name("account.vertifyEmail");
 Route::post( "vertify/email/{user}", [ AuthController::class, "vertify" ] )->name( "account.vertify" );
+Route::view( "forget/password",  "client.auth.forget_password"  )->name( "forget.password" );
+Route::post( "forget/password",   [ AuthController::class, "forget" ]  )->name( "forget.password" );
+Route::post( "vertify/password/{user}",   [ AuthController::class, "vertifyPassword" ]  )->name( "vertify.password" );
 
 Route::group([ "middleware" => "auth", "prefix" => "account"],function () {
     Route::view( "password" ,'client.auth.change_password' )->name( "account.changepassword" )->middleware( "checkInfo" );
@@ -31,7 +34,6 @@ Route::group([ "middleware" => "auth", "prefix" => "account"],function () {
     Route::post( "changeAvata/{user}", [ AuthController::class, "changeAvata" ] )->name( "changeAvata" );
 });
 
-// Route::view("check", "client.auth.email");
 // login social
 Route::get( 'auth/google', [ GoogleAuthController::class, 'redirectToGoogle' ] );
 Route::get( 'auth/google/callback', [ GoogleAuthController::class, 'handleGoogleCallback' ] );
@@ -43,7 +45,12 @@ Auth::routes();
 // admin
 Route::group([ "prefix" => "admin",  "middleware" => "admin" ], function () {
     Route::view( "/", "admin.index" );
+
     Route::resource( "user", UserController::class );
+    Route::get( "user/restoreDelete/{user}", [ UserController::class, "restoreDelete" ] )->name( "user.restoreDelete" );
+    Route::delete( "user/softDelete/{user}", [ UserController::class, "softDelete" ] )->name( "user.softDelete" );
+    Route::post( "user/active", [ UserController::class, "active"] )->name( "user.active" );
+
     Route::resource( "category", CategoryController::class );
     Route::resource( "post", PostController::class );
     Route::post( "post/import", [ PostController::class, "uploadFile" ] )->name( "post.import" );

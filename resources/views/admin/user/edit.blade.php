@@ -2,9 +2,11 @@
 @section('content')
     <div class="container">
         <div class="card">
-            <div class="card-header d-flex justify-content-between">
-                <h2>Edit User</h2>
-                <a href="{{ route('user.index') }}" class="btn btn-success h-100">List user</a>
+            <div class="card-header">
+                <div class="d-flex justify-content-between">
+                    <h2 class="p-0 m-0">Create User</h2>
+                    <a href="{{ route('user.index') }}" class="btn btn-success">List user</a>
+                </div>
             </div>
             <div class="card-body">
                 @if (\Session::has('message'))
