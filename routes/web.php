@@ -4,21 +4,23 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GithubAuthController;
 use App\Http\Controllers\GoogleAuthController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 // view clien
-Route::view( "/", "client.index" )->name( "home" );
-Route::view( "account", "client.profile" )->name( "profile" )->middleware( "checkInfo" );
+Route::get( "/", [ HomeController::class, "home" ] )->name( "home" );
+Route::get( "account", [ HomeController::class, "account" ] )->name( "profile" )->middleware( "checkInfo" );
+Route::get( "activity", [ HomeController::class, "activity" ] )->name( "activity" );
 
 // account
-Route::view( "dang-nhap", "client.auth.login" )->name( "dangnhap" );
+Route::view( "dang-nhap", "client.auth.login" )->name( "dangnhap" )->middleware( "checkAuth" );
 Route::post( "dang-nhap" , [ AuthController::class,  "checkLogin" ] )->name("account.checkLogin");
-Route::view( "dang-ky" , "client.auth.register" )->name( "dangky" );;
+Route::view( "dang-ky" , "client.auth.register" )->name( "dangky" )->middleware( "checkAuth" );
 Route::post( "dang-ky", [ AuthController::class, "register" ] )->name( "account.register");
-Route::view( "vertify/email", "client.auth.vertify_email" )->name("account.vertifyEmail");
+Route::view( "vertify/email", "client.auth.vertify_email" )->name("account.vertifyEmail")->middleware( "auth" );
 Route::post( "vertify/email/{user}", [ AuthController::class, "vertify" ] )->name( "account.vertify" );
 Route::view( "forget/password",  "client.auth.forget_password"  )->name( "forget.password" );
 Route::post( "forget/password",   [ AuthController::class, "forget" ]  )->name( "forget.password" );

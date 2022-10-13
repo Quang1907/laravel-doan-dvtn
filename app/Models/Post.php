@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     use HasFactory;
-    protected $fillable = [ "title", "content" ];
+
+    protected $fillable = [ "title", "content", "image", "user_id", "slug" ];
 
     public function categories()
     {
@@ -17,7 +18,7 @@ class Post extends Model
 
     public function scopeSearch( $query ) {
         if ( !empty( request()->category_id ) ) {
-            $query->whereHas( "categories" , function ( $query ){
+            $query->whereHas( "categories" , function ( $query ) {
                 $query =  $query->where( "id" , request()->category_id);
                 return  $query;
             });

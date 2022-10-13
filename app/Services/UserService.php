@@ -40,8 +40,9 @@ class UserService {
     }
 
     public function listUser() {
-        return $this->userReponsitory->all();
-        // return $this->userReponsitory->whereManager( "admin", auth()->user()->id );
+        // return $this->userReponsitory->all();
+        $pagination = config("pagination.category");
+        return $this->userReponsitory->whereManager( "manager", auth()->user()->id );
     }
 
     public function createUser( Request $request ) {

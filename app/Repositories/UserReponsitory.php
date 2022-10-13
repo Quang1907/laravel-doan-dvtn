@@ -30,7 +30,7 @@ class UserReponsitory {
     }
 
     public function whereManager( $field, $condition, $pagination = 5 ){
-        return $this->user->where( $field, $condition )->paginate( $pagination );
+        return $this->user->search()->where( $field, $condition )->paginate( $pagination );
     }
 
     public function create( $attributes ) {

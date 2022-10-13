@@ -2,6 +2,7 @@
 namespace App\Repositories;
 
 use App\Models\Category;
+use App\Models\Post;
 
 class CategoryReponsitory {
     protected $category = null;
@@ -24,5 +25,9 @@ class CategoryReponsitory {
 
     public function update( $attributes, $category ) {
         return $category->update( $attributes );
+    }
+
+    public function post() {
+        return $this->category->with("posts")->find(1);
     }
 }

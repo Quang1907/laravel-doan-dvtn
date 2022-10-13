@@ -2,25 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\CategoryService;
+
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    private $categorySerice = null;
+
+    public function __construct( CategoryService $categorySerice )
     {
-        $this->middleware('auth');
+        $this->categorySerice = $categorySerice;
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function index()
-    {
-        return view('home');
+    public function home() {
+        return view( "client.index" );
+    }
+
+    public function activity() {
+        $category = $this->categorySerice->categortPost();
+        return view( "client.activity", compact( "category" ) );
+    }
+
+    public function account() {
+        return view( "client.profile" );
     }
 }

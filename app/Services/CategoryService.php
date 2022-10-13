@@ -15,6 +15,10 @@ class CategoryService {
         return $this->categoryReponsitory->all();
     }
 
+    public function categortPost() {
+        return $this->categoryReponsitory->post();
+    }
+
     public function paginationCategory() {
         $pagination = config( "pagination.category" );
         return $this->categoryReponsitory->pagination( $pagination );

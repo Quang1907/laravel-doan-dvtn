@@ -20,12 +20,7 @@
             class="hidden md:flex justify-between items-center w-full  md:w-auto md:order-1 md:m-auto">
             <ul
                 class="flex flex-col items-center px-4 mt-4 bg-gray-50 rounded-lg border border-gray-100 md:flex-row md:space-x-10 sm:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-                <li class="py-5">
-                    <a href="{{ route( 'home' ) }}"
-                        class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700"
-                        aria-current="page">Trang chủ</a>
-                </li>
-                <li>
+                {{-- <li>
                     <button id="mega-menu-full-dropdown-button"
                         class="flex justify-between items-center py-2 pr-4 pl-3 w-full font-medium text-gray-700 rounded md:w-auto hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-gray-400 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700">Tin
                         tức
@@ -36,31 +31,25 @@
                                 clip-rule="evenodd"></path>
                         </svg>
                     </button>
+                </li> --}}
+
+                @foreach ( config( "menu" ) as $menu )
+                <li class="py-5">
+                    <a href="{{ route( $menu['route'] ) }}"
+                        class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700"
+                        aria-current="page">{{ $menu[ 'title' ] }}</a>
                 </li>
-                <li>
-                    <a href=""
-                        class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700">Cửa
-                        hàng</a>
-                </li>
-                <li>
-                    <a href=""
-                        class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700">Hoạt
-                        động</a>
-                </li>
-                <li>
-                    <a href=""
-                        class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700">Liên
-                        hệ</a>
-                </li>
+                @endforeach
+
                 <li class="flex">
                     @guest
                         @if (Route::has('dangnhap'))
                             <a class="nav-link hover:bg-blue-700 bg-blue-600 text-white py-2 px-3 rounded" href="{{ route( 'dangnhap' ) }}">{{ __('Đăng nhập') }}</a>
                         @endif
 
-                        {{-- @if (Route::has('account.create'))
+                        {{-- @if (Route::has('dangky'))
                             <li>
-                                <a class="nav-link " href="{{ route('account.create') }}">{{ __('Register') }}</a>
+                                <a class="nav-link " href="{{ route('dangky') }}">{{ __('Register') }}</a>
                             </li>
                         @endif --}}
                     @else
@@ -78,7 +67,7 @@
                                 <span clspanss="block relative">
                                 </span>
                             </div>
-                            <div class="z-50 absolute right-0 md:mt-[276px] mr-12 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                            <div class="z-50 absolute right-0 mt-[310px] mr-12 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                                 id="user-dropdown">
                                 <div class="py-3 px-4">
                                     <span
@@ -118,24 +107,6 @@
                                 </ul>
                             </div>
                         </div>
-                        {{-- <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::user()->name }}
-                            </a>
-
-                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                    onclick="event.preventDefault();
-                                                    document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
-                                </a>
-
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                    @csrf
-                                </form>
-                            </div>
-                        </li> --}}
                     @endguest
                 </li>
             </ul>

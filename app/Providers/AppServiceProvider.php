@@ -28,9 +28,5 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Hash::extend("sha1", function($app)
-        {
-            return new Sha1Hasher();
-        });
     }
 }
