@@ -27,6 +27,17 @@
                             <span class="text-danger">{{ $errors->first('name') }}</span>
                         </div>
                         <div class="mb-3">
+                            <label for="" class="form-label">Danh mục cha</label>
+                            @php
+                                $htmlOption = null;
+                                categorySelect( $categories, $htmlOption );
+                            @endphp
+                            <select class="form-control form-select-lg" name="parent_id">
+                                <option value="" selected>Choose an category</option>
+                                {!! $htmlOption !!}
+                            </select>
+                        </div>
+                        <div class="mb-3">
                             <button type="submit" class="btn btn-success float-end">Save</button>
                         </div>
                     </form>

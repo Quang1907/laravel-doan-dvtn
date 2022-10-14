@@ -26,7 +26,7 @@ class ChangeInfoRequest extends FormRequest
         return [
             "name" => "required|max:30",
             "email" => "required|email|unique:users,email,". auth()->user()->id ,
-            "birthday" => "required",
+            "birthday" => "required|date|date_format:Y-m-d",
             "phonenumber" => "required|max:10",
         ];
     }
@@ -39,6 +39,7 @@ class ChangeInfoRequest extends FormRequest
             "email.email" => "Email không đúng định dạng",
             "email.unique" => "Email đã tồn tại trên hệ thống",
             "birthday.required" => "Ngày sinh vui lòng không để trống",
+            "birthday.date_format" => "Vui lòng kiểm tra lại ngày sinh",
             "phonenumber.required" => "Số điện thoại vui lòng không để trống",
             "phonenumber.max" => "Số điện thoại phải là 10 số",
         ];

@@ -15,7 +15,9 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.0",
         "maatwebsite/excel": "^3.1",
-        "realrashid/sweet-alert": "^5.1"
+        "nao-pon/flysystem-google-drive": "~1.1",
+        "realrashid/sweet-alert": "^5.1",
+        "unisharp/laravel-filemanager": "^2.5"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
@@ -31,7 +33,10 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": [
+            "app/Helpers/Helper.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

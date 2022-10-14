@@ -16,14 +16,7 @@
                         </ul>
                     </div>
                 @endif
-
-                <ul class="list-inline m-0">
-                    @if ($errors->any())
-                        @foreach ($errors->all() as $error)
-                            <li class="text-danger"><span>{{$error}}</span></li>
-                        @endforeach
-                    @endif
-                </ul>
+                <x-errors.any/>
                 <form action="{{ route('user.store') }}" method="post">
                     @csrf
                     <div class="mb-3">

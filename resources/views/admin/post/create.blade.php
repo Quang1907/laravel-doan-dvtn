@@ -14,11 +14,11 @@
                         </ul>
                     </div>
                 @endif
-                <div class="text-right my-3">
+                <div class="text-right">
                     <a href="{{ route('post.index') }}" class="btn btn-success"><i class="fa-solid fa-backward"></i></a>
                 </div>
-                <div class="mt-5 col-sm-4 mx-auto">
-                    <form action="{{ route('post.store') }}" method="post">
+                <div class="mt-3 mx-auto">
+                    <form action="{{ route('post.store') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
                             <label for="" class="form-label">Post Name</label>
@@ -27,8 +27,25 @@
                             <span class="text-danger">{{ $errors->first('title') }}</span>
                         </div>
                         <div class="mb-3">
+                            <label for="" class="form-label">Image</label>
+                            <div class="custom-file">
+                                <div>
+                                    <input type="file" accept="image/*" class="custom-file-input"  id="customFile" name="image" value="{{ old('image') }}">
+                                    <label class="custom-file-label" for="customFile">Choose file</label>
+                                    <span class="text-danger">{{ $errors->first('image') }}</span>
+                                </div>
+                                <div>
+                                    <input type="checkbox" name="googleDrive" id="googleDrive">
+                                    <label for="googleDrive">Upload image to google drive</label>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <img class="d-none mt-4" src="" width="150px" alt="image description" id="showimage">
+                            </div>
+                        </div>
+                        <div class="mb-3">
                             <label for="" class="form-label">Post content</label>
-                            <textarea class="form-control" name="content" placeholder="Enter post content" cols="30" rows="10">{{ old('content') }}</textarea>
+                            <textarea id="my-editor" name="content" class="form-control">{!! old('content') !!}</textarea>
                             <span class="text-danger">{{ $errors->first('content') }}</span>
                         </div>
                         <div>
@@ -52,10 +69,44 @@
 @endsection
 
 @section('script')
+    <script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
     <script>
         $(document).ready(function() {
             $('.category').select2();
+            var select = $(".select2-selection__choice")
+            select.css( "color", "black" );
+            select.css( "padding-left", "30px" );
             $(".select2-search__field").addClass("border-0");
+
+            $('.category').change( function () {
+                $(".select2-selection__choice").css( "color", "black" );
+                $(".select2-selection__choice").css( "padding-left", "30px" );
+            });
         });
+
+        $(".custom-file-input").on("change", function() {
+          var fileName = $(this).val().split("\\").pop();
+          $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+          $("#showimage").removeClass( "d-none" );
+          readURL(this);
+        });
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#showimage').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        var options = {
+            filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
+            filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token=',
+            filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+            filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token='
+        };
+        CKEDITOR.replace('my-editor', options);
     </script>
 @endsection

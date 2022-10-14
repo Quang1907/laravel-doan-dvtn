@@ -51,8 +51,8 @@ class AuthController extends Controller
     }
 
     public function forget( Request $request ) {
-        $user = $this->userService->forgetPassword( $request );
-        return view( "client.auth.vertify_password", compact( "user" ));
+        return $this->userService->forgetPassword( $request );
+
     }
 
     public function vertifyPassword( Request $request, User $user ) {

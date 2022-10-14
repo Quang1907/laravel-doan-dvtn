@@ -26,6 +26,7 @@ class CreatePostRequest extends FormRequest
         return [
             "title" => "required",
             "content" => "required",
+            "image" => "required",
             "category_id" => "required",
         ];
     }
@@ -33,9 +34,10 @@ class CreatePostRequest extends FormRequest
     public function messages()
     {
         return [
-            "title.required" => "Title cannot be blank",
-            "content.required" => "Content cannot be blank",
-            "category_id.required" => "Category cannot be blank",
+            "title.required" => "Vui lòng không để trống tiêu đề",
+            "content.required" => "Vui lòng không để trống nội dung",
+            "category_id.required" => "Vui lòng chọn danh mục",
+            "image.required" => "Vui lòng tải lên hình ảnh",
         ];
     }
 }

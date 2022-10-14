@@ -32,6 +32,7 @@ class User extends Authenticatable
         'auth_type',
         "is_active",
         "token",
+        "admin",
         "email_verified_at",
     ];
 
@@ -61,6 +62,11 @@ class User extends Authenticatable
     public function hasPermission( $name ) {
         return $this->role->permissions()->where( "name", $name )->exists();
     }
+
+    public function post() {
+        return $this->hasOne( Post::class );
+    }
+
 
     public function scopeSearch( $query ) {
 

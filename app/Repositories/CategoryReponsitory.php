@@ -27,7 +27,11 @@ class CategoryReponsitory {
         return $category->update( $attributes );
     }
 
-    public function post() {
-        return $this->category->with("posts")->find(1);
+    public function post( $id ) {
+        return $this->category->with("posts")->find( $id );
+    }
+
+    public function whereName( $name ) {
+        return $this->category->where( "name", $name )->first();
     }
 }

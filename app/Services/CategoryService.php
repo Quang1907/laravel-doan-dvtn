@@ -3,6 +3,7 @@ namespace App\Services;
 
 use App\Repositories\CategoryReponsitory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class CategoryService {
     protected $categoryReponsitory = null;
@@ -16,7 +17,8 @@ class CategoryService {
     }
 
     public function categortPost() {
-        return $this->categoryReponsitory->post();
+        $category = $this->categoryReponsitory->whereName("Hoạt động");
+        return $this->categoryReponsitory->post( $category->id );
     }
 
     public function paginationCategory() {
@@ -25,6 +27,7 @@ class CategoryService {
     }
 
     public function create( Request $request ) {
+        $request['slug'] = Str::slug( $request->name );
         return $this->categoryReponsitory->create( $request->all() );
     }
 

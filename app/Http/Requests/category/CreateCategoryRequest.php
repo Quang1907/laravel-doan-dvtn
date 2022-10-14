@@ -32,6 +32,7 @@ class CreateCategoryRequest extends FormRequest
         return [
             "name.required" => "Category name cannot be blank",
             "name.unique" => "Category name exists",
+            "name.unique" => "Category name exists",
         ];
     }
 }

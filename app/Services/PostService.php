@@ -6,7 +6,10 @@ use App\Models\Post;
 use App\Repositories\PostReponsitory;
 use Illuminate\Bus\Batchable;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use RealRashid\SweetAlert\Facades\Alert;
+use Exception;
 
 class PostService {
     use Batchable;
@@ -22,19 +25,66 @@ class PostService {
         return $this->postReponsitory->all();
     }
 
+    public function slugPost( $slug ) {
+        return $this->postReponsitory->where( "slug", $slug );
+    }
+
     public function paginationPost( ) {
         $pagination = config( "pagination.post");
         return $this->postReponsitory->pagination( $pagination );
     }
 
     public function createPost( Request $request ) {
-        $data = $this->postReponsitory->create( $request->all() );
-        Alert::toast('Post Created Successfully.', 'success');
-        return $data->categories()->attach( $request->category_id );
+        DB::beginTransaction();
+
+        try {
+            $data = $request->all();
+            $data['slug'] = Str::slug( $data["title"] );
+            $data['user_id'] = auth()->user()->id;
+
+            $image = $request->file("image");
+
+            if ( $request->googleDrive ) {
+                $imageId = $image->store( "", "google");
+                $data['image'] = \Storage::disk('google')->url($imageId);
+            }else{
+                $fileName = time() . $image->getClientOriginalName();
+                $image->storeAs( "public", $fileName);
+                $data['image'] = $fileName;
+            }
+
+            $data = $this->postReponsitory->create( $data );
+
+            $data->categories()->attach( $request->category_id );
+
+            Alert::toast( 'Post Created Successfully.', 'success' );
+        } catch ( Exception $e ) {
+            DB::rollBack();
+
+            throw new Exception( $e->getMessage() );
+        }
+
+        DB::commit();
     }
 
     public function updatePost( Request $request, Post $post ) {
-        $this->postReponsitory->update( $request->all(), $post );
+        $data = $request->all();
+        $data['slug'] = Str::slug( $data["title"] );
+        $data['user_id'] = auth()->user()->id;
+
+        $image = $request->file("image");
+
+        if ( !empty( $image ) ) {
+            if ( $request->googleDrive ) {
+                $imageId = $image->store( "", "google");
+                $data['image'] = \Storage::disk('google')->url($imageId);
+            }else{
+                $fileName = time() . $image->getClientOriginalName();
+                $image->storeAs( "public", $fileName);
+                $data['image'] = $fileName;
+            }
+        }
+        $this->postReponsitory->update( $data, $post );
         Alert::toast('Post Updated Successfully.', 'success');
         return $post->categories()->sync( $request->category_id );
     }

@@ -50,8 +50,7 @@
                             </tr>
                         </thead>
                         <tbody class="table-group-divider ">
-                            @foreach ( $categories as $category )
-
+                            @forelse ( $categories as $category )
                                 <tr class="table-primary">
                                     <td scope="row">{{ $category->id }}</td>
                                     <td scope="row" class="w-75">{{ $category->name }}</td>
@@ -65,7 +64,11 @@
                                         </form>
                                     </td>
                                 </tr>
-                            @endforeach
+                            @empty
+                                <tr>
+                                    <td colspan="3">Hiện tại không có danh mục</td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                     {{ $categories->links('vendor.pagination.bootstrap') }}

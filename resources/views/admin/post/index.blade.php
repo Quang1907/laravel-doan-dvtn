@@ -83,8 +83,8 @@
                         <thead class="table-light">
                             <tr class="bg-danger">
                                 <th>ID</th>
+                                <th>Image</th>
                                 <th>Post name</th>
-                                <th>Content</th>
                                 <th>List Caetgory</th>
                                 <th>Action</th>
                             </tr>
@@ -93,8 +93,14 @@
                             @foreach ( $posts as $post )
                                 <tr class="table-primary">
                                     <td scope="row">{{ $post->id }}</td>
-                                    <td scope="row" class="w-25">{{ $post->title }}</td>
-                                    <td scope="row">{{ $post->content }}</td>
+                                    <td scope="row">
+                                        @if ( stripos( $post->image,  "drive.google.com" ) )
+                                            <img src="{{ $post->image }}"  width="70px" alt="">
+                                        @else
+                                            <img src="{{ asset( "storage/" . $post->image ) }}"  width="70px" alt="">
+                                        @endif
+                                    </td>
+                                    <td scope="row" class="">{{ $post->title }}</td>
                                     <td>
                                         <ul>
                                             @foreach ( $post->categories as $category )
@@ -115,7 +121,7 @@
                                                 <a href="{{ route('post.edit', $post->id) }}" class="btn btn-warning">Edit</a>
                                             @endcan
                                             @can('delete', $post)
-                                                <button type="button" class="btn btn-danger" onclick="btnDeletePost()" >Delete</button>
+                                                <button type="submit" class="btn btn-danger" onclick="btnDeletePost()" >Delete</button>
                                             @endcan
                                         </form>
                                     </td>

@@ -26,6 +26,17 @@
                             <input type="text" class="form-control" name="name" value="{{ $category->name }}" placeholder="Tên danh mục">
                         </div>
                         <div class="mb-3">
+                            <label for="" class="form-label">Danh mục cha</label>
+                            @php
+                                $htmlOption = null;
+                                categorySelect( $categories, $htmlOption, $category->parent_id );
+                            @endphp
+                            <select class="form-control form-select-lg" name="parent_id">
+                                <option value="" selected>Choose an category</option>
+                                {!! $htmlOption !!}
+                            </select>
+                        </div>
+                        <div class="mb-3">
                             <button type="submit" class="btn btn-success float-end">Save</button>
                         </div>
                     </form>

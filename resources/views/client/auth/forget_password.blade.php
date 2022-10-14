@@ -3,6 +3,9 @@
 
 @section('content')
 <div class="sm:container my-5">
+    <div class="w-1/3 m-auto">
+        <x-errors.message />
+    </div>
     <form class="space-y-6 w-1/2 m-auto" method="post" action="{{ route( "forget.password" ) }}">
         @csrf
         <div class="text-3xl font-semibold text-center">

@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 Route::get( "/", [ HomeController::class, "home" ] )->name( "home" );
 Route::get( "account", [ HomeController::class, "account" ] )->name( "profile" )->middleware( "checkInfo" );
 Route::get( "activity", [ HomeController::class, "activity" ] )->name( "activity" );
+Route::get( "activity/{slug}", [ HomeController::class, "post" ] )->name( "post" );
 
 // account
 Route::view( "dang-nhap", "client.auth.login" )->name( "dangnhap" )->middleware( "checkAuth" );
@@ -57,4 +58,10 @@ Route::group([ "prefix" => "admin",  "middleware" => "admin" ], function () {
     Route::resource( "post", PostController::class );
     Route::post( "post/import", [ PostController::class, "uploadFile" ] )->name( "post.import" );
     Route::get( "export/post", [ PostController::class, "exportFile" ] )->name( "post.export" );
+});
+
+
+// fileManager
+Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
+    \UniSharp\LaravelFilemanager\Lfm::routes();
 });

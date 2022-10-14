@@ -30,5 +30,13 @@ class PostReponsitory {
     public function update ( $attributes , Post $post ) {
         return $post->update( $attributes );
     }
+
+    public function where( $field, $value, $condition = "") {
+        if ( !empty( $condition ) ) {
+            return $this->post->where( $field, $condition, $value )->first();
+        }
+        return $this->post->where( $field, $value )->first();
+    }
+
 }
 

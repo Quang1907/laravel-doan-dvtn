@@ -177,7 +177,7 @@ return [
         App\Providers\TelescopeServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
-
+        App\Providers\GoogleDriveServiceProvider::class,
     ],
 
     /*

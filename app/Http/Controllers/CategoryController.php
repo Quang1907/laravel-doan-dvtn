@@ -32,7 +32,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.category.create');
+        $categories = $this->categories->allCategory();
+        return view('admin.category.create', compact( "categories" ));
     }
 
     /**
@@ -66,7 +67,8 @@ class CategoryController extends Controller
      */
     public function edit( Category $category )
     {
-        return view( 'admin.category.edit', compact("category") );
+        $categories = $this->categories->allCategory();
+        return view( 'admin.category.edit', compact("category", "categories") );
     }
 
     /**

@@ -11,7 +11,6 @@ use App\Services\PostService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Facades\Excel;
-use RealRashid\SweetAlert\Facades\Alert;
 
 class PostController extends Controller
 {
@@ -107,7 +106,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        $this->authorize("delete", $post);
+        $this->authorize("delete", $post );
         $this->postService->deletePost( $post );
         return back();
     }

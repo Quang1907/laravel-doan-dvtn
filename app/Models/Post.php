@@ -16,6 +16,10 @@ class Post extends Model
         return $this->belongstoMany( Category::class, "category_posts", 'posts_id', 'category_id' );
     }
 
+    public function user() {
+        return $this->hasOne( User::class, "id" , "user_id");
+    }
+
     public function scopeSearch( $query ) {
         if ( !empty( request()->category_id ) ) {
             $query->whereHas( "categories" , function ( $query ) {
@@ -34,4 +38,5 @@ class Post extends Model
 
         return $query;
     }
+
 }

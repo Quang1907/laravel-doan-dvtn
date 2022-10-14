@@ -47,9 +47,10 @@ class UserService {
 
     public function createUser( Request $request ) {
         $data = $request->all();
-        $data[ "manager" ] = auth()->user()->id;
-        $data[ "is_active" ] = true ;
         if ( $data['password'] == $data['confirm_password'] ) {
+            $data[ "manager" ] = auth()->user()->id;
+            $data[ "is_active" ] = true ;
+            $data[ "admin" ] = true ;
             $data['password'] = hash( "sha256", $data['password']);
             $this->userReponsitory->create( $data );
             return redirect()->route("user.index")->with( "message", "User created successfully." );
@@ -149,11 +150,12 @@ class UserService {
         $email =  $request->email;
         $user = $this->userReponsitory->findbyEmail( $email );
         $data['token'] = strtoupper( Str::random( 5 ) );
-        $this->userReponsitory->update( $data, $user );
         if ( !empty( $user ) ) {
+            $this->userReponsitory->update( $data, $user );
             dispatch( new SendEmail( $user ) );
-            return $user;
+            return view( "client.auth.vertify_password", compact( "user" ) );
         }
+        return back()->with( ["message" => "Khong tim thay email cua ban"] )->withInput();
     }
 
     public function vertifyPassword( Request $request, User $user ) {
