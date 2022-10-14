@@ -27,8 +27,8 @@ class CategoryReponsitory {
         return $category->update( $attributes );
     }
 
-    public function post( $id ) {
-        return $this->category->with("posts")->find( $id );
+    public function whereCate( $id ) {
+        return Category::with('posts')->find( $id );
     }
 
     public function whereName( $name ) {

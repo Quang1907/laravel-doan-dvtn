@@ -18,7 +18,7 @@ class CategoryService {
 
     public function categortPost() {
         $category = $this->categoryReponsitory->whereName("Hoạt động");
-        return $this->categoryReponsitory->post( $category->id );
+        return $this->categoryReponsitory->whereCate( $category->id );
     }
 
     public function paginationCategory() {

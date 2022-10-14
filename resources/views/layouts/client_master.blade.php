@@ -8,6 +8,7 @@
     <title>@yield('title')</title>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css" integrity="sha512-UTNP5BXLIptsaj5WdKFrkFov94lDx+eBvbKyoe1YAfjeRPC+gT5kyZ10kOHCfNZqEui1sxmqvodNUx3KbuYI/A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     @yield('css')
 </head>
 
@@ -20,9 +21,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
         integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     @include('sweetalert::alert')
 
     <script>
+        $("#button-nav").click( function () {
+            $("#mega-menu-full").toggle();
+        });
+
+        $("#mega-menu-full-dropdown").toggle();
+
+        $("#mega-menu-full-dropdown-button").click( function () {
+            $("#mega-menu-full-dropdown").toggle();
+        })
         // open profile user
         $(document).ready(function() {
             var check = true;
@@ -41,5 +52,4 @@
     </script>
     @yield( 'script' )
 </body>
-
 </html>

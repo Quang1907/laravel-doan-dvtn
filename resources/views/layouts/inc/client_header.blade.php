@@ -6,9 +6,9 @@
                 Niên</span>
         </a>
 
-        <button data-collapse-toggle="mobile-menu-2" type="button"
+        <button data-collapse-toggle="mega-menu-full" id="button-nav" type="button"
             class="inline-flex text-white items-center p-2 ml-1 text-sm rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-            aria-controls="mobile-menu-2" aria-expanded="false">
+            aria-controls="mega-menu-full" aria-expanded="false">
             <svg class="w-6 h-6 text-black" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd"
@@ -20,38 +20,18 @@
             class="hidden md:flex justify-between items-center w-full  md:w-auto md:order-1 md:m-auto">
             <ul
                 class="flex flex-col items-center px-4 mt-4 bg-gray-50 rounded-lg border border-gray-100 md:flex-row md:space-x-10 sm:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-                {{-- <li>
-                    <button id="mega-menu-full-dropdown-button"
-                        class="flex justify-between items-center py-2 pr-4 pl-3 w-full font-medium text-gray-700 rounded md:w-auto hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-gray-400 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700">Tin
-                        tức
-                        <svg class="ml-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                clip-rule="evenodd"></path>
-                        </svg>
-                    </button>
-                </li> --}}
-
                 @foreach ( config( "menu" ) as $menu )
-                <li class="py-5">
-                    <a href="{{ route( $menu['route'] ) }}"
-                        class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700"
-                        aria-current="page">{{ $menu[ 'title' ] }}</a>
-                </li>
+                    <li class="py-5">
+                        <a href="{{ route( $menu['route'] ) }}"
+                            class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700"
+                            aria-current="page">{{ $menu[ 'title' ] }}</a>
+                    </li>
                 @endforeach
-
                 <li class="flex">
                     @guest
                         @if (Route::has('dangnhap'))
                             <a class="nav-link hover:bg-blue-700 bg-blue-600 text-white py-2 px-3 rounded" href="{{ route( 'dangnhap' ) }}">{{ __('Đăng nhập') }}</a>
                         @endif
-
-                        {{-- @if (Route::has('dangky'))
-                            <li>
-                                <a class="nav-link " href="{{ route('dangky') }}">{{ __('Register') }}</a>
-                            </li>
-                        @endif --}}
                     @else
                         <div class="flex items-center md:order-2">
                             <button type="button" id="profileUser"

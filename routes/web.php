@@ -48,6 +48,7 @@ Auth::routes();
 // admin
 Route::group([ "prefix" => "admin",  "middleware" => "admin" ], function () {
     Route::view( "/", "admin.index" );
+    Route::post( "carousel",  [ HomeController::class, "carousel" ] )->name( "carousel" );
 
     Route::resource( "user", UserController::class );
     Route::get( "user/restoreDelete/{user}", [ UserController::class, "restoreDelete" ] )->name( "user.restoreDelete" );

@@ -2,6 +2,7 @@
 @section( "title", "Trang cá nhân" )
 
 @section( "content" )
+
 <div class=" dark:bg-gray-900 flex flex-wrap items-center justify-center">
     <div class="w-full bg-white dark:bg-gray-800 shadow-lg transform duration-200 easy-in-out">
         <div class="h-2/4 sm:h-52 overflow-hidden">

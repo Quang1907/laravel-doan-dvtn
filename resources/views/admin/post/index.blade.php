@@ -94,11 +94,7 @@
                                 <tr class="table-primary">
                                     <td scope="row">{{ $post->id }}</td>
                                     <td scope="row">
-                                        @if ( stripos( $post->image,  "drive.google.com" ) )
-                                            <img src="{{ $post->image }}"  width="70px" alt="">
-                                        @else
-                                            <img src="{{ asset( "storage/" . $post->image ) }}"  width="70px" alt="">
-                                        @endif
+                                        <img src="{{ url_image( $post->image ) }}"  width="70px" alt="">
                                     </td>
                                     <td scope="row" class="">{{ $post->title }}</td>
                                     <td>
