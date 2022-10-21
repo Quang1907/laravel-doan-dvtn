@@ -37,7 +37,7 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <button type="submit" class="btn btn-success float-end">Save</button>
+                            <button type="submit" class="btn btn-success bg-success float-end">Save</button>
                         </div>
                     </form>
                 </div>

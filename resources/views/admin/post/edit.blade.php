@@ -1,10 +1,15 @@
 @extends('layouts.admin_master')
-@section('title', 'Edit post')
+@section('title', 'Chỉnh sửa bài viết')
+
+@section('css')
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+@endsection
+
 @section('content')
     <div class="container mt-3">
         <div class="card border-primary">
             <div class="card-header">
-                <h2 class="text-center">Edit Post</h2>
+                <h2 class="text-center text-2xl font-bold">Chỉnh sửa bài viết</h2>
             </div>
             <div class="card-body">
                 @if (\Session::has('message'))
@@ -36,9 +41,13 @@
                                     <label class="custom-file-label" for="customFile">Choose file</label>
                                     <span class="text-danger">{{ $errors->first('image') }}</span>
                                 </div>
-                                <div>
-                                    <input type="checkbox" name="googleDrive" id="googleDrive">
-                                    <label for="googleDrive">Upload image to google drive</label>
+                                <div class="mt-3">
+                                    <label class="switch switch-secondary switch-pill form-control-label mr-2">
+                                        <input type="checkbox" class="switch-input form-check-input" name="googleDrive">
+                                        <span class="switch-label"></span>
+                                        <span class="switch-handle"></span>
+                                    </label>
+                                    Upload image to google drive
                                 </div>
                             </div>
                             <div class="text-center">
@@ -69,7 +78,7 @@
                             <span class="text-danger">{{ $errors->first('category_id') }}</span>
                         </div>
                         <div class="m-3">
-                            <button type="submit" class="btn btn-success float-end">Save</button>
+                            <button type="submit" class="btn btn-success bg-success float-end">Save</button>
                         </div>
                     </form>
                 </div>
@@ -80,6 +89,8 @@
 
 @section('script')
     <script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
     <script>
         $(document).ready(function() {
             $('.category').select2();

@@ -34,6 +34,7 @@ class User extends Authenticatable
         "token",
         "admin",
         "email_verified_at",
+        "gender",
     ];
 
     /**
@@ -67,6 +68,13 @@ class User extends Authenticatable
         return $this->hasOne( Post::class );
     }
 
+    public function events() {
+        return $this->belongsToMany( Event::class , "users_events", "user_create", "event_id" );
+    }
+
+    public function showEvent() {
+        return $this->belongsToMany( Event::class , "users_events", "user_id", "event_id" );
+    }
 
     public function scopeSearch( $query ) {
 

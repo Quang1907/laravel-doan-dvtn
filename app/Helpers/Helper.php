@@ -37,3 +37,25 @@ if ( !function_exists( "url_image") ) {
         return  asset( "storage/" . $url) ;
     }
 }
+
+
+if ( !function_exists( "check_time") ) {
+    function check_time( $time ) {
+        $now = Carbon::now();
+        if ( $now->greaterThan( $time ) ) {
+            echo '<span class="bg-green-600 text-white font-semibold py-1 px-3 rounded-full text-xs">Đã hoàn thành</span>' ;
+        }else{
+            echo '<span class="bg-yellow-600 text-white font-semibold py-1 px-3 rounded-full text-xs">Chưa diễn ra</span>' ;
+        }
+    }
+}
+
+if ( !function_exists( "check_active_event") ) {
+    function check_active_event( $active ) {
+        if ( $active ) {
+            echo '<span class="bg-green-600 text-white font-semibold py-1 px-3 rounded-full text-xs">Đã tham gia</span>' ;
+        }else{
+            echo '<span class="bg-red-600 text-white font-semibold py-1 px-3 rounded-full text-xs">Không tham gia</span>' ;
+        }
+    }
+}

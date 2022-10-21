@@ -1,55 +1,185 @@
 @extends( "layouts.client_master" )
 @section( "title", "Trang cá nhân" )
 
+@section('css')
+<link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+@endsection
+
 @section( "content" )
 
-<div class=" dark:bg-gray-900 flex flex-wrap items-center justify-center">
-    <div class="w-full bg-white dark:bg-gray-800 shadow-lg transform duration-200 easy-in-out">
-        <div class="h-2/4 sm:h-52 overflow-hidden">
-            <img class="w-full" src="https://images.unsplash.com/photo-1638803040283-7a5ffd48dad5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80" alt="Photo by aldi sigun on Unsplash" />
-        </div>
-        <x-account.profile-avata/>
-        <div class="container m-auto max-w-3xl">
-            {{-- <div class="hidden">
-                <div class="flex p-4 w-5/6 m-auto mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800 " id="divError" role="alert">
-                    <svg aria-hidden="true" class="flex-shrink-0 inline w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
-                    </svg>
-                    <div>
-                        <span class="font-medium">Vui lòng kiểm tra lại:</span>
-                        <ul class="mt-1.5 ml-4  mx-2 text-red-700 list-disc list-inside" id="error">
-                        </ul>
+<div class="bg-gray-100">
+    <div class="container mx-auto my-5 p-5">
+        <div class="md:flex no-wrap md:-mx-2 ">
+            <div class="w-full md:w-3/12 md:mx-2">
+                <div class="bg-white p-3 border-t-4 border-green-400">
+                    <div class="image overflow-hidden">
+                        <img class="h-auto w-full mx-auto" src="{{ url_image( auth()->user()->avata ) }}" alt="Avata">
                     </div>
+                    <h1 class="text-gray-900 font-bold text-xl leading-8 my-1 text-center">{{ auth()->user()->name }}</h1>
+                    <ul
+                        class="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
+                        <li class="flex items-center py-3">
+                            <span>Status</span>
+                            <span class="ml-auto"><span
+                                    class="bg-green-500 py-1 px-2 rounded text-white text-sm">Active</span></span>
+                        </li>
+                        <li class="flex items-center py-3">
+                            <span>Thành viên kể từ</span>
+                            <span class="ml-auto">{{ auth()->user()->created_at->format('d-m-Y') }}</span>
+                        </li>
+                    </ul>
                 </div>
-            </div> --}}
-
-            @if ( Session::has( "message" ) )
-                <div id="toast-simple" class=" my-4 flex items-center p-4 space-x-4 w-full text-gray-500 bg-white rounded-lg divide-x divide-gray-200 shadow dark:text-gray-400 dark:divide-gray-700 space-x dark:bg-gray-800" role="alert">
-                    <svg aria-hidden="true" class="w-5 h-5 text-green-600 dark:text-blue-500" focusable="false" data-prefix="fas" data-icon="paper-plane" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M511.6 36.86l-64 415.1c-1.5 9.734-7.375 18.22-15.97 23.05c-4.844 2.719-10.27 4.097-15.68 4.097c-4.188 0-8.319-.8154-12.29-2.472l-122.6-51.1l-50.86 76.29C226.3 508.5 219.8 512 212.8 512C201.3 512 192 502.7 192 491.2v-96.18c0-7.115 2.372-14.03 6.742-19.64L416 96l-293.7 264.3L19.69 317.5C8.438 312.8 .8125 302.2 .0625 289.1s5.469-23.72 16.06-29.77l448-255.1c10.69-6.109 23.88-5.547 34 1.406S513.5 24.72 511.6 36.86z"></path></svg>
-                    <div class="pl-4 text-sm font-normal">{{ Session::get( "message" )}}</div>
-                </div>
-            @endif
-            <div class="px-7 mb-8">
-                <div class="grid grid-cols-4 gap-4">
-                    <span class="mt-2">Email: </span><input disabled id="email" type="text" class="col-span-3 text-black mt-2 px-2 border-2  dark:border-gray-500 dark:text-gray-400" value="{{ Auth::user()->email }}">
-                    <span class="mt-2">Ngày sinh: </span><input disabled id="birthday" type="date" class="col-span-3 text-black mt-2 px-2 border-2  dark:border-gray-500 dark:text-gray-400" value="{{ Auth::user()->birthday }}">
-                    <span class="mt-2">Phonenumber: </span><input disabled id="phoneNumber" type="text" class="col-span-3 text-black mt-2 px-2 border-2  dark:border-gray-500 dark:text-gray-400" value="{{ Auth::user()->phonenumber }}">
-                    <span class="mt-2">Địa chỉ: </span><input disabled id="_name_address" type="text" class="col-span-3 text-black mt-2 px-2 border-2  dark:border-gray-500 dark:text-gray-400" value="{{ Auth::user()->address }}">
-                </div>
-                <div class="text-center py-3">
-                    {{-- <a href="" class="text-blue-700  p-2 hover:bg-blue-500 hover:text-white rounded">Thay đổi địa chỉ</a>
-                    <a href="" class="text-blue-700  p-2 hover:bg-blue-500 hover:text-white rounded">Thay đổi mật khẩu</a> --}}
-                </div>
-                {{-- <a href="{{ route( 'account.password' ) }}" class="text-center m-auto justify-center px-4 py-2 cursor-pointer bg-blue-600 max-w-fit mx-auto mt-8 rounded-lg text-white hover:bg-blue-700 hover:text-gray-100 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-gray-200">
-                    Thay đổi thông tin
-                </a> --}}
+            </div>
+            <!-- Right Side -->
+            <div class="w-full md:w-9/12 mx-2 h-full">
+                <!-- Profile tab -->
+                <x-errors.any />
+                <div class="flex flex-wrap" id="tabs-id">
+                    <div class="w-full">
+                      <ul class="flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row">
+                        <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
+                          <a class="text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal text-white bg-pink-600" onclick="changeAtiveTab(event,'tab-profile')">
+                            <i class="fas fa-space-shuttle text-base mr-1"></i>  Profile
+                          </a>
+                        </li>
+                        <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
+                          <a class="text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal text-pink-600 bg-white" onclick="changeAtiveTab(event,'tab-settings')">
+                            <i class="fas fa-cog text-base mr-1"></i>  Settings
+                          </a>
+                        </li>
+                        <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
+                          <a class="text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal text-pink-600 bg-white" onclick="changeAtiveTab(event,'tab-options')">
+                            <i class="fas fa-briefcase text-base mr-1"></i>  Options
+                          </a>
+                        </li>
+                      </ul>
+                      <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
+                        <div class="px-4 py-5 flex-auto">
+                          <div class="tab-content tab-space">
+                            <div class="block" id="tab-profile">
+                                <!-- About Section -->
+                                <div class="bg-white p-3  rounded-sm">
+                                    <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
+                                        <span clas="text-green-500">
+                                            <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                            </svg>
+                                        </span>
+                                        <span class="tracking-wide">Thông tin cá nhân</span>
+                                    </div>
+                                    <div class="text-gray-700">
+                                        <div class="grid md:grid-cols-2 text-sm">
+                                            <div class="grid grid-cols-2">
+                                                <div class="px-4 py-2 font-semibold">Họ và tên</div>
+                                                <div class="px-4 py-2">{{ auth()->user()->name }}</div>
+                                            </div>
+                                            <div class="grid grid-cols-2">
+                                                <div class="px-4 py-2 font-semibold">Ngày sinh</div>
+                                                <div class="px-4 py-2">{{ auth()->user()->birthday }}</div>
+                                            </div>
+                                            <div class="grid grid-cols-2">
+                                                <div class="px-4 py-2 font-semibold">Giới tính</div>
+                                                <div class="px-4 py-2">
+                                                    @if ( auth()->user()->gender == 0 )
+                                                        <span>Nữ <i class="fa-solid fa-user-graduate"></i></span>
+                                                    @else
+                                                        <span>Nam </span><i class="fa-solid fa-user-tie"></i>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                            <div class="grid grid-cols-2">
+                                                <div class="px-4 py-2 font-semibold">Số điện thoại</div>
+                                                <div class="px-4 py-2">{{  auth()->user()->phonenumber }}</div>
+                                            </div>
+                                            <div class="grid grid-cols-2">
+                                                <div class="px-4 py-2 font-semibold">Địa chỉ</div>
+                                                <div class="px-4 py-2">{{  auth()->user()->address }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hidden" id="tab-settings">
+                                <div class="bg-white p-3 rounded-sm">
+                                    <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
+                                        <span clas="text-green-500">
+                                            <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                            </svg>
+                                        </span>
+                                        <span class="tracking-wide">Thay đổi thông tin</span>
+                                    </div>
+                                    <div class="text-gray-700">
+                                        <div class="m-auto max-w-3xl">
+                                            <form action="{{ route( 'account.changeinfo' ) }}" method="post" class="mt-5">
+                                                @csrf
+                                                <x-account.divInput type="text" name="name" label="Họ và tên" value="{{ \Auth::user()->name }}" />
+                                                <div class="relative z-0 mb-6 w-full group">
+                                                    <label for="" class="text-sm w-full @error("gender") text-red-400 @enderror">Giới tính @error("gender") {{ $message }}@enderror</label>
+                                                    <div class="mt-2">
+                                                        <input type="radio" name="gender" value="1" id="male"  @if ( old("gender", \Auth::user()->gender ) ) checked @endif>
+                                                        <label for="male" class="w-full">Nam</label>
+                                                        <input type="radio" name="gender" value="0" id="female"  @if ( old("gender", \Auth::user()->gender ) == 0 ) checked @endif>
+                                                        <label for="female" class="w-full">Nữ</label>
+                                                    </div>
+                                                </div>
+                                                <x-account.divInput type="email" name="email" label="Địa chỉ email" value="{{ \Auth::user()->email }}" />
+                                                <x-account.divInput type="date" name="birthday" label="Ngày sinh" value="{{ \Auth::user()->birthday }}" />
+                                                <x-account.divInput type="tel" name="phonenumber" label="Số điện thoại" value="{{ \Auth::user()->phonenumber }}" />
+                                                <button type="submit" class=" mb-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hidden" id="tab-options">
+                                <div class="bg-white p-3 rounded-sm">
+                                    <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
+                                        <span clas="text-green-500">
+                                            <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                            </svg>
+                                        </span>
+                                        <span class="tracking-wide">Thay đổi thông tin</span>
+                                    </div>
+                                    <div class="text-gray-700 mt-3">
+                                        <div class="m-auto max-w-3xl">
+                                            <form action="{{ route( 'account.changePassword' ) }}" method="post">
+                                                @csrf
+                                                <div class="mb-6">
+                                                    <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Mật khẩu mới</label>
+                                                    <input type="password" name="password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="•••••••••" required>
+                                                </div>
+                                                <div class="mb-6">
+                                                    <label for="confirm_password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Nhập lại mật khẩu</label>
+                                                    <input type="password" name="confirm_password" id="confirm_password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="•••••••••" required>
+                                                </div>
+                                                <button type="submit" class=" mb-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
             </div>
         </div>
     </div>
 </div>
+
 @endsection
 
 @section( "script" )
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
     <script>
         $( "#changeAvata" ).click( function () {
             $( "#inputAvate" ).click();
@@ -59,4 +189,35 @@
             $( "#formChangAvata").submit();
         });
     </script>
+
+    <script type="text/javascript">
+        function changeAtiveTab( event, tabID){
+          let element = event.target;
+
+          while(element.nodeName !== "A"){
+            element = element.parentNode;
+
+          }
+
+          ulElement = element.parentNode.parentNode;
+          aElements = ulElement.querySelectorAll("li > a");
+          tabContents = document.getElementById("tabs-id").querySelectorAll(".tab-content > div");
+
+          for(let i = 0 ; i < aElements.length; i++){
+            aElements[i].classList.remove("text-white");
+            aElements[i].classList.remove("bg-pink-600");
+            aElements[i].classList.add("text-pink-600");
+            aElements[i].classList.add("bg-white");
+            tabContents[i].classList.add("hidden");
+            tabContents[i].classList.remove("block");
+          }
+
+          element.classList.remove("text-pink-600");
+          element.classList.remove("bg-white");
+          element.classList.add("text-white");
+          element.classList.add("bg-pink-600");
+          document.getElementById(tabID).classList.remove("hidden");
+          document.getElementById(tabID).classList.add("block");
+        }
+      </script>
 @endsection

@@ -25,11 +25,11 @@ class UserReponsitory {
         return $this->user->onlyTrashed()->where( "id", $id )->first();
     }
 
-    public function all() {
-        return $this->user->search()->paginate( 5 );
+    public function allManager( $field, $condition ) {
+        return $this->user->where( $field, $condition )->get(["id","name"]);
     }
 
-    public function whereManager( $field, $condition, $pagination = 5 ){
+    public function whereManager( $field, $condition, $pagination ){
         return $this->user->search()->where( $field, $condition )->paginate( $pagination );
     }
 

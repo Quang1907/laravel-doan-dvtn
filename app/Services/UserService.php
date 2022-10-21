@@ -17,6 +17,10 @@ class UserService {
         $this->userReponsitory = $userReponsitory;
     }
 
+    public function allManager() {
+        return $this->userReponsitory->allManager( "manager", auth()->user()->id );
+    }
+
     public function checkLogin( Request $request ) {
         $email = $request->email;
         $password = hash( "sha256", $request->password);
@@ -33,28 +37,25 @@ class UserService {
             Auth::login( $user, $remember );
 
             $request->session()->regenerate();
-            return redirect()->intended('admin/category');
+            return redirect()->intended('admin');
         }
 
         return back()->withErrors( ['message' => 'Tài khoản không tồn tại hoặc sai mật khẩu'] )->withInput();
     }
 
     public function listUser() {
-        // return $this->userReponsitory->all();
         $pagination = config("pagination.category");
-        return $this->userReponsitory->whereManager( "manager", auth()->user()->id );
+        return $this->userReponsitory->whereManager( "manager", auth()->user()->id, $pagination );
     }
 
     public function createUser( Request $request ) {
         $data = $request->all();
-        if ( $data['password'] == $data['confirm_password'] ) {
-            $data[ "manager" ] = auth()->user()->id;
-            $data[ "is_active" ] = true ;
-            $data[ "admin" ] = true ;
-            $data['password'] = hash( "sha256", $data['password']);
-            $this->userReponsitory->create( $data );
-            return redirect()->route("user.index")->with( "message", "User created successfully." );
-        }
+        $data[ "manager" ] = auth()->user()->id;
+        $data[ "is_active" ] = true ;
+        $data[ "admin" ] = true ;
+        $data['password'] = hash( "sha256", 1111111 );
+        $this->userReponsitory->create( $data );
+        return redirect()->route("user.index")->with( "message", "User created successfully." );
         return back()->with( "message", "Vui lòng kiểm tra lại" )->withInput();
     }
 
@@ -67,24 +68,18 @@ class UserService {
             $request['password'] = hash( "sha256", $request->password );
             $request['token'] = strtoupper( Str::random( 5 ) );
             $user = $this->userReponsitory->create( $request->all() );
-
             dispatch( new SendEmail( $user ) );
-            return $user;
+            return redirect()->route( "account.vertifyEmail", [ $request->email, $user ] );
         }
     }
 
     public function updatePassword( Request $request ) {
-        // $old_password = hash( "sha256", $request->old_password );
-        // if( auth()->user()->password == $old_password ) {
-            $data[ 'password' ] = hash( "sha256", $request->password );
-            $user = $this->userReponsitory->findbyEmail( auth()->user()->email );
-            $this->userReponsitory->update( $data, $user );
-            $user = $this->userReponsitory->findbyEmail( auth()->user()->email );
-            Auth::login( $user );
-            return redirect()->route( "profile" )->with( "message", "Cập nhật mật khẩu thành công");
-        // }
-
-        return back()->withErrors( "Mật khẩu cũ không đúng." );
+        $data[ 'password' ] = hash( "sha256", $request->password );
+        $user = $this->userReponsitory->findbyEmail( auth()->user()->email );
+        $this->userReponsitory->update( $data, $user );
+        $user = $this->userReponsitory->findbyEmail( auth()->user()->email );
+        Auth::login( $user );
+        return redirect()->route( "profile" )->with( "message", "Cập nhật mật khẩu thành công");
     }
 
     public function updatetInfo( Request $request ){
@@ -105,8 +100,8 @@ class UserService {
             Alert::toast( 'Vui lòng đợi. Tài khoản của bạn sẽ được duyệt sau ít phút.', 'success' );
             return redirect("");
         }
-
-        return view( "client.auth.vertify_email", compact( "user" ))->with("message", "Mã không chính xác");
+        return redirect()->back()->with("message", "Mã xác minh không chính xác")->withInput();
+        // return redirect()->route( "account.vertifyEmail", [ $user->email, $user ] )->with( "message", "Mã xác minh không chính xác")->withInput();
     }
 
     public function changeAvata( Request $request, User $user ) {
@@ -153,7 +148,8 @@ class UserService {
         if ( !empty( $user ) ) {
             $this->userReponsitory->update( $data, $user );
             dispatch( new SendEmail( $user ) );
-            return view( "client.auth.vertify_password", compact( "user" ) );
+            return redirect()->route( "vertify.password", $user );
+            // return view( "client.auth.vertify_password", compact( "user" ) );
         }
         return back()->with( ["message" => "Khong tim thay email cua ban"] )->withInput();
     }
@@ -163,7 +159,7 @@ class UserService {
         if ( $data[ 'token' ] == $user->token ) {
             $this->userReponsitory->update( $data, $user );
             Auth::login( $user );
-            return redirect()->route( "account.changepassword" );
+            return redirect()->route( "account.changePassword" );
         }
         return back()->with( ["message" => "Nhập mã xác minh không chính xác"] )->withInput();
     }

@@ -1,10 +1,10 @@
 @extends('layouts.admin_master')
-@section('title', 'Information post')
+@section('title', 'Thông tin bài viết')
 @section('content')
     <div class="container mt-3">
         <div class="card border-primary">
             <div class="card-header">
-                <h2 class="text-center">List Posts</h2>
+                <h2 class="text-center text-2xl font-bold">@yield("title")</h2>
             </div>
             <div class="card-body">
                 @if (\Session::has('message'))

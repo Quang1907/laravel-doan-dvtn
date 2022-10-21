@@ -35,6 +35,7 @@ class UserRegisterRequest extends FormRequest
             "ward" => "required",
             "manager" => "required",
             "street" => "required",
+            "gender" => "required",
         ];
     }
 
@@ -59,6 +60,7 @@ class UserRegisterRequest extends FormRequest
             "ward.required" => " ",
             "manager.required" => " ",
             "street.required" => "vui lòng không để trống",
+            "gender.required" => "Vui lòng không để trống"
         ];
     }
 }

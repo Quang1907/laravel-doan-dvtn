@@ -1,9 +1,11 @@
 <?php
 namespace App\Services;
 
+use App\Models\Category;
 use App\Repositories\CategoryReponsitory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class CategoryService {
     protected $categoryReponsitory = null;
@@ -33,5 +35,10 @@ class CategoryService {
 
     public function update( Request $request,  $category  ) {
         return $this->categoryReponsitory->update( $request->all(), $category );
+    }
+
+    public function delete( Category $category ) {
+        $category->delete();
+        return Alert::toast( 'Post Deleted Successfully.', 'success' );
     }
 }

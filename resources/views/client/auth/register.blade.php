@@ -15,8 +15,17 @@
             <x-account.label name="email" label="Địa chỉ email" />
         </div>
         <div class="relative z-0 mb-6 w-full group">
+            <label for="" class="text-sm w-full @error("gender") text-red-400 @enderror">Giới tính @error("gender") {{ $message }}@enderror</label>
+            <div class="mt-2">
+                <input type="radio" name="gender" value="1" id="male"  @if ( old("gender", "" ) ) checked @endif>
+                <label for="male" class="w-full">Nam</label>
+                <input type="radio" name="gender" value="0" id="female"  @if ( old("gender", "" ) == 0 ) checked @endif>
+                <label for="female" class="w-full">Nữ</label>
+            </div>
+        </div>
+        <div class="relative z-0 mb-6 w-full group">
+            <label for="" class="text-sm w-full @error("birthday") text-red-400 @enderror">Ngày sinh @error("birthday") {{ $message }}@enderror</label>
             <x-account.input value="birthday" type="date" name="birthday"/>
-            <x-account.label name="birthday" label="Ngày sinh" />
         </div>
         <div class="relative z-0 mb-6 w-full group">
             <x-account.input value="" type="password" name="password"/>

@@ -2,19 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
+use App\Models\User;
 use App\Services\CategoryService;
 use App\Services\PostService;
+use App\Services\UserService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
     private $categorySerice = null;
     private $postService = null;
+    private $userService = null;
 
-    public function __construct( CategoryService $categorySerice, PostService $postService )
+    public function __construct( CategoryService $categorySerice, PostService $postService, UserService $userService )
     {
         $this->categorySerice = $categorySerice;
         $this->postService = $postService;
+        $this->userService = $userService;
     }
 
     public function home() {
@@ -47,5 +53,35 @@ class HomeController extends Controller
         ];';
         file_put_contents( config_path("carousel.php"), $content );
         return back();
+    }
+
+    public function calendar() {
+        $users = $this->userService->allManager();
+
+        $eventArr = array();
+        $bookings = User::find( auth()->user()->id )->showEvent()->get();
+
+        $events = array();
+
+        foreach ( $bookings as $booking ) {
+            $color = null;
+            $textColor = null;
+
+            if ( $booking->title == "quang" ) {
+                $color = "red";
+                $textColor = "yellow";
+            }
+
+            $events[] = [
+                "id" => $booking->id,
+                "title" =>  $booking->title,
+                "start" =>  $booking->start,
+                "content" =>  $booking->content,
+                "end" =>  $booking->end,
+                "color" => $color,
+                "textColor" => $textColor,
+            ];
+        }
+        return view( "client.calendar", compact( 'events', "users") );
     }
 }

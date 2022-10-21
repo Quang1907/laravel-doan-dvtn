@@ -25,7 +25,9 @@ class UserSeeder extends Seeder
                 "password" => hash( "sha256", "1111111" ),
                 "role_id" => 1,
                 "admin" => true,
-                "is_active" => true
+                "is_active" => true,
+                "gender" => 1,
+                "avata" => "images/avata/man.png",
             ],
             [
                 "name" => "editor",
@@ -37,7 +39,10 @@ class UserSeeder extends Seeder
                 "password" => hash( "sha256", "1111111" ),
                 "role_id" => 2,
                 "admin" => true,
-                "is_active" => true
+                "is_active" => true,
+                "gender" => 1,
+                "manager" => 1,
+                "avata" => "images/avata/man.png",
             ],
             [
                 "name" => "user",
@@ -49,7 +54,10 @@ class UserSeeder extends Seeder
                 "password" => hash( "sha256", "1111111" ),
                 "role_id" => 3,
                 "admin" => false,
-                "is_active" => true
+                "is_active" => true,
+                "gender" => 1,
+                "manager" => 2,
+                "avata" => "images/avata/man.png",
             ],
         ];
 

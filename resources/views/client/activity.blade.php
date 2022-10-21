@@ -29,12 +29,12 @@
                         @forelse (  $category->posts as $post )
                             <div class="py-8 flex flex-wrap md:flex-nowrap">
                                 <div class="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
-                                    <a href="{{  url( "activity/" . $post->slug ) }}" class="group h-48 md:h-64 block bg-gray-100 overflow-hidden relative">
+                                    <a href="{{  route( "activity" , $post->slug ) }}" class="group h-48 md:h-64 block bg-gray-100 overflow-hidden relative">
                                         <img src="{{ url_image( $post->image ) }}" loading="lazy" alt="Photo by Minh Pham" class="w-full h-full object-cover object-center absolute inset-0 group-hover:scale-110 transition duration-200" />
                                     </a>
                                 </div>
                                 <div class="md:flex-grow pl-3 mb-0">
-                                    <a href="{{  url( "activity/" . $post->slug ) }}" class="hover:text-blue-500 text-2xl font-medium text-gray-900 title-font mb-2" >{{ $post->title }}</a>
+                                    <a href="{{  route( "activity" , $post->slug ) }}" class="hover:text-blue-500 text-2xl font-medium text-gray-900 title-font mb-2" >{{ $post->title }}</a>
                                     <div class="showContent">{!! $post->content !!}</div>
                                     <div class="flex items-center gap-2 mt-5">
                                         <div class="w-10 h-10 shrink-0 bg-gray-100 rounded-full overflow-hidden">
@@ -45,7 +45,7 @@
                                             <span class="block text-gray-400 text-sm">{{ format_date( $post->created_at ) }}</span>
                                         </div>
                                     </div>
-                                    <a href="{{  url( "activity/" . $post->slug ) }}" class="text-indigo-500 inline-flex items-center mt-4">Xem thêm
+                                    <a href="{{  route( "activity" , $post->slug ) }}" class="text-indigo-500 inline-flex items-center mt-4">Xem thêm
                                         <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                             <path d="M5 12h14"></path>
                                             <path d="M12 5l7 7-7 7"></path>

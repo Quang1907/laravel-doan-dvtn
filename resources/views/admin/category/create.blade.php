@@ -27,6 +27,11 @@
                             <span class="text-danger">{{ $errors->first('name') }}</span>
                         </div>
                         <div class="mb-3">
+                            <label for="" class="form-label">Slug Category</label>
+                            <input type="text" class="form-control" name="slug" value="{{ old('slug') }}" id="" placeholder="Tên danh mục">
+                            <span class="text-danger">{{ $errors->first('slug') }}</span>
+                        </div>
+                        <div class="mb-3">
                             <label for="" class="form-label">Danh mục cha</label>
                             @php
                                 $htmlOption = null;
@@ -38,7 +43,7 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <button type="submit" class="btn btn-success float-end">Save</button>
+                            <button type="submit" class="btn btn-success bg-success float-end">Save</button>
                         </div>
                     </form>
                 </div>

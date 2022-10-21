@@ -3,7 +3,12 @@
 namespace App\Providers;
 
 use App\Libs\CustomHash\Sha1Hasher;
+use App\Models\Category;
+use App\Repositories\CategoryReponsitory;
+use App\Services\CategoryService;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -28,5 +33,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $categories = ( new CategoryService( new CategoryReponsitory( new Category() )) )->allCategory();
+        View::share(['categories'=> $categories ]);
     }
 }

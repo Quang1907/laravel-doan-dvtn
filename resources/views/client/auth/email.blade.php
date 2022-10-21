@@ -99,7 +99,7 @@
                     <tr>
                         <td align="center" valign="top" style="padding: 36px 24px;">
                             <a href="#" style="display: inline-block;">
-                                <img src="{{ asset('images/logo/huyhieudoan.png') }}" alt="Logo" border="0" width="48"
+                                <img src="https://upload.wikimedia.org/wikipedia/vi/0/09/Huy_Hi%E1%BB%87u_%C4%90o%C3%A0n.png" alt="Logo" border="0" width="48"
                                     style="display: block; width: 48px; max-width: 48px; min-width: 48px;">
                             </a>
                         </td>

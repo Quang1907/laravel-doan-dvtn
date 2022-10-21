@@ -40,15 +40,24 @@ class GoogleAuthController extends Controller
                 return redirect()->intended( '/' );
 
             }else{
-                $newUser = User::create([
-                    'name' => $user->name,
-                    'email' => $user->email,
-                    'google_id'=> $user->id,
-                    "is_active" => true,
-                    "email_verified_at" => now()->toDateTimeString(),
-                ]);
+                $newUser = User::where("email", $user->email)->first();
+                if ( $newUser ) {
+                    $newUser->update( ["google_id" => $user->id]);
+                }else{
+                    $newUser = User::create([
+                        'name' => $user->name,
+                        'email' => $user->email,
+                        'google_id'=> $user->id,
+                        "is_active" => true,
+                        "email_verified_at" => now()->toDateTimeString(),
+                    ]);
+                }
 
                 Auth::login($newUser);
+
+                if ( !empty( $newUser->address ) && !empty( $newUser->phonenumber ) && !empty( $newUser->password ) ) {
+                    return redirect("/");
+                }
 
                 return redirect()->intended( 'account/confirm' );
             }

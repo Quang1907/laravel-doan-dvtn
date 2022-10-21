@@ -2,9 +2,7 @@
 @section("title", "Page Admin")
 @section('content')
     <div class="container">
-        <h2>Thay đổi carousel</h2>
-    </div>
-    <div class="container">
+        <h2 class="text-2xl mt-4 mb-2">Thay đổi carousel</h2>
         <form action="{{ route( 'carousel' ) }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="input-group">
@@ -17,16 +15,15 @@
             </div>
             <div id="holder2" class="flex" style="margin-top:15px;max-height:100px;"></div>
             <div class="mt-3">
-                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="submit" class="btn btn-primary bg-primary">Save</button>
             </div>
         </form>
     </div>
+
 @endsection
-
-
 @section('script')
 <script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
 <script>
-    $('#lfm').filemanager('images');
+ $('#lfm').filemanager('image');
 </script>
 @endsection

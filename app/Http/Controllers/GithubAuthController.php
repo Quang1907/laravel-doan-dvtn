@@ -30,16 +30,23 @@ class GithubAuthController extends Controller
                 return redirect( '/' );
 
             }else{
-                $gitUser = User::create([
-                    'name' => $user->name,
-                    'email' => $user->email,
-                    'github_id'=> $user->id,
-                    "is_active" => true,
-                    "email_verified_at" => now()->toDateTimeString(),
-                ]);
+                $gitUser = User::where("email", $user->email)->first();
+                if ( $gitUser ) {
+                    $gitUser->update( [ "github_id" => $user->id ] );
+                }else{
+                    $gitUser = User::create([
+                        'name' => $user->name,
+                        'email' => $user->email,
+                        'github_id'=> $user->id,
+                        "is_active" => true,
+                        "email_verified_at" => now()->toDateTimeString(),
+                    ]);
+                }
 
                 Auth::login($gitUser);
-
+                if ( !empty( $gitUser->address ) && !empty( $gitUser->phonenumber ) && !empty( $gitUser->password ) ) {
+                    return redirect("/");
+                }
                 return redirect( 'account/confirm' );
             }
 

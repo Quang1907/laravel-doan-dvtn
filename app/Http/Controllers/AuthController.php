@@ -19,17 +19,18 @@ class AuthController extends Controller
         $this->userService = $userService;
     }
 
+    public function checkLogin( LoginRequest $request ) {
+        return $this->userService->checkLogin( $request );
+    }
+
     public function register( UserRegisterRequest $request ) {
-        $user = $this->userService->register( $request );
-        return view( "client.auth.vertify_email", compact( "user" ));
+        return $this->userService->register( $request );
+
+        // return view( "client.auth.vertify_email", compact( "user" ));
     }
 
     public function password( ChangePasswordRequest $request ) {
         return $this->userService->updatePassword( $request );
-    }
-
-    public function checkLogin( LoginRequest $request ) {
-        return $this->userService->checkLogin( $request );
     }
 
     public function info( ChangeInfoRequest $request ) {
@@ -40,6 +41,10 @@ class AuthController extends Controller
     public function confirm( ConfirmInfoRequest $request, User $user ) {
         $this->userService->confirmInfo( $request, $user );
         return redirect("/");
+    }
+
+    public function vertifyEmail( $email, User $user ) {
+        return view( "client.auth.vertify_email", compact( "email", "user" ) );
     }
 
     public function vertify( Request $request, User $user ) {
@@ -53,6 +58,10 @@ class AuthController extends Controller
     public function forget( Request $request ) {
         return $this->userService->forgetPassword( $request );
 
+    }
+
+    public function confirmMail( User $user ) {
+        return view("client.auth.vertify_email",compact( "user" ) );
     }
 
     public function vertifyPassword( Request $request, User $user ) {

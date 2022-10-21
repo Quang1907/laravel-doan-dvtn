@@ -38,16 +38,6 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" name="password" id="password" placeholder="">
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="confirm_password" class="form-label">Confirm Password</label>
-                        <input type="password"
-                          class="form-control" name="confirm_password" id="confirm_password" placeholder="">
-                      </div>
-                    <div class="mb-3">
                         <button class="btn btn-success">Save</button>
                     </div>
                 </form>

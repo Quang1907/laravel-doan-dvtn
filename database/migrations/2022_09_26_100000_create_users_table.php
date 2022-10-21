@@ -20,8 +20,9 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('phonenumber', 10)->nullable();
             $table->date('birthday')->nullable();
+            $table->boolean( "gender" )->nullable();
             $table->string('address')->nullable();
-            $table->string("avata")->nullable();
+            $table->string("avata")->default( "images/avata/man.png" );
             $table->string('password')->nullable();
             $table->foreignId( "role_id" )->default( 3 )->constrained();
             $table->boolean("admin")->default(false);
@@ -32,7 +33,6 @@ class CreateUsersTable extends Migration
             $table->string( "google_id" )->nullable();
 
             $table->string('github_id')->nullable();
-            $table->string('auth_type')->nullable();
 
             $table->rememberToken();
             $table->timestamps();

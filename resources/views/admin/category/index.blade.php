@@ -19,8 +19,8 @@
                                         <input type="date" name="date" class="form-control rounded-0 px-2" value="{{ request('date') }}" aria-controls="example1">
                                     </div>
                                     <div class="mt-3">
-                                        <button type="submit" class="btn btn-primary mt-0">Search</button>
-                                        <a href="{{ route('category.index') }}" type="submit" class="btn btn-success mt-0">Reset</a>
+                                        <button type="submit" class="btn btn-primary  bg-primary mt-0">Search</button>
+                                        <a href="{{ route('category.index') }}" type="submit" class="btn btn-success bg-green-500 mt-0">Reset</a>
                                     </div>
                                 </div>
                             </form>
@@ -53,8 +53,8 @@
                             @forelse ( $categories as $category )
                                 <tr class="table-primary">
                                     <td scope="row">{{ $category->id }}</td>
-                                    <td scope="row" class="w-75">{{ $category->name }}</td>
-                                    <td class="w-25">
+                                    <td scope="row" >{{ $category->name }}</td>
+                                    <td class="w-96">
                                         <form action="{{ route( "category.destroy" , $category->id ) }}" method="post">
                                             @csrf
                                             @method("DELETE")

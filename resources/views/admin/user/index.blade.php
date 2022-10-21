@@ -53,10 +53,10 @@
                                         </select>
                                 </div>
                                 <div class="mb-3">
-                                    <button type="submit" class="btn btn-primary mt-0">Search</button>
-                                    <button type="button" class="btn btn-success mt-0" id="btnActive">Active</button>
-                                    <button type="button" class="btn btn-danger mt-0" id="btnInactive">Inactive</button>
-                                    <a href="{{ route('user.index') }}" class="btn btn-warning mt-0">Reset</a>
+                                    <button type="submit" class="btn btn-primary bg-primary mt-0">Search</button>
+                                    <button type="button" class="btn btn-success bg-success mt-0" id="btnActive">Active</button>
+                                    <button type="button" class="btn btn-danger bg-danger mt-0" id="btnInactive">Inactive</button>
+                                    <a href="{{ route('user.index') }}" class="btn btn-warning bg-warning text-white mt-0">Reset</a>
                                     <a href="{{ url( 'admin/user?softdelete=on' ) }}" class="btn btn-dark mt-0" id="btnInactive">
                                         <i class="fa-solid fa-trash-can-arrow-up"></i>
                                     </a>
@@ -71,8 +71,7 @@
                     </div>
                 </div>
                 <div class="table-responsive">
-
-                    <table class="table table-primary">
+                    <table class="table table-primary text-black">
                         <thead>
                             <tr>
                                 <th scope="col"><input type="checkbox" id="checkAll"></th>
@@ -101,15 +100,15 @@
                                        </ul>
                                     </td>
                                     <td class="text-center my-auto">
-                                        <i class="@if ( $user->is_active ) text-green @else text-red @endif fa-regular fa-circle-dot"></i>
+                                        <i class="@if ( $user->is_active ) text-green-500 @else text-red-600 @endif fa-regular fa-circle-dot"></i>
                                     </td>
                                     <td>
                                         @if ( request()->softdelete != "on" )
                                             <form action="{{ route('user.destroy', $user ) }}" method="post">
                                                 @csrf
                                                 @method("delete")
-                                                <a href="{{ route('user.edit', $user) }}" class="btn btn-warning">Edit</a>
-                                                <button type="submit" onclick="return confirm( 'Bạn có muốn tiếp tục?' ) " class="btn btn-danger">Delete</button>
+                                                <a href="{{ route('user.edit', $user) }}" class="btn btn-warning text-white">Edit</a>
+                                                <button type="submit" onclick="return confirm( 'Bạn có muốn tiếp tục?' ) " class="btn btn-danger bg-danger">Delete</button>
                                             </form>
                                         @else
                                             <form action="{{ route( 'user.softDelete', $user ) }}" method="post">
@@ -118,13 +117,15 @@
                                                 <a href="{{ route( 'user.restoreDelete', $user ) }}"
                                                 onclick="return confirm( 'Bạn có muốn tiếp tục kích hoạt người dùng?' );"
                                                 class="btn btn-success">Restore</a>
-                                                <button type="submit" onclick="return confirm( 'Bạn có muốn tiếp tục?' ) " class="btn btn-danger">Delete</button>
+                                                <button type="submit" onclick="return confirm( 'Bạn có muốn tiếp tục?' ) " class="btn btn-danger bg-danger">Delete</button>
                                             </form>
                                         @endif
                                     </td>
                                 </tr>
                             @empty
-                                <td>Hiện tại không có người dùng nào tương ứng</td>
+                                <tr>
+                                    <td colspan="7">Hiện tại không có người dùng nào tương ứng</td>
+                                </tr>
                             @endforelse
                         </tbody>
                     </table>

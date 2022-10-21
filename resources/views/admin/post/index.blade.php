@@ -1,10 +1,10 @@
 @extends('layouts.admin_master')
-@section('title', 'trang quan ly bai viet')
+@section('title', 'Trang quản lý bài viết')
 @section('content')
     <div class="container mt-3">
         <div class="card border-primary">
             <div class="card-header">
-                <h2 class="text-center">List Posts</h2>
+                <h2 class="text-center text-2xl font-bold">Danh sách bài viết</h2>
             </div>
             <div class="card-body">
                 <div class="table">
@@ -40,10 +40,10 @@
                                         </div>
                                     </div>
                                     <div class="mb-3">
-                                        <button type="submit" class="btn btn-primary mt-0">Search</button>
+                                        <button type="submit" class="btn btn-primary bg-primary mt-0">Search</button>
                                         <a href="{{ route('post.index') }}" class="btn btn-success mt-0">Reset</a>
                                         <button onclick="showImport()" type="button"
-                                            class="text-white btn btn-warning mt-0">
+                                            class="text-white btn btn-warning bg-warning mt-0">
                                             <i class="fas fa-plus"></i>
                                             <span>Add files</span>
                                         </button>
@@ -63,7 +63,7 @@
                                         </div>
                                     </div>
                                     <input type="file" name="upload_file" accept=".xlsx">
-                                    <button class="btn btn-success" type="submit">Start</button>
+                                    <button class="btn btn-success bg-success" type="submit">Start</button>
                                 </form>
                             </div>
                         </div>
@@ -75,11 +75,7 @@
                         </div>
                     </div>
                     <table
-                        class="table table-striped
-                    table-hover
-                    table-borderless
-                    table-primary
-                    align-middle">
+                        class="table table-striped table-hover table-borderless table-primary align-middle text-black">
                         <thead class="table-light">
                             <tr class="bg-danger">
                                 <th>ID</th>
@@ -90,7 +86,7 @@
                             </tr>
                         </thead>
                         <tbody class="table-group-divider ">
-                            @foreach ( $posts as $post )
+                            @forelse ( $posts as $post )
                                 <tr class="table-primary">
                                     <td scope="row">{{ $post->id }}</td>
                                     <td scope="row">
@@ -106,7 +102,7 @@
                                             @endforeach
                                         </ul>
                                     </td>
-                                    <td class="w-25">
+                                    <td class="w-96">
                                         <form action="{{ route('post.destroy', $post->id) }}" method="post" id="formDelete">
                                             @csrf
                                             @method('DELETE')
@@ -114,15 +110,19 @@
                                                 <a href="{{ route('post.show', $post->id) }}" class="btn btn-primary">Detail</a>
                                             @endcan
                                             @can('update', $post)
-                                                <a href="{{ route('post.edit', $post->id) }}" class="btn btn-warning">Edit</a>
+                                                <a href="{{ route('post.edit', $post->id) }}" class="btn btn-warning text-white">Edit</a>
                                             @endcan
                                             @can('delete', $post)
-                                                <button type="submit" class="btn btn-danger" onclick="btnDeletePost()" >Delete</button>
+                                                <button type="submit" class="btn btn-danger bg-danger" onclick="btnDeletePost()" >Delete</button>
                                             @endcan
                                         </form>
                                     </td>
                                 </tr>
-                            @endforeach
+                            @empty
+                                <tr>
+                                    <td colspan="5">Hiện tại không có bài viết</td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                     {{ $posts->appends(request()->all())->links('vendor.pagination.bootstrap') }}
