@@ -67,6 +67,7 @@ Route::group([ "prefix" => "admin",  "middleware" => "admin" ], function () {
     Route::resource( "calendar", CalendarController::class );
     Route::get( "timkeeping", [ CalendarController::class,"timekeeping" ] )->name( "timkeeping" );
     Route::get( "timkeeping/{event}", [ CalendarController::class, "showEvent" ] )->name( "timkeeping.detail" );
+    Route::post( "timekeeping/active", [ CalendarController::class, "active"])->name( "user_event.active" );
 });
 
 // fileManager

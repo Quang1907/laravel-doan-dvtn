@@ -6,6 +6,7 @@ use App\Models\Event;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class CalendarController extends Controller
 {
@@ -127,8 +128,24 @@ class CalendarController extends Controller
         $events = Event::whereIn("id", $eventArr)->get( [ "id", "title", "start", "content", "end" ] );
         return view( "admin.schedule.timekeeping", compact( "events" ) );
     }
+
     public function showEvent( Event $event ) {
-        $users = DB::table( "users_events as u_e" )->where( "event_id", $event->id )->join( "users as u", "u.id", "=", "u_e.user_id" )->get( ["u_e.active", "u.email", "u.name","u.email"] );
+        $users = DB::table( "users_events as u_e" )->where( "event_id", $event->id )->join( "users as u", "u.id", "=", "u_e.user_id" )->get( ["u_e.active", "u.id", "u.email", "u.name","u.email"] );
         return view( "admin.schedule.show", compact( "users", "event" ) );
+    }
+
+    public function active( Request $request ){
+        $userArr = explode( ",", $request->active );
+        $setActive = $request->inactive == "on" ? false : true;
+        if ( is_array( $userArr ) ) {
+            foreach ( $userArr as $user_id  ) {
+                DB::table( "users_events" )->where( "user_id", $user_id )->update( [ "active" => $setActive ] );
+            }
+        } else {
+            DB::table( "users_events" )->where( "user_id", $userArr )->update( [ "active" => $setActive ] );
+        }
+
+        Alert::toast("Cập nhật thành công","success" );
+        return back();
     }
 }

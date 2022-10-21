@@ -5,11 +5,5 @@
         </svg>
         {!! \Session::get('message') !!}
     </div>
-{{--
-    <div class="alert alert-success text-center">
-        <ul class="m-0">
-            <li class="list-unstyled">{!! \Session::get('message') !!}</li>
-        </ul>
-    </div> --}}
 @endif
 

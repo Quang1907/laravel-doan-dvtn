@@ -22,8 +22,7 @@
                         </h3>
                     </div>
                     <!-- Modal body -->
-                    <div class="p-6 space-y-6" id="show-content">
-
+                    <div class="p-6 space-y-1" id="show-content">
                     </div>
                     <!-- Modal footer -->
                     <div class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
@@ -69,10 +68,10 @@
             defaultView : "agendaWeek",
             events      : bookings,
             eventClick: function ( event ) {
-                var html = '<h3 class="p-0 m-0">Tên hoạt động: '+ event.title +'</h3>'+
-                    '<h3 class="p-0 m-0">Thoi gian bat dau: '+  $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss") +'</h3>'+
-                    '<h3 class="p-0 m-0">Thoi gian ket thuc: '+  $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss") +'</h3>'+
-                    event.content;
+                var html = '<p class="p-0 m-0">Tên hoạt động: '+ event.title +'</p>'+
+                    '<p class="p-0 m-0">Thời gian bắt đầu: '+  $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss") +'</p>'+
+                    '<p class="p-0 m-0">Thời gian kết thúc: '+  $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss") +'</p>'+
+                    '<h3 class="p-0 m-0">Nội dung hoạt động: </h2> ' + event.content;
                 $("#show-content").html( html );
                 $("#large-modal").toggle();
             },

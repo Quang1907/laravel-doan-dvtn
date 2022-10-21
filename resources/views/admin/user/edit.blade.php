@@ -22,6 +22,7 @@
                         <span>{{$error}}</span>
                     @endforeach
                 @endif
+
                 <form action="{{ route('user.update', $user) }}" method="post">
                     @csrf
                     @method("put")

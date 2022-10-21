@@ -11,7 +11,7 @@
         <div class="container m-auto max-w-3xl">
             <div class="container m-auto max-w-3xl">
                 <div class="text-3xl font-semibold text-center pb-5">Hoàn tất thông tin</div>
-                <form action="{{ route( 'account.confirm', auth()->user() ) }}" method="post">
+            <form action="{{ route( 'account.confirm', auth()->user() ) }}" method="post">
                     @csrf
                     <div class="relative z-0 mb-6 w-full group">
                         <x-account.input value="phonenumber" type="tel" name="phonenumber"></x-account.input>

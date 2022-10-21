@@ -30,24 +30,22 @@
                                 </td>
                                 <td class="py-3 px-6 text-left">
                                     <div class="flex items-center">
-                                        <span>{{ $event->start . " đến " . $event->end }}</span>
+                                        <span class="font-medium">{{ $event->start . " đến " . $event->end }}</span>
                                     </div>
                                 </td>
                                 <td class="py-3 px-6 text-center">
-                                    {{ check_time( $event->end) }}
+                                    {!! check_time( $event ) !!}
                                 </td>
                                 <td class="py-3 px-6 text-center">
                                     <div class="flex item-center justify-center">
                                         <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-                                           <a href="{{ route( 'timkeeping.detail', $event ) }}">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                            stroke="currentColor">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                            </svg>
-                                            </a>
+                                            @if ( check_time_end( $event->end ) )
+                                               <a href="{{ route( 'timkeeping.detail', $event ) }}">
+                                                    <i class="fa-solid fa-eye"></i>
+                                                </a>
+                                            @else
+                                                <i class="fa-solid fa-eye-slash"></i>
+                                            @endif
                                         </div>
                                     </div>
                                 </td>
@@ -67,7 +65,17 @@
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
 <script>
 $(document).ready( function () {
-    $('#timekeeping').DataTable();
+    $('#timekeeping').DataTable(
+        {
+            "language": {
+                "lengthMenu": "Hiển thị _MENU_ hoạt động",
+                "zeroRecords": "Không tìm thấy hoạt động tương ứng",
+                "info": "Trang _PAGE_ của _PAGES_",
+                "infoEmpty": "Hiện tại chưa có hoạt động",
+                "infoFiltered": "(filtered from _MAX_ total records)"
+            }
+        }
+    );
 } );
 </script>
 @endsection

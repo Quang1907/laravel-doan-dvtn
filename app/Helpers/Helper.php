@@ -40,17 +40,27 @@ if ( !function_exists( "url_image") ) {
 
 
 if ( !function_exists( "check_time") ) {
-    function check_time( $time ) {
+    function check_time( $event  ) {
         $now = Carbon::now();
-        if ( $now->greaterThan( $time ) ) {
-            echo '<span class="bg-green-600 text-white font-semibold py-1 px-3 rounded-full text-xs">Đã hoàn thành</span>' ;
-        }else{
-            echo '<span class="bg-yellow-600 text-white font-semibold py-1 px-3 rounded-full text-xs">Chưa diễn ra</span>' ;
+        if ( $now->between( $event->start,  $event->end ) ) {
+            return '<span class="bg-blue-600 text-white font-semibold py-1 px-3 rounded-full text-xs">Đang diễn ra</span>' ;
         }
+        if ( $now->greaterThan( $event->end ) ) {
+            return '<span class="bg-green-600 text-white font-semibold py-1 px-3 rounded-full text-xs">Đã hoàn thành</span>' ;
+        }
+        return '<span class="bg-yellow-600 text-white font-semibold py-1 px-3 rounded-full text-xs">Chưa diễn ra</span>';
+
     }
 }
 
-if ( !function_exists( "check_active_event") ) {
+if ( !function_exists( "check_time_end") ) {
+    function check_time_end( $timeEnd  ) {
+        $now = Carbon::now();
+        return $now->greaterThan( $timeEnd  ) ? true : false;
+    }
+}
+
+if ( !function_exists( "check_acctive_event") ) {
     function check_active_event( $active ) {
         if ( $active ) {
             echo '<span class="bg-green-600 text-white font-semibold py-1 px-3 rounded-full text-xs">Đã tham gia</span>' ;
