@@ -1,15 +1,19 @@
 <?php
 
-use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ColorController;
+use App\Http\Controllers\Admin\HomeController;
+use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\GithubAuthController;
 use App\Http\Controllers\GoogleAuthController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\PostController;
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
+
 
 // view client
 Route::get( "/", [ HomeController::class, "home" ] )->name( "home" );
@@ -68,6 +72,11 @@ Route::group([ "prefix" => "admin",  "middleware" => "admin" ], function () {
     Route::get( "timkeeping", [ CalendarController::class,"timekeeping" ] )->name( "timkeeping" );
     Route::get( "timkeeping/{event}", [ CalendarController::class, "showEvent" ] )->name( "timkeeping.detail" );
     Route::post( "timekeeping/active", [ CalendarController::class, "active"])->name( "user_event.active" );
+
+    Route::resource( "product", ProductController::class );
+    Route::get( "product-image/{id}/delete", [ ProductController::class, "deleteImage" ] )->name( "product-image.delete" );
+    Route::resource( "color", ColorController::class );
+    Route::get( "brand", App\Http\Livewire\Admin\Brand\Index::class )->name( "brand.index" );
 });
 
 // fileManager

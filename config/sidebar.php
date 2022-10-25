@@ -16,8 +16,37 @@ return [
         ],
     ],
     [
+        "name" => "Sản phẩm",
+        "id" => "product",
+        "icon" => '<i class="fa-solid fa-list"></i>',
+        "parent" => [
+           [
+            "name" => "Tất cả sản phẩm",
+            "route" => "product.index",
+            ],
+           [
+            "name" => "Tạo sản phẩm",
+            "route" => "product.create",
+            ],
+        ],
+    ],
+    [
         "name" => "Bài viết",
         "route" => "post.index",
+        "id" => "",
+        "icon" => '<i class="fa-solid fa-copy"></i>',
+        "parent" => "",
+    ],
+    [
+        "name" => "Brand",
+        "route" => "brand.index",
+        "id" => "",
+        "icon" => '<i class="fa-solid fa-copy"></i>',
+        "parent" => "",
+    ],
+    [
+        "name" => "Color",
+        "route" => "color.index",
         "id" => "",
         "icon" => '<i class="fa-solid fa-copy"></i>',
         "parent" => "",

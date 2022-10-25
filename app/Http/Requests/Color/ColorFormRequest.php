@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Category;
+namespace App\Http\Requests\Color;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateCategoryRequest extends FormRequest
+class ColorFormRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,12 +24,9 @@ class UpdateCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            "name" => "required|string",
-            "description" => "required",
-            "imageFile" => "nullable|image|mimes:png,jpg,jpeg",
-            "meta_title" => "required|string",
-            "meta_keyword" => "required|string",
-            "meta_description" => "required|string",
+            "name" => "required",
+            "code" => "required",
+            "status" => "nullable",
         ];
     }
 }

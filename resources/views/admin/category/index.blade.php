@@ -4,7 +4,7 @@
     <div class="container mt-3">
         <div class="card border-primary">
             <div class="card-header">
-                <h2 class="text-center">List Category</h2>
+                <h2 class="text-center h2">List Category</h2>
             </div>
             <div class="card-body">
                 <div class="table">
@@ -49,7 +49,7 @@
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody class="table-group-divider ">
+                        <tbody class="table-group-divider text-black ">
                             @forelse ( $categories as $category )
                                 <tr class="table-primary">
                                     <td scope="row">{{ $category->id }}</td>
@@ -58,9 +58,13 @@
                                         <form action="{{ route( "category.destroy" , $category->id ) }}" method="post">
                                             @csrf
                                             @method("DELETE")
-                                            <a href="{{ route( "category.show" , $category->id ) }}" class="btn btn-primary">List Posts</a>
-                                            <a href="{{ route( "category.edit" , $category->id ) }}" class="btn btn-warning">Edit</a>
-                                            <button class="btn btn-danger">Delete</button>
+                                            <div class="d-flex justify-end px-2">
+                                                @if ( $category->slug == "hoat-dong" )
+                                                    <a href="{{ route( "category.show" , $category->id ) }}" class="btn btn-primary">List Posts</a>
+                                                @endif
+                                                    <a href="{{ route( "category.edit" , $category->id ) }}" class="btn btn-warning text-white mx-1">Edit</a>
+                                                    <button class="btn btn-danger">Delete</button>
+                                            </div>
                                         </form>
                                     </td>
                                 </tr>

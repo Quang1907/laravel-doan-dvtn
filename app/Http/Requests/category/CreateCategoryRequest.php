@@ -25,7 +25,11 @@ class CreateCategoryRequest extends FormRequest
     {
         return [
             "name" => "required|unique:categories",
-            // "slug" => "required|unique:categories,slug|max:191",
+            "description" => "required",
+            "imageFile" => "nullable|mimes:png,jpg,jpeg",
+            "meta_title" => "required|string",
+            "meta_keyword" => "required|string",
+            "meta_description" => "required|string",
         ];
     }
 

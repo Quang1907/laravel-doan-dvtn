@@ -29,11 +29,17 @@ class CategoryService {
     }
 
     public function create( Request $request ) {
+        $request[ 'image' ] = str_replace( $request->root(), "", $request->image );
+        $request["status"] = ( $request->status == "on" ) ? 1 : 0 ;
         $request['slug'] = Str::slug( $request->name );
         return $this->categoryReponsitory->create( $request->all() );
     }
 
     public function update( Request $request,  $category  ) {
+        $request[ 'image' ] = str_replace( $request->root(), "", $request->image );
+        $request[ "status" ] = ( $request->status == "on" ) ? 1 : 0 ;
+        $request[ "slug" ] =  Str::slug( $request->slug );
+
         return $this->categoryReponsitory->update( $request->all(), $category );
     }
 

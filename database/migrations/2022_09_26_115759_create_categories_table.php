@@ -25,7 +25,7 @@ class CreateCategoriesTable extends Migration
             $table->string( "meta_keyword" );
             $table->mediumText( "meta_description" );
 
-            $table->tinyInteger( "status" )->default( 0 )->commit( "1=visible, 0=hidden" );
+            $table->tinyInteger( "status" )->default( 1 )->commit( "1=visible, 0=hidden" );
             $table->integer("parent_id")->nullable();
             $table->timestamps();
         });

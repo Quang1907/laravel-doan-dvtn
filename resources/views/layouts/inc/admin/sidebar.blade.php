@@ -19,23 +19,23 @@
                 </li>
                 @foreach ( config('sidebar') as $menu )
                     @if ( !empty( $menu['parent'] ) )
-                        <li class="has-sub expand">
-                            <a class="sidenav-item-link" href="#" data-toggle="collapse" data-target="#{{ $menu[ 'id' ] }}"
-                                aria-expanded="true" aria-controls="email">
+                        <li class="has-sub">
+                            <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#{{ $menu[ 'id' ] }}"
+                                aria-expanded="false" aria-controls="email">
                                 <i class="mdi mdi-email"></i>
                                 <span class="nav-text">{{ $menu['name'] }}</span> <b class="caret"></b>
                             </a>
                         </li>
                         <ul class="collapse" id="{{ $menu[ 'id' ] }}">
-                            <div class="sub-menu">
-                                @foreach ( $menu['parent'] as $menuParent )
-                                <li>
+                                <div class="sub-menu">
+                                    @foreach ( $menu['parent'] as $menuParent )
+                                    <li>
                                     <a class="sidenav-item-link collapse" href="{{ route( $menuParent['route'] ) }}">
-                                        <span class="nav-text">{{ $menuParent['name'] }}</span>
-                                    </a>
-                                </li>
-                                @endforeach
-                            </div>
+                                            <span class="nav-text">{{ $menuParent['name'] }}</span>
+                                        </a>
+                                    </li>
+                                    @endforeach
+                                </div>
                         </ul>
                     @else
                         <li>

@@ -1,10 +1,10 @@
 @extends( 'layouts.admin_master' )
-@section( 'title', 'trang quan ly danh muc' )
+@section( 'title', 'Trang quản lý danh mục' )
 @section( 'content' )
     <div class="container mt-3">
         <div class="card border-primary">
             <div class="card-header">
-                <h2 class="text-center">List Posts In Category</h2>
+                <h2 class="text-center h2">Danh sách bài viết</h2>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -12,7 +12,7 @@
                         <a href="{{ route('category.index') }}" class="btn btn-success"><i class="fa-solid fa-backward"></i></a>
                     </div>
                     <div class="">
-                        <h2>Category name: <span> {{ $category->name }} </span></h2>
+                        <h2 class="h3">Category name: <span> {{ $category->name }} </span></h2>
                     </div>
                     <table
                         class="table table-striped

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Category\CreateCategoryRequest;
 use App\Http\Requests\Category\UpdateCategoryRequest;
 use App\Models\Category;
@@ -10,10 +11,12 @@ use App\Services\CategoryService;
 class CategoryController extends Controller
 {
     private $categories = null;
+
     public function __construct( CategoryService $categories) {
 
         $this->categories = $categories;
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -78,7 +81,7 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCategoryRequest $request, Category $category)
+    public function update( UpdateCategoryRequest $request, Category $category )
     {
         $this->categories->update( $request, $category );
         return redirect()->route("category.index")->with( "message", "Category Updated Successfully.");
