@@ -2,9 +2,13 @@
 @section('title', 'Categories')
 @section('content')
     <div class="card">
-        <div class="card-header rounded row justify-between">
-            <h2 class="h2">Product</h2>
-            <a href="{{ route( 'product.create' ) }}" class="btn text-white btn-warning float-end btn-sm">Add Product</a>
+        <div class="card-header rounded d-flex">
+            <div class="w-100">
+                <h2 class="h2">Change Product</h2>
+            </div>
+            <div class="w-100 text-right">
+                <a href="{{ route('product.create') }}" class="btn text-white btn-warning btn-sm">Add Product</a>
+            </div>
         </div>
         <div class="card-body">
             <x-message />

@@ -15,7 +15,7 @@
                         <h2 class="h3">Category name: <span> {{ $category->name }} </span></h2>
                     </div>
                     <table
-                        class="table table-striped
+                        class="mt-2 table table-striped
                     table-hover
                     table-borderless
                     table-primary
@@ -25,27 +25,16 @@
                                 <th>ID</th>
                                 <th>Post Title</th>
                                 <th>Content</th>
-                                {{-- <th>Action</th> --}}
+                                <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody class="table-group-divider ">
+                        <tbody class="table-group-divider">
                             @foreach ($category->posts as $post)
                                 <tr class="table-primary">
                                     <td scope="row">{{ $post->id }}</td>
                                     <td scope="row" class="w-25">{{ $post->title }}</td>
-                                    <td scope="row" class="w-50">{{ $post->content }}</td>
-                                    {{-- <td class="w-25">
-                                        <form action="{{ route('post.destroy', $post->id) }}" method="post">
-                                            @csrf
-                                            @method('DELETE')
-                                             <a href="{{ route('post.show', $post->id) }}"
-                                                class="btn btn-primary">List
-                                                Posts</a>
-                                            <a href="{{ route('post.edit', $post->id) }}"
-                                                class="btn btn-warning">Edit</a>
-                                            <button class="btn btn-danger">Delete</button>
-                                        </form>
-                                    </td> --}}
+                                    <td scope="row" class="w-50">{!! $post->content !!}</td>
+                                    <td><a href="" class="btn btn-primary">Xem bài viết</a></td>
                                 </tr>
                             @endforeach
                         </tbody>

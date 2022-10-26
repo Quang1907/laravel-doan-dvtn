@@ -11,7 +11,7 @@
     <div class="container mx-auto my-5 p-5">
         <div class="md:flex no-wrap md:-mx-2 ">
             <div class="w-full md:w-3/12 md:mx-2">
-                <div class="bg-white p-3 border-t-4 border-green-400">
+                <div class="bg-white p-3 border-t-4 border-blue-400">
                     <div class="image overflow-hidden">
                         <img class="h-auto w-full mx-auto" src="{{ url_image( auth()->user()->avata ) }}" alt="Avata">
                     </div>
@@ -21,7 +21,7 @@
                         <li class="flex items-center py-3">
                             <span>Status</span>
                             <span class="ml-auto"><span
-                                    class="bg-green-500 py-1 px-2 rounded text-white text-sm">Active</span></span>
+                                    class="bg-blue-500 py-1 px-2 rounded text-white text-sm">Active</span></span>
                         </li>
                         <li class="flex items-center py-3">
                             <span>Thành viên kể từ</span>
@@ -38,17 +38,17 @@
                     <div class="w-full">
                       <ul class="flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row">
                         <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
-                          <a class="text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal text-white bg-pink-600" onclick="changeAtiveTab(event,'tab-profile')">
+                          <a class="text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal text-white bg-blue-600" onclick="changeAtiveTab(event,'tab-profile')">
                             <i class="fas fa-space-shuttle text-base mr-1"></i>  Profile
                           </a>
                         </li>
                         <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
-                          <a class="text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal text-pink-600 bg-white" onclick="changeAtiveTab(event,'tab-settings')">
+                          <a class="text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal text-blue-600 bg-white" onclick="changeAtiveTab(event,'tab-settings')">
                             <i class="fas fa-cog text-base mr-1"></i>  Settings
                           </a>
                         </li>
                         <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
-                          <a class="text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal text-pink-600 bg-white" onclick="changeAtiveTab(event,'tab-options')">
+                          <a class="text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal text-blue-600 bg-white" onclick="changeAtiveTab(event,'tab-options')">
                             <i class="fas fa-briefcase text-base mr-1"></i>  Options
                           </a>
                         </li>
@@ -205,17 +205,17 @@
 
           for(let i = 0 ; i < aElements.length; i++){
             aElements[i].classList.remove("text-white");
-            aElements[i].classList.remove("bg-pink-600");
-            aElements[i].classList.add("text-pink-600");
+            aElements[i].classList.remove("bg-blue-600");
+            aElements[i].classList.add("text-blue-600");
             aElements[i].classList.add("bg-white");
             tabContents[i].classList.add("hidden");
             tabContents[i].classList.remove("block");
           }
 
-          element.classList.remove("text-pink-600");
+          element.classList.remove("text-blue-600");
           element.classList.remove("bg-white");
           element.classList.add("text-white");
-          element.classList.add("bg-pink-600");
+          element.classList.add("bg-blue-600");
           document.getElementById(tabID).classList.remove("hidden");
           document.getElementById(tabID).classList.add("block");
         }

@@ -43,12 +43,12 @@ if ( !function_exists( "check_time") ) {
     function check_time( $event  ) {
         $now = Carbon::now();
         if ( $now->between( $event->start,  $event->end ) ) {
-            return '<span class="bg-blue-600 text-white font-semibold py-1 px-3 rounded-full text-xs">Đang diễn ra</span>' ;
+            return '<span class="bg-primary text-white font-semibold py-1 px-3 rounded-full text-xs">Đang diễn ra</span>' ;
         }
         if ( $now->greaterThan( $event->end ) ) {
-            return '<span class="bg-green-600 text-white font-semibold py-1 px-3 rounded-full text-xs">Đã hoàn thành</span>' ;
+            return '<span class="bg-success text-white font-semibold py-1 px-3 rounded-full text-xs">Đã hoàn thành</span>' ;
         }
-        return '<span class="bg-yellow-600 text-white font-semibold py-1 px-3 rounded-full text-xs">Chưa diễn ra</span>';
+        return '<span class="bg-warning text-white font-semibold py-1 px-3 rounded-full text-xs">Chưa diễn ra</span>';
 
     }
 }
@@ -60,12 +60,12 @@ if ( !function_exists( "check_time_end") ) {
     }
 }
 
-if ( !function_exists( "check_acctive_event") ) {
+if ( !function_exists( "check_active_event") ) {
     function check_active_event( $active ) {
         if ( $active ) {
-            echo '<span class="bg-green-600 text-white font-semibold py-1 px-3 rounded-full text-xs">Đã tham gia</span>' ;
+            echo '<span class="bg-success text-white font-semibold py-1 px-3 rounded-full text-xs">Đã tham gia</span>' ;
         }else{
-            echo '<span class="bg-red-600 text-white font-semibold py-1 px-3 rounded-full text-xs">Không tham gia</span>' ;
+            echo '<span class="bg-danger text-white font-semibold py-1 px-3 rounded-full text-xs">Không tham gia</span>' ;
         }
     }
 }

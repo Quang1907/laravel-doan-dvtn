@@ -2,9 +2,13 @@
 @section('title', 'Create Product')
 @section('content')
     <div class="card">
-        <div class="card-header rounded row justify-between">
-            <h2 class="h2">New Product</h2>
-            <a href="{{ route('product.index' ) }}" class="btn text-white btn-warning float-end btn-sm">Back</a>
+        <div class="card-header rounded d-flex">
+            <div class="w-100">
+                <h2 class="h2">Change Product</h2>
+            </div>
+            <div class="w-100 text-right">
+                <a href="{{ route('product.index') }}" class="btn text-white btn-warning btn-sm">Back</a>
+            </div>
         </div>
         <div class="card-body">
             <x-errors.any />
@@ -126,7 +130,7 @@
                                 <i class="fa fa-picture-o"></i> Choose
                             </a>
                             </span>
-                            <input id="thumbnail2" class="form-control" type="text" value="{{ old( 'image' ) }}" name="image" multiple>
+                            <input id="thumbnail2" class="form-control" type="hidden" value="{{ old( 'image' ) }}" name="image" >
                         </div>
                         <div id="holder2" class="flex" style="margin-top:15px;max-height:100px;"></div>
                     </div>

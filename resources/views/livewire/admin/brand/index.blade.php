@@ -2,8 +2,12 @@
     @include( "livewire.admin.brand.modal-form" )
     <div class="card m-4">
         <div class="card-header rounded d-flex justify-between">
-            <h2 class="h2">Brand</h2>
-            <a href="#" class="btn text-white btn-primary float-end btn-sm"  data-bs-toggle="modal" data-bs-target="#brandModal">Add Brand</a>
+            <div class="w-100">
+                <h2 class="h2">Brand</h2>
+            </div>
+            <div class="w-100 text-right">
+                <a href="#" data-bs-toggle="modal" data-bs-target="#brandModal" class="btn text-white btn-primary btn-sm">Add Brand</a>
+            </div>
         </div>
         <div class="card-body">
             @if ( session( "message" ) )
@@ -23,11 +27,11 @@
                     </thead>
                     <tbody>
                         @forelse ( $brands as $brand )
-                            <tr class="">
-                                <td>{{ $brand->id }}</td>
-                                <td>{{ $brand->name }}</td>
-                                <td>{{ $brand->status == 1 ? "Visiblae" : "Hidden" }}</td>
-                                <td class="w-25 text-center">
+                            <tr>
+                                <td class="p-1">{{ $brand->id }}</td>
+                            <td class="p-1">{{ $brand->name }}</td>
+                                <td class="p-1">{{ $brand->status == 1 ? "Visiblae" : "Hidden" }}</td>
+                                <td class="w-25 text-center p-1">
                                     <a href="#" wire:click.prevent="editBrand({{ $brand->id }})" data-bs-toggle="modal" data-bs-target="#updateBrandModal" class="btn btn-warning bg-warning text-white">Edit</a>
                                     <a href="#" wire:click.prevent="deleteBrand({{ $brand->id }})" data-bs-toggle="modal" data-bs-target="#deleteBrandModal"  class="btn btn-danger bg-danger text-white">Delete</a>
                                 </td>

@@ -1,12 +1,16 @@
 @extends( 'layouts.admin_master' )
 @section('title', 'Colors')
 @section('content')
-    <div class="card row m-4">
-        <div class="card-header rounded row justify-between">
-            <h2 class="h2">Colors</h2>
-            <a href="{{ route('color.create') }}" class="btn text-white btn-warning float-end btn-sm">Add Color</a>
+    <div class="card m-4">
+        <div class="card-header rounded d-flex">
+            <div class="w-100">
+                <h2 class="h2">Colors</h2>
+            </div>
+            <div class="w-100 text-right">
+                <a href="{{ route('color.create') }}" class="btn text-white btn-primary btn-sm">Add Color</a>
+            </div>
         </div>
-        <div class="card-body ">
+        <div class="card-body">
             <x-message />
             <div class="table-responsive">
                 <table class="table table-striped">

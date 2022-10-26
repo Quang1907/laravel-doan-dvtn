@@ -1,10 +1,14 @@
 @extends( 'layouts.admin_master' )
 @section('title',  empty( $color ) ? 'Create Color' : 'Edit Color' )
 @section('content')
-    <div class="card row m-4">
-        <div class="card-header rounded row justify-between">
-            <h2 class="h2">@yield( "title" )</h2>
-            <a href="{{ route('color.index') }}" class="btn text-white btn-warning float-end btn-sm">Back</a>
+    <div class="card m-4">
+        <div class="card-header rounded d-flex">
+            <div class="w-100">
+                <h2 class="h2">@yield( "title" )</h2>
+            </div>
+            <div class="w-100 text-right">
+                <a href="{{ route('color.index') }}" class="btn text-white btn-primary btn-sm">Back</a>
+            </div>
         </div>
         <div class="card-body">
             <x-message />

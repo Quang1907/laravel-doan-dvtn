@@ -66,8 +66,8 @@
                         <div class="mb-3 d-flex">
                             <div class="mb-3 d-flex">
                                 <div class="custom-control custom-checkbox checkbox-outline-success d-inline-block mr-3 mb-3">
-                                    <input type="checkbox" class="custom-control-input" id="outline-chekbox-success"  wire:model.defer="status" id="status" {{ ( old( 'status' ) == true ) ? "checked" : "" }}>
-                                    <label class="custom-control-label" for="outline-chekbox-success">Status</label>
+                                    <input type="checkbox" class="custom-control-input" id="outline-{{ $brand_id }}-chekbox-success"  wire:model.defer="status" id="status" {{ ( old( 'status' ) == true ) ? "checked" : "" }}>
+                                    <label class="custom-control-label" for="outline-{{ $brand_id }}-chekbox-success">Status</label>
                                   </div>
                             </div>
                         </div>

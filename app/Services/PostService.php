@@ -84,6 +84,7 @@ class PostService {
                 $data['image'] = $fileName;
             }
         }
+
         $this->postReponsitory->update( $data, $post );
         Alert::toast('Post Updated Successfully.', 'success');
         return $post->categories()->sync( $request->category_id );

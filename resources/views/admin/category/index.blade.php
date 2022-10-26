@@ -46,7 +46,7 @@
                             <tr class="bg-danger">
                                 <th>ID</th>
                                 <th>Category name</th>
-                                <th>Action</th>
+                                <th class="text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody class="table-group-divider text-black ">
@@ -54,16 +54,20 @@
                                 <tr class="table-primary">
                                     <td scope="row">{{ $category->id }}</td>
                                     <td scope="row" >{{ $category->name }}</td>
-                                    <td class="w-96">
+                                    <td class="w-50">
                                         <form action="{{ route( "category.destroy" , $category->id ) }}" method="post">
                                             @csrf
                                             @method("DELETE")
-                                            <div class="d-flex justify-end px-2">
+                                            <div class="d-flex px-2 float-right" >
                                                 @if ( $category->slug == "hoat-dong" )
-                                                    <a href="{{ route( "category.show" , $category->id ) }}" class="btn btn-primary">List Posts</a>
+                                                    <div>
+                                                        <a href="{{ route( "category.show" , $category->id ) }}" class="btn btn-primary">List Posts</a>
+                                                    </div>
                                                 @endif
-                                                    <a href="{{ route( "category.edit" , $category->id ) }}" class="btn btn-warning text-white mx-1">Edit</a>
-                                                    <button class="btn btn-danger">Delete</button>
+                                                    <div>
+                                                        <a href="{{ route( "category.edit" , $category->id ) }}" class="btn btn-warning text-white mx-1">Edit</a>
+                                                        <button class="btn btn-danger">Delete</button>
+                                                    </div>
                                             </div>
                                         </form>
                                     </td>

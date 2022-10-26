@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
     private $userService = null;
+
     public function __construct( UserService $userService) {
         $this->userService = $userService;
     }
@@ -21,8 +22,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index() {
         $users = $this->userService->listUser();
         return view("admin.user.index", compact("users") );
     }
@@ -32,8 +32,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create() {
         $roles = Role::all();
         return view( "admin.user.create", compact( "roles" ) );
     }
@@ -44,8 +43,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store( CreateUserRequest $request )
-    {
+    public function store( CreateUserRequest $request ) {
         return $this->userService->createUser( $request );
     }
 
@@ -55,8 +53,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
-    {
+    public function show(User $user) {
         return view( "admin.user.show", compact( "user") );
     }
 
@@ -66,8 +63,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
-    {
+    public function edit(User $user) {
         $roles = Role::all();
         return view( "admin.user.edit", compact( "user", "roles") );
     }
@@ -79,8 +75,7 @@ class UserController extends Controller
      * @param  intUser $user
      * @return \Illuminate\Http\Response
      */
-    public function update( UpdateUserRequest $request, User $user)
-    {
+    public function update( UpdateUserRequest $request, User $user) {
         $user->update( $request->all() );
         return back()->with( "message", "User Updated Successfully");
     }
@@ -91,8 +86,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
-    {
+    public function destroy(User $user) {
         $user->delete();
         return redirect()->route( "user.index" )->with( "message", "User Updated Successfully");
     }

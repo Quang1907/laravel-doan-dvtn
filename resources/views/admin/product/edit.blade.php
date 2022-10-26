@@ -2,9 +2,13 @@
 @section('title', 'Edit Product')
 @section('content')
     <div class="card">
-        <div class="card-header rounded row justify-between">
-            <h2 class="h2">Change Product</h2>
-            <a href="{{ route('product.index') }}" class="btn text-white btn-warning float-end btn-sm">Back</a>
+        <div class="card-header rounded d-flex">
+            <div class="w-100">
+                <h2 class="h2">Change Product</h2>
+            </div>
+            <div class="w-100 text-right">
+                <a href="{{ route('product.index') }}" class="btn text-white btn-warning btn-sm">Back</a>
+            </div>
         </div>
         <div class="card-body">
             <x-errors.any />
@@ -99,15 +103,15 @@
                             <div class="mb-3 col-sm-4">
                                 <label for="original_price" class="form-label">Original Price</label>
                                 <input type="number"
-                                class="form-control" name="original_price" value="{{ old( 'original_price', $product->original_price ) }}"  id="original_price">
+                                class="form-control" name="original_price"  value="0" value="{{ old( 'original_price', $product->original_price ) }}"  id="original_price">
                             </div>
                             <div class="mb-3 col-sm-4">
                                 <label for="selling_price" class="form-label">Selling Price</label>
-                                <input type="number" class="form-control" value="{{ old( 'selling_price', $product->selling_price ) }}" name="selling_price" id="selling_price">
+                                <input type="number" class="form-control"  value="0" value="{{ old( 'selling_price', $product->selling_price ) }}" name="selling_price" id="selling_price">
                             </div>
                             <div class="mb-3 col-sm-4">
                                 <label for="quantity" class="form-label">Quantity</label>
-                                <input type="number" class="form-control" value="{{ old( 'quantity', $product->quantity ) }}" name="quantity" id="quantity">
+                                <input type="number" class="form-control"  value="0" value="{{ old( 'quantity', $product->quantity ) }}" name="quantity" id="quantity">
                             </div>
                             <div class="mb-3 mx-3 d-flex">
                                 <div class="form-check px-2">
@@ -130,17 +134,24 @@
                         </div>
                     </div>
                     <div class="tab-pane fade border p-3" id="product-image" role="tabpanel" aria-labelledby="product-image-tab">
-                        <div class="mb-3">
-                            <label for="imageFile" class="form-label">Upload Product Images</label>
-                            <input type="file" class="form-control" name="imageFile[]" id="imageFile" multiple>
-                            <div class="row">
-                                <div class="col-sm-1">
-                                    @foreach ( $product->productImages as $productImage )
-                                        <img src="{{ asset( $productImage->image ) }}" width="100px" height="100px" class=" mt-3 img-thumbnail rounded-top border-2" alt="">
-                                        <a href="{{ route( 'product-image.delete', $productImage )}}" class="d-block text-center"><i class="mdi mdi-close"></i></a>
-                                    @endforeach
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                            <a id="lfm" data-input="thumbnail2" data-preview="holder2" class="btn btn-primary text-white">
+                                <i class="fa fa-picture-o"></i> Choose
+                            </a>
+                            </span>
+                            <input id="thumbnail2" class="form-control"  value="{{ old( 'image', $product->image ) }}" type="hidden" name="image">
+                        </div>
+                        <div id="holder2" class="flex mb-2" style="margin-top:15px;max-height:100px;">
+                        </div>
+                        <div class="row p-2 border">
+                            <h3 class="w-100">Hình ảnh</h3>
+                            @foreach ( $product->productImages()->get() as $image )
+                                <div class="col-sm-2 text-center">
+                                    <img src="{{ asset( $image->image ) }}" class="w-100" alt="">
+                                    <a href="{{ route( 'product-image.delete', $image ) }}"><i class="fa-solid fa-xmark"></i></a>
                                 </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                     <div class="tab-pane fade border p-3 fw-bold" id="product-color" role="tabpanel" aria-labelledby="product-color-tab">
@@ -159,7 +170,7 @@
                                     </label>
                                 </div>
                                 @empty
-                                    <p>Color not found</p>
+                                    <p id="noColor">Color not found</p>
                                 @endforelse
                             </div>
                         </div>
@@ -221,7 +232,7 @@
                                             <tr class="">
                                                 <td scope="row"><input type="text" class="form-control" id="colorName"></td>
                                                 <td><input type="text" class="form-control" id="colorCode"></td>
-                                                <td><input type="number" class="form-control" id="colorQuantity"></td>
+                                                <td><input type="number" value="0" class="form-control" id="colorQuantity"></td>
                                                 <td><button type="button" class="btn btn-primary bg-primary text-white" id="newColor">Add</button></td>
                                             </tr>
                                         </tbody>
@@ -240,7 +251,10 @@
 @endsection
 
 @section('script')
+    <script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
     <script>
+        $('#lfm').filemanager('image');
+
         var i = 1;
         $( "#newColor" ).click(function (e) {
             e.preventDefault();
@@ -248,8 +262,8 @@
             var code = $( "#colorCode" ).val();
             var quantity = $( "#colorQuantity" ).val();
             if ( name && code && quantity ) {
-                $( "#colors" ).append(render( name, code, quantity, i ));
                 reset();
+                $( "#colors" ).append(render( name, code, quantity, i ));
             }
         });
 
@@ -257,6 +271,7 @@
             $( "#colorName" ).val( "" );
             $( "#colorCode" ).val( "" );
             $( "#colorQuantity" ).val( "" );
+            $( "#noColor" ).hide();
         }
 
         function render( name, code, quantity, i ) {
@@ -274,4 +289,6 @@
                     '</div>';
         }
     </script>
+
 @endsection
+

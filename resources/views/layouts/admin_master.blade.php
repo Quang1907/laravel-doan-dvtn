@@ -29,7 +29,7 @@
     <script src="{{ asset('plugins/nprogress/nprogress.js') }}"></script>
 
     {{-- Tailwind --}}
-    <link rel="stylesheet" href="{{ asset( 'css/app.css' ) }}">
+    {{-- <link rel="stylesheet" href="{{ asset( 'css/app.css' ) }}"> --}}
 
     @yield( 'css' )
     @livewireStyles
