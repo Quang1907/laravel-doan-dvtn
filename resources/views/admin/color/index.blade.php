@@ -29,13 +29,13 @@
                                 <td>{{ $color->id }}</td>
                                 <td>{{ $color->name }}</td>
                                 <td>{{ $color->code }}</td>
-                                <td>{{ $color->status ? "Visiable" : "Hidden" }}</td>
+                                <td>{{ $color->status ? "Visible" : "Hidden" }}</td>
                                 <td class="text-center">
                                     <form action="{{ route( 'color.destroy', $color ) }}" method="post">
                                         @csrf
                                         @method( "DELETE" )
-                                        <a href="{{ route( 'color.edit', $color ) }}" class="btn btn-warning text-white">Edit</a>
-                                        <button type="submit" class="btn btn-danger bg-danger text-white" onclick="return confirm( 'Are you sure, you want to delete this data?');">Delete</button>
+                                        <a href="{{ route( 'color.edit', $color ) }}" class="btn btn-sm btn-warning text-white">Edit</a>
+                                        <button type="submit" class="btn btn-sm btn-danger bg-danger text-white" onclick="return confirm( 'Are you sure, you want to delete this data?');">Delete</button>
                                     </form>
                                 </td>
                             </tr>

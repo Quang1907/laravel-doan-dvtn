@@ -19,20 +19,18 @@
         <div id="mega-menu-full"
             class="hidden md:flex justify-between items-center w-full  md:w-auto md:order-1 md:m-auto">
             <ul
-                class="flex flex-col items-center px-4 mt-4 bg-gray-50 rounded-lg border border-gray-100 md:flex-row md:space-x-10 sm:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-                @foreach ( $categories as $menu )
-                    @if (  empty( $menu->parent_id) )
-                        <li class="py-5">
-                            <a href="{{ url( $menu['slug'] ) }}"
-                            class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700"
-                            aria-current="page">{{ $menu[ 'name' ] }}</a>
-                        </li>
-                    @endif
+                class="flex flex-col pl-4 items-center  bg-gray-50 rounded-lg border border-gray-100 md:flex-row md:space-x-2 sm:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+                @foreach ( config( "client.navbar" ) as $menu )
+                    <li>
+                        <a href="{{ route( $menu[ 'route' ] ) }}"
+                        class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700"
+                        aria-current="page">{{ $menu[ 'name' ] }}</a>
+                    </li>
                 @endforeach
                 <li class="flex">
                     @guest
                         @if (Route::has('dangnhap'))
-                            <a class="nav-link hover:bg-blue-700 bg-blue-600 text-white py-2 px-3 rounded" href="{{ route( 'dangnhap' ) }}">{{ __('Đăng nhập') }}</a>
+                            <a class="nav-link hover:bg-blue-700 bg-blue-600 text-white py-2 px-3 rounded mr-4 my-2" href="{{ route( 'dangnhap' ) }}">{{ __('Đăng nhập') }}</a>
                         @endif
                     @else
                         <div class="flex items-center md:order-2">
@@ -40,7 +38,7 @@
                                 class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
                                 <img id="avata" alt="Photo by aldi sigun on Unsplash" src="{{ url_image( Auth::user()->avata ) }}" class="mx-auto object-cover rounded-full h-[40px] bg-white w-[40px]" />
                             </button>
-                            <div class="flex justify-start px-5 ">
+                            <div class="flex justify-start px-2">
                                 <span clspanss="block relative">
                                 </span>
                             </div>

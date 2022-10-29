@@ -40,14 +40,14 @@
                                         </div>
                                     </div>
                                     <div class="mb-3">
-                                        <button type="submit" class="btn btn-primary bg-primary mt-0">Search</button>
-                                        <a href="{{ route('post.index') }}" class="btn btn-success mt-0">Reset</a>
+                                        <button type="submit" class="btn btn-sm btn-primary bg-primary mt-0">Search</button>
+                                        <a href="{{ route('post.index') }}" class="btn btn-sm btn-success mt-0">Reset</a>
                                         <button onclick="showImport()" type="button"
-                                            class="text-white btn btn-warning bg-warning mt-0">
+                                            class="text-white btn btn-sm btn-warning bg-warning mt-0">
                                             <i class="fas fa-plus"></i>
                                             <span>Add files</span>
                                         </button>
-                                        <a href="{{ route( 'post.export' ) }}" class="btn btn-info">Export</a>
+                                        <a href="{{ route( 'post.export' ) }}" class="btn btn-sm btn-info">Export</a>
                                     </div>
                                 </div>
                             </form>
@@ -63,13 +63,13 @@
                                         </div>
                                     </div>
                                     <input type="file" name="upload_file" accept=".xlsx">
-                                    <button class="btn btn-success bg-success" type="submit">Start</button>
+                                    <button class="btn btn-sm btn-success bg-success" type="submit">Start</button>
                                 </form>
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-3 mt-3 text-right">
                             @can( 'create', App\Models\Post::class )
-                                <a href="{{ route('post.create') }}" class="btn btn-success"><i
+                                <a href="{{ route('post.create') }}" class="btn btn-sm btn-success"><i
                                         class="fa-solid fa-plus"></i></a>
                             @endcan
                         </div>
@@ -81,8 +81,8 @@
                                 <th>ID</th>
                                 <th>Image</th>
                                 <th>Post name</th>
-                                <th>List Caetgory</th>
-                                <th>Action</th>
+                                <th>Caetgory</th>
+                                <th width="350px">Action</th>
                             </tr>
                         </thead>
                         <tbody class="table-group-divider ">
@@ -106,15 +106,17 @@
                                         <form action="{{ route('post.destroy', $post->id) }}" method="post" id="formDelete">
                                             @csrf
                                             @method('DELETE')
-                                            @can('view', $post)
-                                                <a href="{{ route('post.show', $post->id) }}" class="btn btn-primary">Detail</a>
-                                            @endcan
-                                            @can('update', $post)
-                                                <a href="{{ route('post.edit', $post->id) }}" class="btn btn-warning text-white">Edit</a>
-                                            @endcan
-                                            @can('delete', $post)
-                                                <button type="submit" class="btn btn-danger bg-danger" onclick="btnDeletePost()" >Delete</button>
-                                            @endcan
+                                            <div class="flex">
+                                                @can('view', $post)
+                                                    <a href="{{ route('post.show', $post->id) }}" class="btn btn-sm btn-primary">Detail</a>
+                                                @endcan
+                                                @can('update', $post)
+                                                    <a href="{{ route('post.edit', $post->id) }}" class="btn btn-sm btn-warning text-white">Edit</a>
+                                                @endcan
+                                                @can('delete', $post)
+                                                    <button type="submit" class="btn btn-sm btn-danger bg-danger" onclick="btnDeletePost()" >Delete</button>
+                                                @endcan
+                                            </div>
                                         </form>
                                     </td>
                                 </tr>

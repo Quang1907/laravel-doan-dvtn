@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CalendarController;
@@ -19,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 Route::get( "/", [ HomeController::class, "home" ] )->name( "home" );
 Route::get( "account", [ HomeController::class, "account" ] )->name( "profile" )->middleware( "checkInfo" );
 Route::get( "hoat-dong", [ HomeController::class, "activity" ] )->name( "activity" );
-Route::get( "hoat-dong/{slug}", [ HomeController::class, "post" ] )->name( "activity" );
+Route::get( "hoat-dong/{slug}", [ HomeController::class, "post" ] )->name( "activity.post" );
 Route::get( "lich", [ HomeController::class, "calendar" ] )->name( "calendar" );
 
 // account
@@ -55,7 +56,6 @@ Auth::routes();
 // admin
 Route::group([ "prefix" => "admin",  "middleware" => "admin" ], function () {
     Route::view( "/", "admin.index" );
-    Route::view( "chat", "admin.chat" );
     Route::post( "carousel",  [ HomeController::class, "carousel" ] )->name( "carousel" );
 
     Route::resource( "user", UserController::class );
@@ -77,6 +77,8 @@ Route::group([ "prefix" => "admin",  "middleware" => "admin" ], function () {
     Route::get( "product-image/{id}/delete", [ ProductController::class, "deleteImage" ] )->name( "product-image.delete" );
     Route::resource( "color", ColorController::class );
     Route::get( "brand", App\Http\Livewire\Admin\Brand\Index::class )->name( "brand.index" );
+
+    Route::resource( "slider", SliderController::class );
 });
 
 // fileManager

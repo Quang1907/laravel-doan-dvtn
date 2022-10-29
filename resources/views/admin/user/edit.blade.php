@@ -4,24 +4,12 @@
         <div class="card">
             <div class="card-header">
                 <div class="d-flex justify-content-between">
-                    <h2 class="p-0 m-0">Create User</h2>
-                    <a href="{{ route('user.index') }}" class="btn btn-success">List user</a>
+                    <h2 class="p-0 m-0">Edit User</h2>
+                    <a href="{{ route('user.index') }}" class="btn btn-sm btn-success">List user</a>
                 </div>
             </div>
             <div class="card-body">
-                @if (\Session::has('message'))
-                    <div class="alert alert-success text-center">
-                        <ul class="m-0">
-                            <li class="list-unstyled">{!! \Session::get('message') !!}</li>
-                        </ul>
-                    </div>
-                @endif
-
-                @if ($errors->any())
-                    @foreach ($errors->all() as $error)
-                        <span>{{$error}}</span>
-                    @endforeach
-                @endif
+                <x-errors.any/>
 
                 <form action="{{ route('user.update', $user) }}" method="post">
                     @csrf

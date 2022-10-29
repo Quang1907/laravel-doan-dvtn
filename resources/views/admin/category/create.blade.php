@@ -8,7 +8,7 @@
             </div>
             <div class="card-body">
                 <div class="text-right my-3">
-                    <a href="{{ route('category.index') }}" class="btn btn-success"><i class="fa-solid fa-backward"></i></a>
+                    <a href="{{ route('category.index') }}" class="btn btn-sm btn-success"><i class="fa-solid fa-backward"></i></a>
                 </div>
                 @if (\Session::has('message'))
                     <div class="alert alert-success text-center">
@@ -41,14 +41,13 @@
                         </div>
                         <div class="input-group">
                             <span class="input-group-btn">
-                            <a id="lfm" data-input="thumbnail2" data-preview="holder2" class="btn btn-primary text-white">
+                            <a id="lfm" data-input="thumbnail2" data-preview="holder2" class="btn btn-sm btn-primary text-white">
                                 <i class="fa fa-picture-o"></i> Choose
                             </a>
                             </span>
-                            <input id="thumbnail2" class="form-control" type="text" value="{{ old( 'image' ) }}" name="image" multiple>
+                            <input id="thumbnail2" class="form-control" type="hidden" value="{{ old( 'image' ) }}" name="image" multiple>
                         </div>
                         <div id="holder2" class="flex" style="margin-top:15px;max-height:100px;"></div>
-
                         <div class="col-sm-6 mt-4">
                             <div class="custom-control custom-checkbox checkbox-success d-inline-block mr-3 mb-3">
                                 <input type="checkbox" name="status" class="custom-control-input" id="customCheckSuccess" {{ ( old( 'status' ) == "on" ) ? "checked" : "" }}>
@@ -75,7 +74,7 @@
                             @error( 'meta_description' ) <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                         <div class="mb-3">
-                            <button type="submit" class="btn btn-success bg-success float-end">Save</button>
+                            <button type="submit" class="btn btn-sm btn-success bg-success float-end">Save</button>
                         </div>
                     </form>
                 </div>

@@ -41,11 +41,11 @@
                         <label class="form-check-label">
                             <input type="checkbox" name="status" class="form-check-input" @if( old( 'status', $color ? $color->status : "" ) == 1 ) checked @endif>
                             <i class="input-helper"></i>
-                            Success
+                            Status
                         </label>
                     </div>
                     <div>
-                        <button type="submit" class="btn btn-primary bg-primary float-right text-white">Submit</button>
+                        <button type="submit" class="btn btn-primary btn-sm bg-primary float-right text-white">Submit</button>
                     </div>
                 </form>
             </div>

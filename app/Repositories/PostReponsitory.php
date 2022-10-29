@@ -33,10 +33,13 @@ class PostReponsitory {
 
     public function where( $field, $value, $condition = "") {
         if ( !empty( $condition ) ) {
-            return $this->post->where( $field, $condition, $value )->first();
+            return $this->post->with( 'categories' )->where( $field, $condition, $value )->first();
         }
-        return $this->post->where( $field, $value )->first();
+        return $this->post->with( 'categories' )->where( $field, $value )->first();
     }
 
+    public function orderByAndLimit( $orderBy = "ASC", $number = 10, $offset = 0,  $primary = "id" ) {
+        return $this->post->orderBy( $primary, $orderBy )->limit( $number,  $offset )->get();
+    }
 }
 

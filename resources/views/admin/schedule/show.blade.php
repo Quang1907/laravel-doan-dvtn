@@ -20,9 +20,9 @@
                         </div>
                     </div>
                     <div class="m-3">
-                        <h4 class="font-semibold">Tên hoạt động: <span class="text-gray-500">{{ $event->title }}</span></h4>
-                        <h4 class="font-semibold">Thời gian bắt đầu: <span class="text-gray-500">{{ $event->start }}</span></h4>
-                        <h4 class="font-semibold">Thời gian kết thúc: <span class="text-gray-500">{{ $event->end }}</span></h4>
+                        <h5 class="font-semibold">Tên hoạt động: <span class="text-gray-500">{{ $event->title }}</span></h5>
+                        <h5 class="font-semibold">Thời gian bắt đầu: <span class="text-gray-500">{{ $event->start }}</span></h5>
+                        <h5 class="font-semibold">Thời gian kết thúc: <span class="text-gray-500">{{ $event->end }}</span></h5>
                     </div>
                 </div>
                 <div class="bg-white shadow-md rounded p-4">
@@ -32,8 +32,8 @@
                             <input type="text" class="d-none" name="active" id="valueCheckActive" >
                             <input type="checkbox" class="d-none" name="inactive" id="valueCheckInActive">
                         </form>
-                        <button type="button" class="btn btn-success bg-success mt-0" id="btnActive">Có tham gia</button>
-                        <button type="button" class="btn btn-danger bg-danger mt-0" id="btnInactive">Không tham gia</button>
+                        <button type="button" class="btn btn-sm btn-success bg-success mt-0" id="btnActive">Có tham gia</button>
+                        <button type="button" class="btn btn-sm btn-danger bg-danger mt-0" id="btnInactive">Không tham gia</button>
                     </div>
                     <table class="min-w-max w-full table-auto" id="timekeeping">
                         <thead>

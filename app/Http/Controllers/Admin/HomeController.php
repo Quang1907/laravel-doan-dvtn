@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Slider;
 use App\Models\User;
 use App\Services\CategoryService;
 use App\Services\PostService;
@@ -28,7 +29,8 @@ class HomeController extends Controller
 
     public function activity() {
         $category = $this->categorySerice->categortPost();
-        return view( "client.activity", compact( "category" ) );
+        $sliders = Slider::where( "status", true )->get();
+        return view( "client.activity", compact( "category", "sliders" ) );
     }
 
     public function post( $slug ) {

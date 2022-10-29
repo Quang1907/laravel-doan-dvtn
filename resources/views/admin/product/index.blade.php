@@ -39,13 +39,13 @@
                                 <td>{{ $product->name }}</td>
                                 <td>{{ $product->original_price }}</td>
                                 <td>{{ $product->quantity }}</td>
-                                <td>{{ $product->status ? "Visiable" : "Hidden" }}</td>
+                                <td>{{ $product->status ? "Visible" : "Hidden" }}</td>
                                 <td>
                                     <form action="{{ route( 'product.destroy', $product ) }}" method="post">
                                         @csrf
                                         @method( "DELETE" )
-                                        <a href="{{ route( 'product.edit', $product ) }}" class="btn btn-sm btn-warning bg-warning text-white">Edit</a>
-                                        <button type="submit" class="btn btn-danger btn-sm bg-danger text-white" onclick="return confirm( 'Are you sure, you want to delete this data?');">Delete</button>
+                                        <a href="{{ route( 'product.edit', $product ) }}" class="btn btn-sm btn-sm btn-warning bg-warning text-white">Edit</a>
+                                        <button type="submit" class="btn btn-sm btn-danger btn-sm bg-danger text-white" onclick="return confirm( 'Are you sure, you want to delete this data?');">Delete</button>
                                     </form>
                                 </td>
                             </tr>

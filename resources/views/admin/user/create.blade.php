@@ -5,7 +5,7 @@
             <div class="card-header ">
                 <div class="d-flex justify-content-between">
                     <h2 class="p-0 m-0">Create User</h2>
-                    <a href="{{ route('user.index') }}" class="btn btn-success">List user</a>
+                    <a href="{{ route('user.index') }}" class="btn btn-sm btn-success">List user</a>
                 </div>
             </div>
             <div class="card-body">
@@ -38,7 +38,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <button class="btn btn-success">Save</button>
+                        <button class="btn btn-sm btn-success">Save</button>
                     </div>
                 </form>
             </div>

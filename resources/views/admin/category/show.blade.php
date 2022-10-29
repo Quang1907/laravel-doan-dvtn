@@ -9,7 +9,7 @@
             <div class="card-body">
                 <div class="table-responsive">
                     <div class="text-right my-3">
-                        <a href="{{ route('category.index') }}" class="btn btn-success"><i class="fa-solid fa-backward"></i></a>
+                        <a href="{{ route('category.index') }}" class="btn btn-sm btn-success"><i class="fa-solid fa-backward"></i></a>
                     </div>
                     <div class="">
                         <h2 class="h3">Category name: <span> {{ $category->name }} </span></h2>
@@ -34,7 +34,7 @@
                                     <td scope="row">{{ $post->id }}</td>
                                     <td scope="row" class="w-25">{{ $post->title }}</td>
                                     <td scope="row" class="w-50">{!! $post->content !!}</td>
-                                    <td><a href="" class="btn btn-primary">Xem bài viết</a></td>
+                                    <td><a href="" class="btn btn-sm btn-primary">Xem bài viết</a></td>
                                 </tr>
                             @endforeach
                         </tbody>

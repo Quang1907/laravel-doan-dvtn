@@ -100,4 +100,8 @@ class PostService {
         $import = new PostImport;
         $import->queue( $file );
     }
+
+    public function recentPost( $limit = 3 ) {
+        return $this->postReponsitory->orderByAndLimit( "DESC", $limit );
+    }
 }

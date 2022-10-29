@@ -136,7 +136,7 @@
                     <div class="tab-pane fade border p-3" id="product-image" role="tabpanel" aria-labelledby="product-image-tab">
                         <div class="input-group">
                             <span class="input-group-btn">
-                            <a id="lfm" data-input="thumbnail2" data-preview="holder2" class="btn btn-primary text-white">
+                            <a id="lfm" data-input="thumbnail2" data-preview="holder2" class="btn btn-sm btn-primary text-white">
                                 <i class="fa fa-picture-o"></i> Choose
                             </a>
                             </span>
@@ -233,7 +233,7 @@
                                                 <td scope="row"><input type="text" class="form-control" id="colorName"></td>
                                                 <td><input type="text" class="form-control" id="colorCode"></td>
                                                 <td><input type="number" value="0" class="form-control" id="colorQuantity"></td>
-                                                <td><button type="button" class="btn btn-primary bg-primary text-white" id="newColor">Add</button></td>
+                                                <td><button type="button" class="btn btn-sm btn-primary bg-primary text-white" id="newColor">Add</button></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -243,7 +243,7 @@
                     </div>
                 </div>
                 <div  class="text-end mt-3">
-                    <button type="submit" class="btn btn-success bg-success text-white">Submit</button>
+                    <button type="submit" class="btn btn-sm btn-success bg-success text-white">Submit</button>
                 </div>
             </form>
         </div>

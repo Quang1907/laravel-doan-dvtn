@@ -27,7 +27,7 @@ class CreateProductsTable extends Migration
             $table->integer( "selling_price" );
             $table->integer( "quantity" );
             $table->boolean( "trending" )->default( false )->commit( "1=trending, 0=not-trending" );
-            $table->boolean( "status" )->default( false )->commit( "1=show, 0=visiable" );
+            $table->boolean( "status" )->default( false )->commit( "1=show, 0=visible" );
 
             $table->string( "meta_title" )->nullable();
             $table->mediumText( "meta_keyword" )->nullable();

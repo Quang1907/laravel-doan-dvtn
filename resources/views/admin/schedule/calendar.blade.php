@@ -51,8 +51,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary  bg-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" id="saveBtn" class="btn btn-primary bg-primary">Save</button>
+                        <button type="button" class="btn btn-sm btn-secondary  bg-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" id="saveBtn" class="btn btn-sm btn-primary bg-primary">Save</button>
                     </div>
                 </div>
             </div>
@@ -211,8 +211,8 @@
                     var id = event.id;
                     const swalWithBootstrapButtons = Swal.mixin({
                         customClass: {
-                            confirmButton: 'btn btn-success',
-                            cancelButton: 'btn btn-danger bg-danger mx-2'
+                            confirmButton: 'btn btn-sm btn-success',
+                            cancelButton: 'btn btn-sm btn-danger bg-danger mx-2'
                         },
                         buttonsStyling: false
                     })

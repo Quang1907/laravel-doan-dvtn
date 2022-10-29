@@ -26,8 +26,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary bg-secondary" data-bs-dismiss="modal" wire:click="closeModal">Close</button>
-                    <button type="submit" class="btn btn-primary bg-primary text-white">Save</button>
+                    <button type="button" class="btn btn-sm btn-secondary bg-secondary" data-bs-dismiss="modal" wire:click="closeModal">Close</button>
+                    <button type="submit" class="btn btn-sm btn-primary bg-primary text-white">Save</button>
                 </div>
             </form>
         </div>
@@ -73,8 +73,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary bg-secondary" data-bs-dismiss="modal" wire:click="closeModal">Close</button>
-                        <button type="submit" class="btn btn-primary bg-primary text-white">Save</button>
+                        <button type="button" class="btn btn-sm btn-secondary bg-secondary" data-bs-dismiss="modal" wire:click="closeModal">Close</button>
+                        <button type="submit" class="btn btn-sm btn-primary bg-primary text-white">Save</button>
                     </div>
                 </form>
             </div>
@@ -104,8 +104,8 @@
                         <h6 class="text-danger">Are you sure you want delete this data?</h6>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary bg-secondary" data-bs-dismiss="modal" wire:click="closeModal">Close</button>
-                        <button type="submit" class="btn btn-primary bg-primary text-white">Yes</button>
+                        <button type="button" class="btn btn-sm btn-secondary bg-secondary" data-bs-dismiss="modal" wire:click="closeModal">Close</button>
+                        <button type="submit" class="btn btn-sm btn-primary bg-primary text-white">Yes</button>
                     </div>
                 </form>
             </div>

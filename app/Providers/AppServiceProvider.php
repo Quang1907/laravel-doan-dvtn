@@ -2,12 +2,12 @@
 
 namespace App\Providers;
 
-use App\Libs\CustomHash\Sha1Hasher;
 use App\Models\Category;
+use App\Models\Post;
 use App\Repositories\CategoryReponsitory;
+use App\Repositories\PostReponsitory;
 use App\Services\CategoryService;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+use App\Services\PostService;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -33,7 +33,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $categories = ( new CategoryService( new CategoryReponsitory( new Category() )) )->allCategory();
-        View::share(['categories'=> $categories ]);
+        $categories = ( new CategoryService( new CategoryReponsitory( new Category() ) ) )->allCategory();
+        $recent_posts = ( new PostService( new PostReponsitory( new Post() ) ) )->recentPost();
+        View::share(['categories'=> $categories, "recent_posts" => $recent_posts ]);
     }
 }

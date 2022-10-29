@@ -19,14 +19,14 @@
                                         <input type="date" name="date" class="form-control rounded-0 px-2" value="{{ request('date') }}" aria-controls="example1">
                                     </div>
                                     <div class="mt-3">
-                                        <button type="submit" class="btn btn-primary  bg-primary mt-0">Search</button>
-                                        <a href="{{ route('category.index') }}" type="submit" class="btn btn-success bg-green-500 mt-0">Reset</a>
+                                        <button type="submit" class="btn btn-sm btn-primary  bg-primary mt-0">Search</button>
+                                        <a href="{{ route('category.index') }}" type="submit" class="btn btn-sm btn-success bg-green-500 mt-0">Reset</a>
                                     </div>
                                 </div>
                             </form>
                         </div>
                         <div class="col-sm-12 col-md-6 mt-3 text-right">
-                            <a href="{{ route('category.create') }}" class="btn btn-success"><i class="fa-solid fa-plus"></i></a>
+                            <a href="{{ route('category.create') }}" class="btn btn-sm btn-success"><i class="fa-solid fa-plus"></i></a>
                         </div>
                     </div>
                     @if (\Session::has('message'))
@@ -61,12 +61,12 @@
                                             <div class="d-flex px-2 float-right" >
                                                 @if ( $category->slug == "hoat-dong" )
                                                     <div>
-                                                        <a href="{{ route( "category.show" , $category->id ) }}" class="btn btn-primary">List Posts</a>
+                                                        <a href="{{ route( "category.show" , $category->id ) }}" class="btn btn-sm btn-primary">List Posts</a>
                                                     </div>
                                                 @endif
                                                     <div>
-                                                        <a href="{{ route( "category.edit" , $category->id ) }}" class="btn btn-warning text-white mx-1">Edit</a>
-                                                        <button class="btn btn-danger">Delete</button>
+                                                        <a href="{{ route( "category.edit" , $category->id ) }}" class="btn btn-sm btn-warning text-white mx-1">Edit</a>
+                                                        <button class="btn btn-sm btn-danger">Delete</button>
                                                     </div>
                                             </div>
                                         </form>

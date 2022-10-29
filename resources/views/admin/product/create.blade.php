@@ -126,13 +126,17 @@
                     <div class="tab-pane fade border p-3" id="product-image" role="tabpanel" aria-labelledby="product-image-tab">
                         <div class="input-group">
                             <span class="input-group-btn">
-                            <a id="lfm" data-input="thumbnail2" data-preview="holder2" class="btn btn-primary text-white">
+                            <a id="lfm" data-input="thumbnail2" data-preview="holder2" class="btn btn-sm btn-primary text-white">
                                 <i class="fa fa-picture-o"></i> Choose
                             </a>
                             </span>
                             <input id="thumbnail2" class="form-control" type="hidden" value="{{ old( 'image' ) }}" name="image" >
                         </div>
-                        <div id="holder2" class="flex" style="margin-top:15px;max-height:100px;"></div>
+                        <div id="holder2" class="flex" style="margin-top:15px;max-height:100px;">
+                            @if ( !empty( old( 'image' ) ) )
+                                <img src="{{ asset( old( 'image' ) ) }}" width="80px" alt="">
+                            @endif
+                        </div>
                     </div>
                     <div class="tab-pane fade border p-3" id="product-color" role="tabpanel" aria-labelledby="product-color-tab">
                         <div class="mb-3">
@@ -141,7 +145,7 @@
                                 @forelse ( $colors as $color )
                                 <div class="col-sm-3 border h-100" style="background-color: {{ $color->code }}">
                                     <div class="mt-2 custom-control custom-checkbox checkbox-secondary d-inline-block mr-3 mb-3">
-                                        <input type="checkbox" value="{{ $color->id }}" name="colors[{{ $color->id }}]" @if ( old( 'colors.' . $color->id ) == "on" ) checked @endif class="custom-control-input" id="label-{{$color->id}}">
+                                        <input type="checkbox" value="{{ $color->id }}" name="colors[{{ $color->id }}]" @if ( old( 'colors.' . $color->id ) == $color->id ) checked @endif class="custom-control-input" id="label-{{$color->id}}">
                                         <label class="custom-control-label" for="label-{{$color->id}}">{{ $color->name }}</label>
                                     </div>
                                     <label class="">
@@ -157,7 +161,7 @@
                     </div>
                 </div>
                 <div class="text-end mt-3">
-                    <button type="submit" class="btn btn-success bg-success text-white">Submit</button>
+                    <button type="submit" class="btn btn-sm btn-success bg-success text-white">Submit</button>
                 </div>
             </form>
         </div>

@@ -6,22 +6,12 @@
             <div class="card-header">
                 <div class="d-flex justify-content-between">
                     <h2>List User</h2>
-                    <a href="{{ route('user.create') }}" class="btn btn-success h-100">Create new user</a>
+                    <a href="{{ route('user.create') }}" class="btn btn-sm btn-success h-100">Create new user</a>
                 </div>
             </div>
-            @if (\Session::has('message'))
-                <div class="alert alert-success text-center">
-                    <ul class="m-0">
-                        <li class="list-unstyled">{!! \Session::get('message') !!}</li>
-                    </ul>
-                </div>
-            @endif
-           <div class="mx-4">
-            @if ( $errors->any() )
-                @foreach ( $errors->all() as $error )
-                    <div>{{ $error }}</div>
-                @endforeach
-            @endif
+
+           <div class="mt-4 mx-4">
+            <x-errors.any></x-errors.any>
            </div>
             <div class="card-body">
                 <div class="row">
@@ -53,13 +43,13 @@
                                         </select>
                                 </div>
                                 <div class="mb-3">
-                                    <button type="submit" class="btn btn-primary bg-primary mt-0">Search</button>
-                                    <button type="button" class="btn btn-success bg-success mt-0" id="btnActive">Active</button>
-                                    <button type="button" class="btn btn-danger bg-danger mt-0" id="btnInactive">Inactive</button>
-                                    <a href="{{ route('user.index') }}" class="btn btn-warning bg-warning text-white mt-0">Reset</a>
-                                    <a href="{{ url( 'admin/user?softdelete=on' ) }}" class="btn btn-dark mt-0" id="btnInactive">
+                                    <button type="submit" class="btn btn-sm btn-primary bg-primary mt-0">Search</button>
+                                    <button type="button" class="btn btn-sm btn-success bg-success mt-0" id="btnActive">Active</button>
+                                    <button type="button" class="btn btn-sm btn-danger bg-danger mt-0" id="btnInactive">Inactive</button>
+                                    <a href="{{ url( 'admin/user?softdelete=on' ) }}" class="btn btn-sm btn-dark mt-0" id="btnInactive">
                                         <i class="fa-solid fa-trash-can-arrow-up"></i>
                                     </a>
+                                    <a href="{{ route('user.index') }}" class="btn btn-sm btn-warning bg-warning text-white mt-0">Reset</a>
                                 </div>
                             </div>
                         </form>
@@ -100,15 +90,15 @@
                                        </ul>
                                     </td>
                                     <td class="text-center my-auto">
-                                        <i class="@if ( $user->is_active ) text-green-500 @else text-red-600 @endif fa-regular fa-circle-dot"></i>
+                                        <i class="@if ( $user->is_active ) text-success @else text-danger @endif fa-regular fa-circle-dot"></i>
                                     </td>
                                     <td>
                                         @if ( request()->softdelete != "on" )
                                             <form action="{{ route('user.destroy', $user ) }}" method="post">
                                                 @csrf
                                                 @method("delete")
-                                                <a href="{{ route('user.edit', $user) }}" class="btn btn-warning text-white">Edit</a>
-                                                <button type="submit" onclick="return confirm( 'Bạn có muốn tiếp tục?' ) " class="btn btn-danger bg-danger">Delete</button>
+                                                <a href="{{ route('user.edit', $user) }}" class="btn btn-sm btn-warning text-white">Edit</a>
+                                                <button type="submit" onclick="return confirm( 'Bạn có muốn tiếp tục?' ) " class="btn btn-sm btn-danger bg-danger">Delete</button>
                                             </form>
                                         @else
                                             <form action="{{ route( 'user.softDelete', $user ) }}" method="post">
@@ -116,8 +106,8 @@
                                                 @method("delete")
                                                 <a href="{{ route( 'user.restoreDelete', $user ) }}"
                                                 onclick="return confirm( 'Bạn có muốn tiếp tục kích hoạt người dùng?' );"
-                                                class="btn btn-success">Restore</a>
-                                                <button type="submit" onclick="return confirm( 'Bạn có muốn tiếp tục?' ) " class="btn btn-danger bg-danger">Delete</button>
+                                                class="btn btn-sm btn-success">Restore</a>
+                                                <button type="submit" onclick="return confirm( 'Bạn có muốn tiếp tục?' ) " class="btn btn-sm btn-danger bg-danger">Delete</button>
                                             </form>
                                         @endif
                                     </td>
@@ -130,14 +120,14 @@
                         </tbody>
                     </table>
                 </div>
-                {{ $users->appends(request()->all())->links('vendor.pagination.bootstrap') }}
+                {{ $users->appends( request()->all() )->links('vendor.pagination.bootstrap-4') }}
             </div>
         </div>
     </div>
 @endsection
 
 @section( "script" )
-    <script>
+<script>
         $("#checkAll").click( function(){
             $('.checkbox:checkbox').not(this).prop('checked', this.checked);
         });

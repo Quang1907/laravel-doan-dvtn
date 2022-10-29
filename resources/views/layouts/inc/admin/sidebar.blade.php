@@ -17,30 +17,30 @@
                         <span class="nav-text">Bảng điều khiển</span>
                     </a>
                 </li>
-                @foreach ( config('sidebar') as $menu )
+                @foreach ( config('admin.sidebar') as $menu )
                     @if ( !empty( $menu['parent'] ) )
                         <li class="has-sub">
                             <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#{{ $menu[ 'id' ] }}"
                                 aria-expanded="false" aria-controls="email">
-                                <i class="mdi mdi-email"></i>
+                                {!! $menu['icon'] !!}
                                 <span class="nav-text">{{ $menu['name'] }}</span> <b class="caret"></b>
                             </a>
                         </li>
                         <ul class="collapse" id="{{ $menu[ 'id' ] }}">
-                                <div class="sub-menu">
-                                    @foreach ( $menu['parent'] as $menuParent )
-                                    <li>
-                                    <a class="sidenav-item-link collapse" href="{{ route( $menuParent['route'] ) }}">
-                                            <span class="nav-text">{{ $menuParent['name'] }}</span>
-                                        </a>
-                                    </li>
-                                    @endforeach
-                                </div>
+                            <div class="sub-menu">
+                                @foreach ( $menu['parent'] as $menuParent )
+                                <li>
+                                <a class="sidenav-item-link collapse" href="{{ route( $menuParent['route'] ) }}">
+                                        <span class="nav-text">{{ $menuParent['name'] }}</span>
+                                    </a>
+                                </li>
+                                @endforeach
+                            </div>
                         </ul>
                     @else
                         <li>
                             <a class="sidenav-item-link" href="{{ route($menu['route']) }}">
-                                <i class="mdi mdi-briefcase-account-outline"></i>
+                                {!! $menu['icon'] !!}
                                 <span class="nav-text">{{ $menu['name'] }}</span>
                             </a>
                         </li>

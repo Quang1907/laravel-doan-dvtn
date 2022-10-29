@@ -20,7 +20,7 @@
                     </div>
                 @endif
                 <div class="text-right my-3">
-                    <a href="{{ route('post.index') }}" class="btn btn-success"><i class="fa-solid fa-backward"></i></a>
+                    <a href="{{ route('post.index') }}" class="btn btn-sm btn-success"><i class="fa-solid fa-backward"></i></a>
                 </div>
                 <div class="mt-5 mx-auto">
                     <form action="{{ route('post.update', $post ) }}" method="post" enctype="multipart/form-data">
@@ -78,7 +78,7 @@
                             <span class="text-danger">{{ $errors->first('category_id') }}</span>
                         </div>
                         <div class="m-3">
-                            <button type="submit" class="btn btn-success bg-success float-end">Save</button>
+                            <button type="submit" class="btn btn-sm btn-success bg-success float-right">Save</button>
                         </div>
                     </form>
                 </div>
