@@ -4,17 +4,16 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Slider;
-use App\Models\User;
 use App\Services\CategoryService;
 use App\Services\PostService;
 use App\Services\UserService;
-use Illuminate\Http\Request;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
     private $categorySerice = null;
     private $postService = null;
-    private $userService = null;
 
     public function __construct( CategoryService $categorySerice, PostService $postService, UserService $userService )
     {
@@ -27,14 +26,20 @@ class HomeController extends Controller
         return view( "client.index" );
     }
 
-    public function activity() {
-        $category = $this->categorySerice->categortPost();
+    public function categoryPost( $slug = null ) {
+        if ( !empty( $slug ) ) {
+            $slugCategory = $this->categorySerice->categoryPost( $slug );
+            $sliders = Slider::where( "status", true )->get();
+            return view( "client.activity", compact( "slugCategory", "sliders" ) );
+        }
+        $posts = $this->postService->allPost();
         $sliders = Slider::where( "status", true )->get();
-        return view( "client.activity", compact( "category", "sliders" ) );
+        return view( "client.activity", compact( "posts", "sliders" ) );
+
     }
 
-    public function post( $slug ) {
-        $post = $this->postService->slugPost( $slug );
+    public function viewPost( $slugPost ) {
+        $post = $this->postService->slugPost( $slugPost );
         return view( "client.post", compact( "post" ) );
     }
 
@@ -42,35 +47,32 @@ class HomeController extends Controller
         return view( "client.profile" );
     }
 
-    public function carousel( Request $request ) {
-        $request->validate( ['image' => "required"] );
-        $url = explode( ",", $request->image );
-        $urlImage = implode( '","', $url);
-        $content = '<?php
-        return [
-            "image" => [
-                "' . $urlImage . '"
-            ]
-        ];';
-        file_put_contents( config_path("carousel.php"), $content );
-        return back();
-    }
-
     public function calendar() {
-        $users = $this->userService->allManager();
-
         $eventArr = array();
-        $bookings = User::find( auth()->user()->id )->showEvent()->get();
-
+        $bookings = DB::table( "users_events" )->join( "events", "event_id", "id" )->where( "user_id", auth()->user()->id )->get();
         $events = array();
 
         foreach ( $bookings as $booking ) {
             $color = null;
             $textColor = null;
 
-            if ( $booking->title == "quang" ) {
-                $color = "red";
-                $textColor = "yellow";
+            if ( check_time_end ( $booking->end ) )  {
+                if ( $booking->active == false ) {
+                    $color = "red";
+                    $textColor = "yellow";
+                } else {
+                    $color = "green";
+                    $textColor = "yellow";
+                }
+            } else {
+                $now = Carbon::now();
+                if ( $now->between( $booking->start, $booking->end ) ) {
+                    $color = "yellow";
+                    $textColor = "red";
+                }else {
+                    $color = "blue";
+                    $textColor = "yellow";
+                }
             }
 
             $events[] = [
@@ -81,8 +83,9 @@ class HomeController extends Controller
                 "end" =>  $booking->end,
                 "color" => $color,
                 "textColor" => $textColor,
+                "active" => $booking->active,
             ];
         }
-        return view( "client.calendar", compact( 'events', "users") );
+        return view( "client.calendar", compact( 'events' ) );
     }
 }

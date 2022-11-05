@@ -14,14 +14,16 @@ use App\Http\Controllers\GoogleAuthController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-
-
 // view client
 Route::get( "/", [ HomeController::class, "home" ] )->name( "home" );
+Route::get( "/hoat-dong/{slug?}", [ HomeController::class, "categoryPost" ] )->name( "category.post.slug" );
+Route::get( "/hoat-dong/bai-viet/{slug}", [ HomeController::class, "viewPost" ] )->name( "viewPost" );
+
 Route::get( "account", [ HomeController::class, "account" ] )->name( "profile" )->middleware( "checkInfo" );
-Route::get( "hoat-dong", [ HomeController::class, "activity" ] )->name( "activity" );
-Route::get( "hoat-dong/{slug}", [ HomeController::class, "post" ] )->name( "activity.post" );
 Route::get( "lich", [ HomeController::class, "calendar" ] )->name( "calendar" );
+
+// mini game
+Route::view( "sipping-wheel", "client.game.sipping-wheel");
 
 // account
 Route::view( "dang-nhap", "client.auth.login" )->name( "dangnhap" )->middleware( "checkAuth" );
@@ -56,7 +58,7 @@ Auth::routes();
 // admin
 Route::group([ "prefix" => "admin",  "middleware" => "admin" ], function () {
     Route::view( "/", "admin.index" );
-    Route::post( "carousel",  [ HomeController::class, "carousel" ] )->name( "carousel" );
+    // Route::post( "carousel",  [ HomeController::class, "carousel" ] )->name( "carousel" );
 
     Route::resource( "user", UserController::class );
     Route::get( "user/restoreDelete/{user}", [ UserController::class, "restoreDelete" ] )->name( "user.restoreDelete" );
@@ -85,3 +87,4 @@ Route::group([ "prefix" => "admin",  "middleware" => "admin" ], function () {
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
+

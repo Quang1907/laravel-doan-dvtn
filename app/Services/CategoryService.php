@@ -15,11 +15,19 @@ class CategoryService {
     }
 
     public function allCategory() {
-        return $this->categoryReponsitory->all();
+        return $this->categoryReponsitory->allCategory();
     }
 
-    public function categortPost() {
-        $category = $this->categoryReponsitory->whereName("Hoạt động");
+    public function categoryWithPost() {
+        return $this->categoryReponsitory->categoryWithPost();
+    }
+
+    public function searchCategory( Request $request ) {
+        return $request->search  ? $this->categoryReponsitory->searchCategory( $request->search ) : false;
+    }
+
+    public function categoryPost( $slug ) {
+        $category = $this->categoryReponsitory->whereSlug( $slug );
         return $this->categoryReponsitory->whereCate( $category->id );
     }
 

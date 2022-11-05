@@ -15,8 +15,16 @@ class CategoryReponsitory {
         return $this->category->create( $attributes );
     }
 
-    public function all() {
-        return $this->category->all();
+    public function allCategory( ) {
+        return $this->category->with( "posts" )->get();
+    }
+
+    public function categoryWithPost() {
+        return $this->category->search()->with( "posts" )->get();
+    }
+
+    public function searchCategory( $name ) {
+        return $this->category->where( "name", "like", "%" . $name . "%" )->with( "posts" )->get();
     }
 
     public function pagination( $row ) {
@@ -31,7 +39,7 @@ class CategoryReponsitory {
         return Category::with('posts')->find( $id );
     }
 
-    public function whereName( $name ) {
-        return $this->category->where( "name", $name )->first();
+    public function whereSlug( $slug ) {
+        return $this->category->where( "slug", $slug )->first();
     }
 }

@@ -16,7 +16,7 @@ class PostReponsitory {
     }
 
     public function all() {
-        return $this->post->all();
+        return $this->post->orderBy( "id", "DESC" )->search()->with( "categories" )->paginate( 5 );
     }
 
     public function pagination( $number ) {
@@ -36,6 +36,10 @@ class PostReponsitory {
             return $this->post->with( 'categories' )->where( $field, $condition, $value )->first();
         }
         return $this->post->with( 'categories' )->where( $field, $value )->first();
+    }
+
+    public function whereTitle( $field, $value ) {
+        return $this->post->with( 'categories' )->where( $field, $value )->get();
     }
 
     public function orderByAndLimit( $orderBy = "ASC", $number = 10, $offset = 0,  $primary = "id" ) {

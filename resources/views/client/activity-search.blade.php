@@ -38,9 +38,93 @@
     <section class="section">
         <div class="container">
             <div class="columns is-multiline is-desktop">
-                <div class="column is-8-desktop">
-                    @if ( !empty( $posts ) )
-                        <h1 class="h2 mb-5">{!! request()->search ? "Đang hiển thị: <mark> ". request()->search ." </mark>" : "Tất cả hoạt động" !!}</h1>
+                @if ( !empty( $category ) )
+                    <div class="column is-8-desktop">
+                        <h1 class="h2 mb-5">Hiển thị các mục: <mark>{{ $category->name }}</mark></h1>
+                        @foreach ( $category->posts as $post )
+                            <article class="card mb-4">
+                                <div class="post-slider">
+                                    <img src="{{ url_image( $post->image ) }}" class="card-img-top" alt="post-thumb">
+                                </div>
+                                <div class="card-body">
+                                    <h3 class="mb-3"><a class="post-title" href="#">{{ $post->title }}</a></h3>
+                                    <ul class="card-meta list-inline">
+                                        <li class="list-inline-item">
+                                            <button href="#" class="card-meta-author">
+                                                <img src="{{ url_image( $post->user->avata ) }}">
+                                                <span>{{ $post->user->name }}</span>
+                                            </button>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <i class="ti-timer"></i>{{ format_date( $post->created_at ) }}
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <i class="ti-calendar"></i>{{ $post->created_at->format( "d-m-Y" ) }}
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <ul class="card-meta-tag list-inline">
+                                                @foreach ( $post->categories as $category )
+                                                    <li class="list-inline-item"><a href="">{{ $category->name }}</a></li>
+                                                @endforeach
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                    <div class="showContent">{!! $post->content !!}</div>
+                                    <a href="{{ route( 'category.post.slug', [ $category->slug, $post->slug ]) }}" class="mt-3 btn bg-primary hover:text-blue-100 text-white">Xem thêm</a>
+                                </div>
+                            </article>
+                        @endforeach
+                    </div>
+                @elseif( !empty( $allCategories ) && $allCategories->count() > 0 )
+                    <div class="column is-8-desktop">
+                        @if (request()->search )
+                            <h1 class="h2 mb-5">Bạn đang tìm kiếm: <mark>{{ request()->search }}</mark></h1>
+                        @else
+                            <h1 class="h2 mb-5">Tất cả hoạt động<mark></mark></h1>
+                        @endif
+                        @foreach ( $allCategories as $allcategory )
+                            @foreach ( $allcategory->posts as $post )
+                                <article class="card mb-4">
+                                    <div class="post-slider">
+                                        <img src="{{ url_image( $post->image ) }}" class="card-img-top" alt="post-thumb">
+                                    </div>
+                                    <div class="card-body">
+                                        <h3 class="mb-3"><a class="post-title" href="#">{{ $post->title }}</a></h3>
+                                        <ul class="card-meta list-inline">
+                                            <li class="list-inline-item">
+                                                <button href="#" class="card-meta-author">
+                                                    <img src="{{ url_image( $post->user->avata ) }}">
+                                                    <span>{{ $post->user->name }}</span>
+                                                </button>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <i class="ti-timer"></i>{{ format_date( $post->created_at ) }}
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <i class="ti-calendar"></i>{{ $post->created_at->format( "d-m-Y" ) }}
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <ul class="card-meta-tag list-inline">
+                                                    @foreach ( $post->categories as $category )
+                                                        <li class="list-inline-item"><a href="">{{ $category->name }}</a></li>
+                                                    @endforeach
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                        <div class="showContent">{!! $post->content !!}</div>
+                                        <a href="{{ route( 'category.post.slug', [ $category->slug, $post->slug ]) }}" class="mt-3 btn bg-primary hover:text-blue-100 text-white">Xem thêm</a>
+                                    </div>
+                                </article>
+                            @endforeach
+                        @endforeach
+                    </div>
+                @elseif ( $posts->count() > 0 )
+                    <div class="column is-8-desktop">
+                        @if (request()->search )
+                            <h1 class="h2 mb-5">Bạn đang tìm kiếm: <mark>{{ request()->search }}</mark></h1>
+                        @else
+                            <h1 class="h2 mb-5">Tất cả hoạt động<mark></mark></h1>
+                        @endif
                         @foreach ( $posts as $post )
                             <article class="card mb-4">
                                 <div class="post-slider">
@@ -74,46 +158,13 @@
                                 </div>
                             </article>
                         @endforeach
-                    @endif
-
-                    @if ( !empty( $slugCategory ) )
-                        <h1 class="h2 mb-5">Đang hiển thị: <mark>{{ $slugCategory->name }}</mark></h1>
-                        @foreach ( $slugCategory->posts as $post )
-                            <article class="card mb-4">
-                                <div class="post-slider">
-                                    <img src="{{ url_image( $post->image ) }}" class="card-img-top" alt="post-thumb">
-                                </div>
-                                <div class="card-body">
-                                    <h3 class="mb-3"><a class="post-title" href="{{ route( 'viewPost', $post->slug ) }}">{{ $post->title }}</a></h3>
-                                    <ul class="card-meta list-inline">
-                                        <li class="list-inline-item">
-                                            <button href="#" class="card-meta-author">
-                                                <img src="{{ url_image( $post->user->avata ) }}">
-                                                <span>{{ $post->user->name }}</span>
-                                            </button>
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <i class="ti-timer"></i>{{ format_date( $post->created_at ) }}
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <i class="ti-calendar"></i>{{ $post->created_at->format( "d-m-Y" ) }}
-                                        </li>
-                                        <li class="list-inline-item">
-                                            <ul class="card-meta-tag list-inline">
-                                                @foreach ( $post->categories as $category )
-                                                    <li class="list-inline-item"><a href="">{{ $category->name }}</a></li>
-                                                @endforeach
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                    <div class="showContent">{!! $post->content !!}</div>
-                                    <a href="{{ route( 'viewPost', $post->slug ) }}" class="mt-3 btn bg-primary hover:text-blue-100 text-white">Xem thêm</a>
-                                </div>
-                            </article>
-                        @endforeach
-                    @endif
-
-                </div>
+                    </div>
+                @else
+                    <div class="column is-8-desktop">
+                        <h1 class="h2 mb-5">Hiển thị các mục: <mark>{{ request()->search }}</mark></h1>
+                        <h4>Hiện tại chưa thông tin.</h4>
+                    </div>
+                @endif
                 @include( "layouts.inc.client.right-sidebar" )
             </div>
         </div>

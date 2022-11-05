@@ -31,6 +31,7 @@
                             @csrf
                             <input type="text" class="d-none" name="active" id="valueCheckActive" >
                             <input type="checkbox" class="d-none" name="inactive" id="valueCheckInActive">
+                            <input type="text" class="d-none" value="{{ $event->id }}" name="event" id="event">
                         </form>
                         <button type="button" class="btn btn-sm btn-success bg-success mt-0" id="btnActive">Có tham gia</button>
                         <button type="button" class="btn btn-sm btn-danger bg-danger mt-0" id="btnInactive">Không tham gia</button>
@@ -46,32 +47,32 @@
                             </tr>
                         </thead>
                         <tbody class="text-gray-600 text-sm font-light">
-                          @forelse ( $users as $user )
-                          <tr class="border-b border-gray-200 hover:bg-gray-100">
-                                <td scope="row"><input type="checkbox" value="{{ $user->id }}" class="checkbox"></td>
-                                <td class="py-3 px-6 text-left whitespace-nowrap">
-                                    <div class="flex items-center">
-                                        <span class="font-medium">{{ $user->name }}</span>
-                                    </div>
-                                </td>
-                                <td class="py-3 px-6 text-left">
-                                    <div class="flex items-center">
-                                        <span class="font-medium">{{ $user->email }}</span>
-                                    </div>
-                                </td>
-                                <td class="py-3 px-6 text-center">
-                                    {{ check_active_event( $user->active ) }}
-                                </td>
-                                <td class="py-3 px-6 text-center">
-                                    <div class="flex item-center justify-center">
-                                        <div class="w-4 mr-2transform hover:text-purple-500 hover:scale-110">
+                            @forelse ( $users as $user )
+                                <tr class="border-b border-gray-200 hover:bg-gray-100">
+                                    <td scope="row"><input type="checkbox" value="{{ $user->id }}" class="checkbox"></td>
+                                    <td class="py-3 px-6 text-left whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <span class="font-medium">{{ $user->name }}</span>
                                         </div>
-                                    </div>
-                                </td>
-                            </tr>
-                          @empty
+                                    </td>
+                                    <td class="py-3 px-6 text-left">
+                                        <div class="flex items-center">
+                                            <span class="font-medium">{{ $user->email }}</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 px-6 text-center">
+                                        {{ check_active_event( $user->active ) }}
+                                    </td>
+                                    <td class="py-3 px-6 text-center">
+                                        <div class="flex item-center justify-center">
+                                            <div class="w-4 mr-2transform hover:text-purple-500 hover:scale-110">
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @empty
 
-                          @endforelse
+                            @endforelse
                         </tbody>
                     </table>
                 </div>

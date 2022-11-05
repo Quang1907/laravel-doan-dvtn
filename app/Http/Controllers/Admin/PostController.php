@@ -112,7 +112,7 @@ class PostController extends Controller
         return back();
     }
 
-    public function uploadFile( Request $request, Collection $rows ) {
+    public function uploadFile( Request $request ) {
         $this->postService->uploadFile( $request );
         return back();
     }

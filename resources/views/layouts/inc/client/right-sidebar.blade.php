@@ -1,11 +1,11 @@
 <aside class="column is-4-desktop sidebar-inner">
     <!-- Search -->
     <div class="widget">
-        <h4 class="widget-title"><span>Search</span></h4>
-        <form action="#!" class="widget-search">
-            <input class="mb-3" id="search-query" name="s" type="search" placeholder="Type &amp; Hit Enter...">
+        <h4 class="widget-title"><span>Tìm kiếm</span></h4>
+        <form action="{{ url( 'hoat-dong' ) }}" class="widget-search">
+            <input class="mb-3" id="search-query" name="search" type="search" value="{{ request()->search }}" placeholder="Danh mục &amp; tên bài viết...">
             <i class="ti-search"></i>
-            <button type="submit" class="btn btn-primary btn-block">Search</button>
+            <button type="submit" class="btn btn-outline-primary btn-block">Search</button>
         </form>
     </div>
 
@@ -80,7 +80,7 @@
         <form action="#!" method="post" name="mc-embedded-subscribe-form" target="_blank" class="widget-search">
             <input class="mb-3" id="search-query" name="s" type="search" placeholder="Your Email Address">
             <i class="ti-email"></i>
-            <button type="submit" class="btn btn-primary btn-block" name="subscribe">Subscribe
+            <button type="submit" class="btn btn-outline-primary btn-block" name="subscribe">Subscribe
                 now</button>
             <div style="position: absolute; left: -5000px;" aria-hidden="true">
                 <input type="text" name="b_463ee871f45d2d93748e77cad_a0a2c6d074" tabindex="-1">
@@ -92,20 +92,9 @@
     <div class="widget widget-categories">
         <h4 class="widget-title"><span>Categories</span></h4>
         <ul class="list-unstyled widget-list">
-            <li><a href="tags.html" class="d-flex">Creativity <small class="ml-auto">(4)</small></a></li>
-            <li><a href="tags.html" class="d-flex">Demo <small class="ml-auto">(1)</small></a></li>
-            <li><a href="tags.html" class="d-flex">Elements <small class="ml-auto">(1)</small></a></li>
-            <li><a href="tags.html" class="d-flex">Food <small class="ml-auto">(1)</small></a></li>
-            <li><a href="tags.html" class="d-flex">Microwave <small class="ml-auto">(1)</small></a></li>
-            <li><a href="tags.html" class="d-flex">Natural <small class="ml-auto">(3)</small></a></li>
-            <li><a href="tags.html" class="d-flex">Newyork city <small class="ml-auto">(1)</small></a>
-            </li>
-            <li><a href="tags.html" class="d-flex">Nice <small class="ml-auto">(1)</small></a></li>
-            <li><a href="tags.html" class="d-flex">Tech <small class="ml-auto">(2)</small></a></li>
-            <li><a href="tags.html" class="d-flex">Videography <small class="ml-auto">(1)</small></a>
-            </li>
-            <li><a href="tags.html" class="d-flex">Vlog <small class="ml-auto">(1)</small></a></li>
-            <li><a href="tags.html" class="d-flex">Wondarland <small class="ml-auto">(1)</small></a></li>
+            @foreach ( $showCategories  as $category )
+                <li><a href="{{ route( 'category.post.slug', $category->slug ) }}" class="d-flex">{{ $category->name }} <small class="ml-auto">{{ "(" . $category->posts->count() . ")" }}</small></a></li>
+            @endforeach
         </ul>
     </div><!-- tags -->
     <div class="widget">
@@ -135,7 +124,7 @@
                 <div class="is-flex">
                     <img class="card-img-sm" src="{{ url_image( $recent_post->image ) }}">
                     <div class="ml-3">
-                        <h5><a class="post-title" href="{{ route( 'activity', $recent_post->slug ) }}">{{ $recent_post->title }}</a>
+                        <h5><a class="post-title" href="{{ route( 'category.post.slug',  $recent_post->slug ) }}">{{ $recent_post->title }}</a>
                         </h5>
                         <ul class="card-meta mt-3">
                             <li class="list-inline-item mb-0">

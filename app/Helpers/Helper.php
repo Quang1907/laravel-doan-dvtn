@@ -18,7 +18,6 @@ if ( !function_exists( "categorySelect" ) ) {
     }
 }
 
-
 if ( !function_exists( "format_date") ) {
     function format_date( $date ) {
         Carbon::setLocale('vi');
@@ -28,7 +27,6 @@ if ( !function_exists( "format_date") ) {
     }
 }
 
-
 if ( !function_exists( "url_image") ) {
     function url_image( $url ) {
         if ( stripos( $url,  "drive.google.com" ) ) {
@@ -37,7 +35,6 @@ if ( !function_exists( "url_image") ) {
         return  asset( "storage/" . $url) ;
     }
 }
-
 
 if ( !function_exists( "check_time") ) {
     function check_time( $event  ) {

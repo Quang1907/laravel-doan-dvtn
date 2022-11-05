@@ -58,29 +58,25 @@
             </div>
         </div>
 
-        {{-- show Modal --}}
-        <div id="large-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full justify-center items-center" aria-hidden="true">
-        <div class="relative p-4 m-auto w-1/2 max-w-4xl h-full md:h-auto">
-            <!-- Modal content -->
-            <div class="relative bg-white rounded-lg dark:bg-gray-700 mt-24 shadow-lg">
-                <!-- Modal header -->
-                <div class="flex justify-between items-center p-5 rounded-t border-b dark:border-gray-600">
-                    <h3 class="text-xl font-medium text-gray-900 dark:text-white">
-                        Thông tin hoạt động
-                    </h3>
-                </div>
-                <!-- Modal body -->
-                <div class="p-6 space-y-6" id="show-content">
-                </div>
-                <!-- Modal footer -->
-                <div class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
-                    <button data-modal-toggle="large-modal" id="btnClose" type="button" class="text-white bg-black hover:bg-black focus:ring-4 focus:outline-none focus:ring-black font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-black dark:hover:bg-black dark:focus:ring-black">Close</button>
-                    <button data-modal-toggle="large-modal" id="btnDelete" type="button" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Delete</button>
+        <!-- Modal Body -->
+        <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
+        <div class="modal" id="modalId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalTitleId">Thông tin hoạt động</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="show-content">
+                        Body
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" id="btnClose" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-danger" id="btnDelete" >Delete</button>
+                    </div>
                 </div>
             </div>
         </div>
-        </div>
-
 
     </main>
 @endsection
@@ -206,7 +202,8 @@
                     '<h3 class="p-0 m-0">Thoi gian ket thuc: '+  $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss") +'</h3>'+
                     event.content;
                 $("#show-content").html( html );
-                $("#large-modal").toggle();
+
+                $("#modalId").toggle();
                 $("#btnDelete").click( function () {
                     var id = event.id;
                     const swalWithBootstrapButtons = Swal.mixin({
@@ -232,7 +229,7 @@
                                 dataType:'json',
                                 success : function ( response ) {
                                     $('#calendar').fullCalendar('removeEvents', response);
-                                    $("#large-modal").toggle();
+                                    $("#modalId").toggle();
                                 },
                                 error   : function ( error ) {
                                     var message = error.responseJSON;
@@ -291,7 +288,7 @@
         });
 
         $("#btnClose").click( function ( ) {
-            $("#large-modal").toggle();
+            $("#modalId").toggle();
         } );
 
         $( ".fc-event" ).css( "font-size", "15px");

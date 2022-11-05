@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Http\Controllers\Admin\HomeController;
 use App\Models\Category;
 use App\Models\Post;
 use App\Repositories\CategoryReponsitory;
@@ -33,8 +34,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $categories = ( new CategoryService( new CategoryReponsitory( new Category() ) ) )->allCategory();
+        $showCategories = ( new CategoryService( new CategoryReponsitory( new Category() ) ) )->allCategory();
         $recent_posts = ( new PostService( new PostReponsitory( new Post() ) ) )->recentPost();
-        View::share(['categories'=> $categories, "recent_posts" => $recent_posts ]);
+        View::share(['showCategories'=> $showCategories, "recent_posts" => $recent_posts ]);
     }
 }

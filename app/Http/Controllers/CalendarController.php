@@ -139,7 +139,7 @@ class CalendarController extends Controller
         $setActive = $request->inactive == "on" ? false : true;
         if ( is_array( $userArr ) ) {
             foreach ( $userArr as $user_id  ) {
-                DB::table( "users_events" )->where( "user_id", $user_id )->update( [ "active" => $setActive ] );
+                DB::table( "users_events" )->where( "user_id", $user_id )->where( "event_id", $request->event )->update( [ "active" => $setActive ] );
             }
         } else {
             DB::table( "users_events" )->where( "user_id", $userArr )->update( [ "active" => $setActive ] );

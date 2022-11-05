@@ -29,6 +29,10 @@ class PostService {
         return $this->postReponsitory->where( "slug", $slug );
     }
 
+    public function searchPost( $title ) {
+        return $this->postReponsitory->whereTitle( "title", $title );
+    }
+
     public function paginationPost( ) {
         $pagination = config( "pagination.post");
         return $this->postReponsitory->pagination( $pagination );
