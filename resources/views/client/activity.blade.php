@@ -101,7 +101,7 @@
                                         <li class="list-inline-item">
                                             <ul class="card-meta-tag list-inline">
                                                 @foreach ( $post->categories as $category )
-                                                    <li class="list-inline-item"><a href="">{{ $category->name }}</a></li>
+                                                    <li class="list-inline-item"><a href="{{ route( 'category.post.slug', $category->slug ) }}">{{ $category->name }}</a></li>
                                                 @endforeach
                                             </ul>
                                         </li>

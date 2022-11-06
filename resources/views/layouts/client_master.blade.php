@@ -24,6 +24,7 @@
     @yield('content')
     @include('layouts.inc.client.footer')
 
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"
         integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -33,6 +34,20 @@
     <script src="{{ asset( 'js/instafeed/instafeed.min.js' ) }}"></script>
     <script src="{{ asset( 'js/click.js' ) }}"></script>
     <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
+
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+        ( function() {
+            var s1 = document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+
+            s1.async=true;
+            s1.src='https://embed.tawk.to/6366864bdaff0e1306d5e3a3/1gh48dkql';
+            s1.charset='UTF-8';
+            s1.setAttribute('crossorigin','*');
+            s0.parentNode.insertBefore(s1,s0);
+        })();
+    </script>
 
     @include('sweetalert::alert')
     @yield( 'script' )
