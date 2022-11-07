@@ -45,5 +45,9 @@ class PostReponsitory {
     public function orderByAndLimit( $orderBy = "ASC", $number = 10, $offset = 0,  $primary = "id" ) {
         return $this->post->orderBy( $primary, $orderBy )->limit( $number,  $offset )->get();
     }
+
+    public function findPost( $id ) {
+        return $this->post->find( $id );
+    }
 }
 

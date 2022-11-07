@@ -5,14 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Category\CreateCategoryRequest;
 use App\Http\Requests\Category\UpdateCategoryRequest;
-use App\Models\Category;
-use App\Services\CategoryService;
+use App\Services\CategoryPostService;
 
-class CategoryController extends Controller
+class CategoryPostController extends Controller
 {
     private $categories = null;
 
-    public function __construct( CategoryService $categories) {
+    public function __construct( CategoryPostService $categories ) {
 
         $this->categories = $categories;
     }
@@ -25,7 +24,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = $this->categories->paginationCategory();
-        return view('admin.category.index', compact('categories'));
+        return view( 'admin.category.post.index', compact('categories'));
     }
 
     /**
@@ -36,7 +35,7 @@ class CategoryController extends Controller
     public function create()
     {
         $categories = $this->categories->allCategory();
-        return view('admin.category.create', compact( "categories" ));
+        return view( 'admin.category.post.create' , compact( "categories" ) );
     }
 
     /**
@@ -48,7 +47,7 @@ class CategoryController extends Controller
     public function store( CreateCategoryRequest $request )
     {
         $this->categories->create( $request );
-        return redirect()->route("category.index")->with( "message", "Category Created Successfully.");
+        return redirect()->route( "category-posts.index" )->with( "message", "Category Created Successfully.");
     }
 
     /**
@@ -57,9 +56,10 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show( Category $category )
+    public function show( $id )
     {
-        return view( "admin.category.show", compact( "category" ) );
+        $category = $this->categories->findCategoryPost( $id );
+        return view( "admin.category.post.show", compact( "category" ) );
     }
 
     /**
@@ -68,10 +68,11 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit( Category $category )
+    public function edit( $id )
     {
+        $category = $this->categories->findCategoryPost( $id );
         $categories = $this->categories->allCategory();
-        return view( 'admin.category.edit', compact("category", "categories") );
+        return view( 'admin.category.post.edit', compact( "category", "categories" ) );
     }
 
     /**
@@ -81,10 +82,11 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update( UpdateCategoryRequest $request, Category $category )
+    public function update( UpdateCategoryRequest $request, $id )
     {
+        $category = $this->categories->findCategoryPost( $id );
         $this->categories->update( $request, $category );
-        return redirect()->route("category.index")->with( "message", "Category Updated Successfully.");
+        return redirect()->route( "category-posts.index" )->with( "message", "Category Updated Successfully.");
     }
 
     /**
@@ -93,9 +95,10 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy( Category $category )
+    public function destroy( $id )
     {
+        $category = $this->categories->findCategoryPost( $id );
         $this->categories->delete( $category );
-        return redirect()->route("category.index");
+        return redirect()->route( "category-posts.index" );
     }
 }

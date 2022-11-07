@@ -2,15 +2,17 @@
 namespace App\Services;
 
 use App\Models\Category;
-use App\Repositories\CategoryReponsitory;
+use App\Models\CategoryPosts;
+use App\Repositories\CategoryPostReponsitory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use RealRashid\SweetAlert\Facades\Alert;
 
-class CategoryService {
+class CategoryPostService {
     protected $categoryReponsitory = null;
 
-    public function __construct( CategoryReponsitory $categoryReponsitory ) {
+    public function __construct( CategoryPostReponsitory $categoryReponsitory ) {
         $this->categoryReponsitory = $categoryReponsitory;
     }
 
@@ -26,12 +28,20 @@ class CategoryService {
         return $request->search  ? $this->categoryReponsitory->searchCategory( $request->search ) : false;
     }
 
+    public function findCategoryPost( $id ) {
+        return $this->categoryReponsitory->find( $id );
+    }
+
     public function categoryPost( $slug ) {
         $category = $this->categoryReponsitory->whereSlug( $slug );
         return $this->categoryReponsitory->whereCate( $category->id );
     }
 
-    public function paginationCategory() {
+    public function whereSlug( $slug ) {
+        return $this->categoryReponsitory->whereSlug( $slug );
+    }
+
+    public function paginationCategory( ) {
         $pagination = config( "pagination.category" );
         return $this->categoryReponsitory->pagination( $pagination );
     }

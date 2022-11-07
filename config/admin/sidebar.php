@@ -5,13 +5,13 @@ return [
         "id" => "category",
         "icon" => '<i class="fa-solid fa-list" style="font-size:20px"></i>',
         "parent" => [
-           [
-            "name" => "Tất cả danh mục",
-            "route" => "category.index",
+            [
+                "name" => "Danh mục bài viết",
+                "route" => "category-posts.index",
             ],
-           [
-            "name" => "Tạo danh mục",
-            "route" => "category.create",
+            [
+                "name" => "Danh mục sản phẩm",
+                "route" => "category-products.index",
             ],
         ],
     ],
@@ -20,13 +20,13 @@ return [
         "id" => "product",
         "icon" => '<i class="fa-solid fa-list-check" style="font-size:20px"></i>',
         "parent" => [
-           [
-            "name" => "Tất cả sản phẩm",
-            "route" => "product.index",
+            [
+                "name" => "Tất cả sản phẩm",
+                "route" => "product.index",
             ],
-           [
-            "name" => "Tạo sản phẩm",
-            "route" => "product.create",
+            [
+                "name" => "Tạo sản phẩm",
+                "route" => "product.create",
             ],
         ],
     ],

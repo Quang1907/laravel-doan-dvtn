@@ -8,6 +8,7 @@
 @endsection
 
 @section('content')
+
     <div id="carouselExampleCaptions" class="carousel slide relative" data-bs-ride="carousel">
         <div class="carousel-inner relative  w-full overflow-hidden">
             @php( $active = 'active' )
@@ -41,7 +42,7 @@
                 <div class="column is-8-desktop">
                     @if ( !empty( $posts ) )
                         <h1 class="h2 mb-5">{!! request()->search ? "Đang hiển thị: <mark> ". request()->search ." </mark>" : "Tất cả hoạt động" !!}</h1>
-                        @foreach ( $posts as $post )
+                        @forelse ( $posts as $post )
                             <article class="card mb-4">
                                 <div class="post-slider">
                                     <img src="{{ url_image( $post->image ) }}" class="card-img-top" alt="post-thumb">
@@ -70,10 +71,14 @@
                                         </li>
                                     </ul>
                                     <div class="showContent">{!! $post->content !!}</div>
-                                    <a href="{{ route( 'category.post.slug', [ $category->slug, $post->slug ]) }}" class="mt-3 btn bg-primary hover:text-blue-100 text-white">Xem thêm</a>
+                                    <a href="{{ route( 'viewPost', $post->slug ) }}" class="mt-3 btn bg-primary hover:text-blue-100 text-white">Xem thêm</a>
                                 </div>
                             </article>
-                        @endforeach
+                        @empty
+                        @endforelse
+                        <div class="d-flex justify-content-center mt-3">
+                            {{ $posts->appends(request()->all())->links('vendor.pagination.bootstrap-4') }}
+                        </div>
                     @endif
 
                     @if ( !empty( $slugCategory ) )
@@ -111,8 +116,9 @@
                                 </div>
                             </article>
                         @endforeach
+                    @else
+                        <h1 class="h2 mb-5">Hiện tại không có bài viết phù hợp</h1>
                     @endif
-
                 </div>
                 @include( "layouts.inc.client.right-sidebar" )
             </div>

@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CategoryPostController;
+use App\Http\Controllers\Admin\CategoryProductController;
 use App\Http\Controllers\Admin\ColorController;
-use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SliderController;
@@ -11,6 +11,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\GithubAuthController;
 use App\Http\Controllers\GoogleAuthController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -64,7 +65,9 @@ Route::group([ "prefix" => "admin",  "middleware" => "admin" ], function () {
     Route::delete( "user/softDelete/{user}", [ UserController::class, "softDelete" ] )->name( "user.softDelete" );
     Route::post( "user/active", [ UserController::class, "active"] )->name( "user.active" );
 
-    Route::resource( "category", CategoryController::class );
+    Route::resource( "category-posts", CategoryPostController::class );
+    Route::resource( "category-products", CategoryProductController::class );
+
     Route::resource( "post", PostController::class );
     Route::post( "post/import", [ PostController::class, "uploadFile" ] )->name( "post.import" );
     Route::get( "export/post", [ PostController::class, "exportFile" ] )->name( "post.export" );

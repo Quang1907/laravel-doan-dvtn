@@ -2,8 +2,8 @@
     <div id="sidebar" class="sidebar sidebar-with-footer">
         <!-- Aplication Brand -->
         <div class="app-brand">
-            <a href="{{ route('home') }}">
-                <img src="{{ asset('images/logo/huyhieudoan.png') }}" width="40" alt="HuyHieuDoan">
+            <a href="{{ route( 'home' ) }}">
+                <img src="{{ asset( 'images/logo/huyhieudoan.png' ) }}" width="40" alt="HuyHieuDoan">
                 <span class="brand-name">Trang chủ</span>
             </a>
         </div>
@@ -25,7 +25,7 @@
                                             <span class="nav-text">Bảng điều khiển</span>
                                         </a>
                                     </li>
-                                    @foreach (config('admin.sidebar') as $menu)
+                                    @foreach ( config('admin.sidebar') as $menu )
                                         @if (!empty($menu['parent']))
                                             <li class="has-sub">
                                                 <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#{{ $menu[ 'id' ] }}"

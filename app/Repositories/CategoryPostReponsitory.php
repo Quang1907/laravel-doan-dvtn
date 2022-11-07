@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Category;
 
-class CategoryReponsitory {
+class CategoryPostReponsitory {
     protected $category = null;
 
     public function __construct( Category $category ) {
@@ -41,5 +41,9 @@ class CategoryReponsitory {
 
     public function whereSlug( $slug ) {
         return $this->category->where( "slug", $slug )->first();
+    }
+
+    public function find( $id ) {
+        return $this->category->find( $id );
     }
 }

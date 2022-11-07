@@ -7,22 +7,21 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Posts\CreatePostRequest;
 use App\Http\Requests\Posts\UpdatePostRequest;
 use App\Models\Post;
-use App\Services\CategoryService;
+use App\Services\CategoryPostService;
 use App\Services\PostService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Facades\Excel;
 
 class PostController extends Controller
 {
 
     private $postService = null;
-    private $categoryService = null;
+    private $categoryPostService = null;
 
-    public function __construct( PostService $postService, CategoryService $categoryService)
+    public function __construct( PostService $postService, CategoryPostService $categoryPostService)
     {
         $this->postService = $postService;
-        $this->categoryService = $categoryService;
+        $this->categoryPostService = $categoryPostService;
     }
     /**
      * Display a listing of the resource.
@@ -32,7 +31,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = $this->postService->paginationPost();
-        $categories =  $this->categoryService->allCategory();
+        $categories =  $this->categoryPostService->allCategory();
         return view("admin.post.index", compact( "posts", "categories" ));
     }
 
@@ -44,7 +43,7 @@ class PostController extends Controller
     public function create()
     {
         $this->authorize("create", Post::class );
-        $categories = $this->categoryService->allCategory();
+        $categories = $this->categoryPostService->allCategory();
         return view("admin.post.create", compact("categories"));
     }
 
@@ -81,7 +80,7 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $this->authorize("update", $post);
-        $categories = $this->categoryService->allCategory();
+        $categories = $this->categoryPostService->allCategory();
         return view("admin.post.edit", compact("post", "categories"));
     }
 

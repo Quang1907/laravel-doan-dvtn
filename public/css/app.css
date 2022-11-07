@@ -574,11 +574,11 @@ video {
 .m-8 {
   margin: 2rem;
 }
-.m-3 {
-  margin: 0.75rem;
-}
 .m-4 {
   margin: 1rem;
+}
+.m-3 {
+  margin: 0.75rem;
 }
 .m-2 {
   margin: 0.5rem;
@@ -607,10 +607,6 @@ video {
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
 }
-.mx-1 {
-  margin-left: 0.25rem;
-  margin-right: 0.25rem;
-}
 .mx-3 {
   margin-left: 0.75rem;
   margin-right: 0.75rem;
@@ -622,6 +618,10 @@ video {
 .mx-4 {
   margin-left: 1rem;
   margin-right: 1rem;
+}
+.mx-1 {
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
 }
 .my-2 {
   margin-top: 0.5rem;

@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Slider;
-use App\Services\CategoryService;
+use App\Services\CategoryPostService;
 use App\Services\PostService;
 use App\Services\UserService;
 use Carbon\Carbon;
@@ -15,7 +14,7 @@ class HomeController extends Controller
     private $categorySerice = null;
     private $postService = null;
 
-    public function __construct( CategoryService $categorySerice, PostService $postService, UserService $userService )
+    public function __construct( CategoryPostService $categorySerice, PostService $postService, UserService $userService )
     {
         $this->categorySerice = $categorySerice;
         $this->postService = $postService;
@@ -27,13 +26,14 @@ class HomeController extends Controller
     }
 
     public function categoryPost( $slug = null ) {
+        $sliders = Slider::where( "status", true )->get();
+
         if ( !empty( $slug ) ) {
             $slugCategory = $this->categorySerice->categoryPost( $slug );
-            $sliders = Slider::where( "status", true )->get();
             return view( "client.activity", compact( "slugCategory", "sliders" ) );
         }
+
         $posts = $this->postService->allPost();
-        $sliders = Slider::where( "status", true )->get();
         return view( "client.activity", compact( "posts", "sliders" ) );
 
     }
