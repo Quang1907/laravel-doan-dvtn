@@ -4,7 +4,7 @@
     <div class="card">
         <div class="card-header rounded d-flex">
             <div class="w-100">
-                <h2 class="h2">Change Product</h2>
+                <h2 class="h2">Edit Product</h2>
             </div>
             <div class="w-100 text-right">
                 <a href="{{ route('product.index') }}" class="btn text-white btn-warning btn-sm">Back</a>
@@ -60,11 +60,6 @@
                             class="form-control" name="name" value="{{ old( 'name', $product->name ) }}" id="name">
                         </div>
                         <div class="mb-3">
-                            <label for="slug" class="form-label">Product Slug</label>
-                            <input type="text"
-                            class="form-control" name="slug" value="{{ old( 'slug', $product->slug ) }}"  id="slug">
-                        </div>
-                        <div class="mb-3">
                             <label for="" class="form-label">Select Brand</label>
                             <select class="form-control" name="brand" id="">
                                 <option selected>Choose an brand</option>
@@ -103,15 +98,15 @@
                             <div class="mb-3 col-sm-4">
                                 <label for="original_price" class="form-label">Original Price</label>
                                 <input type="number"
-                                class="form-control" name="original_price"  value="0" value="{{ old( 'original_price', $product->original_price ) }}"  id="original_price">
+                                class="form-control" name="original_price"  value="{{ old( 'original_price', $product->original_price ) }}"  id="original_price">
                             </div>
                             <div class="mb-3 col-sm-4">
                                 <label for="selling_price" class="form-label">Selling Price</label>
-                                <input type="number" class="form-control"  value="0" value="{{ old( 'selling_price', $product->selling_price ) }}" name="selling_price" id="selling_price">
+                                <input type="number" class="form-control"  value="{{ old( 'selling_price', $product->selling_price ) }}" name="selling_price" id="selling_price">
                             </div>
                             <div class="mb-3 col-sm-4">
                                 <label for="quantity" class="form-label">Quantity</label>
-                                <input type="number" class="form-control"  value="0" value="{{ old( 'quantity', $product->quantity ) }}" name="quantity" id="quantity">
+                                <input type="number" class="form-control"  value="{{ old( 'quantity', $product->quantity ) }}" name="quantity" id="quantity">
                             </div>
                             <div class="mb-3 mx-3 d-flex">
                                 <div class="form-check px-2">

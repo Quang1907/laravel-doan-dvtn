@@ -1,10 +1,11 @@
 @extends( 'layouts.admin_master' )
+
 @section('title', 'Create Product')
 @section('content')
     <div class="card">
         <div class="card-header rounded d-flex">
             <div class="w-100">
-                <h2 class="h2">Change Product</h2>
+                <h2 class="h2">Create Product</h2>
             </div>
             <div class="w-100 text-right">
                 <a href="{{ route('product.index') }}" class="btn text-white btn-warning btn-sm">Back</a>
@@ -56,11 +57,6 @@
                             <label for="name" class="form-label">Product Name</label>
                             <input type="text"
                             class="form-control" name="name" value="{{ old( 'name' ) }}" id="name">
-                        </div>
-                        <div class="mb-3">
-                            <label for="slug" class="form-label">Product Slug</label>
-                            <input type="text"
-                            class="form-control" name="slug" value="{{ old( 'slug' ) }}"  id="slug">
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Select Brand</label>
@@ -167,7 +163,6 @@
         </div>
     </div>
 @endsection
-
 
 @section( 'script' )
     <script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>

@@ -26,14 +26,6 @@
                             <input type="text" class="form-control" name="name" value="{{ old('name') }}" id="" placeholder="Tên danh mục">
                             <span class="text-danger">{{ $errors->first('name') }}</span>
                         </div>
-                        <div class="mb-3">
-                            <label for="" class="form-label">Danh mục cha</label>
-                            @php( categorySelect( $categories, $htmlOption ) )
-                            <select class="form-control form-select-lg" name="parent_id">
-                                <option value="" selected>Choose an category</option>
-                                {!! $htmlOption !!}
-                            </select>
-                        </div>
                         <div class="form-group">
                             <label for="exampleTextarea1">Description</label>
                             <textarea class="form-control" id="description" name="description" rows="4">{{ old( 'description' ) }}</textarea>

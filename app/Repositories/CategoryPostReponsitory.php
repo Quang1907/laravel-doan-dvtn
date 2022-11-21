@@ -15,7 +15,7 @@ class CategoryPostReponsitory {
         return $this->category->create( $attributes );
     }
 
-    public function allCategory( ) {
+    public function allCategory() {
         return $this->category->with( "posts" )->get();
     }
 

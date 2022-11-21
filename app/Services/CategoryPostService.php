@@ -2,10 +2,8 @@
 namespace App\Services;
 
 use App\Models\Category;
-use App\Models\CategoryPosts;
 use App\Repositories\CategoryPostReponsitory;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use RealRashid\SweetAlert\Facades\Alert;
 

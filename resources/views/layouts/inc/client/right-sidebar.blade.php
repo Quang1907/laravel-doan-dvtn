@@ -92,7 +92,7 @@
     <div class="widget widget-categories">
         <h4 class="widget-title"><span>Categories</span></h4>
         <ul class="list-unstyled widget-list">
-            @foreach ( $showCategories  as $category )
+            @foreach ( $categoryPosts  as $category )
                 <li><a href="{{ route( 'category.post.slug', $category->slug ) }}" class="d-flex">{{ $category->name }} <small class="ml-auto">{{ "(" . $category->posts->count() . ")" }}</small></a></li>
             @endforeach
         </ul>

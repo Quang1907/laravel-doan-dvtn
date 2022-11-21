@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CategoryProduct;
 use App\Models\Slider;
 use App\Services\CategoryPostService;
+use App\Services\CategoryProductService;
 use App\Services\PostService;
-use App\Services\UserService;
+use App\Services\ProductService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -13,12 +15,19 @@ class HomeController extends Controller
 {
     private $categorySerice = null;
     private $postService = null;
+    private $productService = null;
+    private $categoryProductService = null;
 
-    public function __construct( CategoryPostService $categorySerice, PostService $postService, UserService $userService )
+    public function __construct (
+        CategoryPostService $categorySerice,
+        PostService $postService,
+        ProductService $productService,
+        CategoryProductService $categoryProductService )
     {
         $this->categorySerice = $categorySerice;
         $this->postService = $postService;
-        $this->userService = $userService;
+        $this->productService = $productService;
+        $this->categoryProductService = $categoryProductService;
     }
 
     public function home() {
@@ -35,12 +44,31 @@ class HomeController extends Controller
 
         $posts = $this->postService->allPost();
         return view( "client.activity", compact( "posts", "sliders" ) );
+    }
 
+    public function categoryProducts( $slug ){
+        $products =  $this->categoryProductService->categoryProductSlug( $slug );
+        $trendingProducts = $this->productService->trendingProducts();
+        $categoryProduct  = $this->categoryProductService->categorySlug( $slug );
+        $allCategoryProducts = $this->categoryProductService->allCateProduct();
+        return view( "client.product", compact( "products", 'trendingProducts', "categoryProduct", "allCategoryProducts" ) );
+    }
+
+    public function shop() {
+        $trendingProducts = $this->productService->trendingProducts();
+        $products = $this->productService->allProduct();
+        $allCategoryProducts = $this->categoryProductService->allCateProduct();
+        return view( "client.product", compact( "trendingProducts", "products", "allCategoryProducts" ) );
     }
 
     public function viewPost( $slugPost ) {
         $post = $this->postService->slugPost( $slugPost );
         return view( "client.post", compact( "post" ) );
+    }
+
+    public function viewProduct( $slugCate, $slugProduct ) {
+        $product = $this->productService->whereSlug( $slugProduct );
+        return view( "client.product-detail", compact( "slugCate", "slugProduct", "product" ) );
     }
 
     public function account() {

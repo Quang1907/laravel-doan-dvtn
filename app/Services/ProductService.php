@@ -2,7 +2,7 @@
 namespace App\Services;
 
 use App\Models\Brand;
-use App\Models\Category;
+use App\Models\CategoryProduct;
 use App\Models\Color;
 use App\Models\ProductImage;
 use App\Repositories\ProductRepository;
@@ -22,22 +22,26 @@ class ProductService {
         return $this->productRepository->all();
     }
 
+    public function whereSlug( $slug ) {
+        return $this->productRepository->slug( $slug );
+    }
+
     public function create() {
-        $categories = Category::where("status", true)->get();
+        $categories = CategoryProduct::where("status", true)->get();
         $brands = Brand::where("status", true)->get();
         $colors = Color::where( "status", true)->where( "product_id", "=", 0 )->get();
         return view( "admin.product.create", compact( "categories", "brands", "colors" ) );
     }
 
     public function storeProduct( Request $request ) {
-        $category = Category::findOrFail( $request->category_id );
-        $request[ 'slug' ] = Str::slug( $request->slug );
+        $category = CategoryProduct::findOrFail( $request->category_id );
+        $request[ 'slug' ] = Str::slug( $request->name );
         $request[ 'trending' ] =  $this->checkBox($request[ 'trending' ]) ;
         $request[ 'status' ] =  $this->checkBox($request[ 'status' ]) ;
-
         $product =  $category->products()->create( $request->all() );
         $image = str_replace( $request->root(), "", $request->image );
         $imageArr = explode( ",", $image );
+
         foreach ( $imageArr as $key => $image) {
             $product->productImages()->create( [ "product_id" => $product->id, 'image' =>  $image ] );
         }
@@ -52,7 +56,7 @@ class ProductService {
 
     public function editProduct( $id ) {
         $product = $this->productRepository->findOrFail( $id );
-        $categories = Category::where( "status", true)->get();
+        $categories = CategoryProduct::where("status", true)->get();
         $brands = Brand::where( "status", true)->get();
 
         $colorsArr = array();
@@ -68,7 +72,7 @@ class ProductService {
 
     public function updateProduct( Request $request, $id ) {
         $product =  $this->productRepository->findOrFail( $id );
-        $request[ 'slug' ] = Str::slug( $request->slug );
+        $request[ 'slug' ] = Str::slug( $request->name );
         $request[ 'trending' ] =  $this->checkBox($request[ 'trending' ]) ;
         $request[ 'status' ] =  $this->checkBox($request[ 'status' ]) ;
 
@@ -129,5 +133,9 @@ class ProductService {
 
     public function checkBox( $data ) {
         return $data == "on" ? true : false;
+    }
+
+    public function trendingProducts() {
+        return $this->productRepository->trending();
     }
 }

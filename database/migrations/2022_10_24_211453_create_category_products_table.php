@@ -26,7 +26,6 @@ class CreateCategoryProductsTable extends Migration
             $table->mediumText( "meta_description" );
 
             $table->tinyInteger( "status" )->default( 1 )->commit( "1=visible, 0=hidden" );
-            $table->integer("parent_id")->nullable();
             $table->timestamps();
         });
     }

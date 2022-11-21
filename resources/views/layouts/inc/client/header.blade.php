@@ -33,11 +33,37 @@
                     <!-- Dropdown menu -->
                     <div id="dropdownNavbar" class="hidden z-10 w-44 font-normal bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
                         <ul class="py-1 text-sm text-gray-700 dark:text-gray-400" aria-labelledby="dropdownLargeButton">
-                            @foreach ( $showCategories as $category )
+                            @foreach ( $categoryPosts as $category )
                                 <li>
                                     <a href="{{ route( 'category.post.slug',  $category->slug ) }}" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ $category->name }}</a>
                                 </li>
                             @endforeach
+                            <li class="border-t-2">
+                                <a href="{{ url( 'hoat-dong'  ) }}" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Xem tất cả</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <button id="dropdownNavbarLink" data-dropdown-toggle="categoryProduct" class="nav_div">Cửa hàng
+                        <svg class="ml-1 w-5 h-5" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd">
+                            </path>
+                        </svg>
+                    </button>
+                    <!-- Dropdown menu -->
+                    <div id="categoryProduct" class="hidden z-10 w-44 font-normal bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
+                        <ul class="py-1 text-sm text-gray-700 dark:text-gray-400" aria-labelledby="dropdownLargeButton">
+                            @foreach ( $categoryProducts as $categoryProduct )
+                                @if ( empty( $categoryProduct->parent_id ) )
+                                    <li>
+                                        <a href="{{ route( 'category.product.slug',  $categoryProduct->slug ) }}" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ $categoryProduct->name }}</a>
+                                    </li>
+                                @endif
+                            @endforeach
+                            <li class="border-t-2">
+                                <a href="{{ url( 'san-pham'  ) }}" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Xem tất cả</a>
+                            </li>
                         </ul>
                     </div>
                 </li>
@@ -57,24 +83,6 @@
                         </ul>
                     </div>
                 </li>
-                {{-- @php( $html = "" )
-                {{ show_category_post( $categories, $html ) }}
-
-                {{ dd( $html ) }} --}}
-                {{-- @foreach ( $categories as $category )
-                    <li>
-                        <a href="{{ route( 'category.post.slug', $category->slug )}}"
-                        class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700"
-                        aria-current="page">{{ $category->name }}</a>
-                    </li>
-                @endforeach --}}
-                {{-- @foreach ( config( "client.navbar" ) as $menu )
-                    <li>
-                        <a href="{{ route( $menu[ 'route' ] ) }}"
-                        class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700"
-                        aria-current="page">{{ $menu[ 'name' ] }}</a>
-                    </li>
-                @endforeach --}}
                 <li class="flex">
                     @guest
                         @if (Route::has('dangnhap'))

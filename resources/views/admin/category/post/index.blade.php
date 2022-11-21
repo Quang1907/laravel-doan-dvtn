@@ -46,6 +46,7 @@
                             <tr class="bg-danger">
                                 <th>ID</th>
                                 <th>Category name</th>
+                                <th class="text-center my-auto">Status</th>
                                 <th class="text-center">Action</th>
                             </tr>
                         </thead>
@@ -54,6 +55,9 @@
                                 <tr class="table-primary">
                                     <td scope="row">{{ $category->id }}</td>
                                     <td scope="row" >{{ $category->name }}</td>
+                                    <td class="text-center my-auto">
+                                        <i class="@if ( $category->status ) text-success @else text-danger @endif fa-regular fa-circle-dot"></i>
+                                    </td>
                                     <td class="w-50">
                                         <form action="{{ route( "category-posts.destroy" , $category->id ) }}" method="post">
                                             @csrf

@@ -3,11 +3,11 @@
 namespace App\Providers;
 
 use App\Models\Category;
+use App\Models\CategoryProduct;
 use App\Models\Post;
 use App\Repositories\CategoryPostReponsitory;
+use App\Repositories\CategoryProductRepository;
 use App\Repositories\PostReponsitory;
-use App\Services\CategoryPostService;
-use App\Services\PostService;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -33,8 +33,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $showCategories = ( new CategoryPostService( new CategoryPostReponsitory( new Category() ) ) )->allCategory();
-        $recent_posts = ( new PostService( new PostReponsitory( new Post() ) ) )->recentPost();
-        View::share(['showCategories'=> $showCategories, "recent_posts" => $recent_posts ]);
+        $categoryPosts =  ( new CategoryPostReponsitory( new Category ))->allCategory();
+        $recent_posts = ( new PostReponsitory( new Post() ) )->orderByAndLimit( "DESC", 5 );
+        $categoryProducts = ( new CategoryProductRepository( new CategoryProduct() ) )->allCateProduct();
+        View::share([
+            'categoryPosts'=> $categoryPosts,
+            "recent_posts" => $recent_posts,
+            "categoryProducts" => $categoryProducts
+        ]);
     }
 }

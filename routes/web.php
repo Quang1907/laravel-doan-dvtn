@@ -15,13 +15,22 @@ use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-// view client
-Route::get( "/", [ HomeController::class, "home" ] )->name( "home" );
-Route::get( "/hoat-dong/{slug?}", [ HomeController::class, "categoryPost" ] )->name( "category.post.slug" );
-Route::get( "/hoat-dong/bai-viet/{slug}", [ HomeController::class, "viewPost" ] )->name( "viewPost" );
 
-Route::get( "account", [ HomeController::class, "account" ] )->name( "profile" )->middleware( "checkInfo" );
-Route::get( "lich", [ HomeController::class, "calendar" ] )->name( "calendar" );
+// view client
+Route::controller( HomeController::class )->group( function () {
+    Route::get( "/", "home" )->name( "home" );
+    Route::get( "/hoat-dong/{slug?}", "categoryPost" )->name( "category.post.slug" );
+    Route::get( "/hoat-dong/bai-viet/{slug}", "viewPost" )->name( "viewPost" );
+
+    Route::get( "san-pham", "shop" );
+    Route::get( "/san-pham/{slug}", "categoryProducts" )->name( "category.product.slug" );
+    Route::get( "/san-pham/{slug}/{product}", "viewProduct" )->name( "viewProduct" );
+
+    Route::get( "account", "account" )->name( "profile" )->middleware( "checkInfo" );
+
+    Route::get( "lich",  "calendar" )->name( "calendar" );
+}) ;
+
 
 // mini game
 Route::view( "sipping-wheel", "client.game.sipping-wheel");
@@ -89,4 +98,3 @@ Route::group([ "prefix" => "admin",  "middleware" => "admin" ], function () {
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
-

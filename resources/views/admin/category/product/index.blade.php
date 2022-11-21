@@ -37,38 +37,32 @@
                         </div>
                     @endif
                     <table
-                        class="table table-striped
-                    table-hover
-                    table-borderless
-                    table-primary
-                    align-middle">
+                        class="table table-striped table-borderless table-primary align-middle">
                         <thead class="table-light">
                             <tr class="bg-danger">
                                 <th>ID</th>
                                 <th>Category name</th>
+                                <th class="text-center my-auto">Status</th>
                                 <th class="text-center">Action</th>
                             </tr>
                         </thead>
-                        <tbody class="table-group-divider text-black ">
+                        <tbody class="table-group-divider">
                             @forelse ( $category_products as $category )
                                 <tr class="table-primary">
                                     <td scope="row">{{ $category->id }}</td>
                                     <td scope="row" >{{ $category->name }}</td>
-                                    <td class="w-50">
+                                    <td class="text-center my-auto">
+                                        <i class="@if ( $category->status ) text-success @else text-danger @endif fa-regular fa-circle-dot"></i>
+                                    </td>
+                                    <td class="text-center">
                                         <form action="{{ route( "category-products.destroy" , $category->id ) }}" method="post">
                                             @csrf
                                             @method("DELETE")
-                                            <div class="d-flex px-2 float-right" >
-                                                @if ( $category->slug == "hoat-dong" )
-                                                    <div>
-                                                        <a href="{{ route( "category-products.show" , $category->id ) }}" class="btn btn-sm btn-primary">List Posts</a>
-                                                    </div>
-                                                @endif
-                                                    <div>
-                                                        <a href="{{ route( "category-products.edit" , $category->id ) }}" class="btn btn-sm btn-warning text-white mx-1">Edit</a>
-                                                        <button class="btn btn-sm btn-danger">Delete</button>
-                                                    </div>
-                                            </div>
+                                                <div>
+                                                    <a href="{{ route( "category-products.show" , $category->id ) }}" class="btn btn-sm btn-primary">List Products</a>
+                                                    <a href="{{ route( "category-products.edit" , $category->id ) }}" class="btn btn-sm btn-warning text-white mx-1">Edit</a>
+                                                    <button class="btn btn-sm btn-danger">Delete</button>
+                                                </div>
                                         </form>
                                     </td>
                                 </tr>

@@ -27,7 +27,6 @@ class ProductFormRequest extends FormRequest
             "name"=> "required|string",
             "imageFile"=> "nullable",
             "category_id"=> "required|integer",
-            "slug"=> "required|string",
             "brand"=> "required|integer",
             "small_description"=> "required",
             "description"=> "required|string",

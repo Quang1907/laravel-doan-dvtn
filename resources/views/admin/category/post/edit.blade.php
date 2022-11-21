@@ -1,10 +1,10 @@
 @extends('layouts.admin_master')
-@section('title', 'Edit category')
+@section('title', 'Edit Post category')
 @section('content')
     <div class="container mt-3">
         <div class="card border-primary">
             <div class="card-header">
-                <h2 class="text-center h2">Edit Category</h2>
+                <h2 class="text-center h2">Edit Post Category</h2>
             </div>
             <div class="card-body">
                 <div class="text-right my-3">
@@ -24,17 +24,6 @@
                         <div class="mb-3">
                             <label for="" class="form-label">Category Name</label>
                             <input type="text" class="form-control" name="name" value="{{ $category->name }}" placeholder="Tên danh mục">
-                        </div>
-                        <div class="mb-3">
-                            <label for="" class="form-label">Danh mục cha</label>
-                            @php
-                                $htmlOption = null;
-                                categorySelect( $categories, $htmlOption, $category->parent_id );
-                            @endphp
-                            <select class="form-control form-select-lg" name="parent_id">
-                                <option value="" selected>Choose an category</option>
-                                {!! $htmlOption !!}
-                            </select>
                         </div>
                         <div class="form-group">
                             <label for="exampleTextarea1">Description</label>

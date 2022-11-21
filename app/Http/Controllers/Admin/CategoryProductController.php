@@ -53,7 +53,7 @@ class CategoryProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show( $id )
     {
         //
     }
@@ -64,9 +64,9 @@ class CategoryProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit( $id )
     {
-        //
+        return $this->categoryProductService->editCategoryProduct( $id );
     }
 
     /**
@@ -76,9 +76,10 @@ class CategoryProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id )
     {
-        //
+        $this->categoryProductService->update( $request, $id );
+        return redirect()->route( "category-products.index" )->with( "message", "Category Updated Successfully.");
     }
 
     /**
@@ -87,8 +88,9 @@ class CategoryProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy( $id )
     {
-        //
+        $this->categoryProductService->delete( $id );
+        return redirect()->route( "category-products.index" );
     }
 }

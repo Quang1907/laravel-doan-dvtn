@@ -1,10 +1,10 @@
 @extends( 'layouts.admin_master' )
-@section('title', 'Categories')
+@section('title', 'List Products')
 @section('content')
     <div class="card">
         <div class="card-header rounded d-flex">
             <div class="w-100">
-                <h2 class="h2">Change Product</h2>
+                <h2 class="h2">List Products</h2>
             </div>
             <div class="w-100 text-right">
                 <a href="{{ route('product.create') }}" class="btn text-white btn-warning btn-sm">Add Product</a>
@@ -30,8 +30,8 @@
                             <tr>
                                 <td>{{ $product->id }}</td>
                                 <td>
-                                    @if ( $product->category )
-                                        {{ $product->category->name }}
+                                    @if ( $product->category_products )
+                                        {{ $product->category_products->name }}
                                     @else
                                         {{ "No category" }}
                                     @endif
