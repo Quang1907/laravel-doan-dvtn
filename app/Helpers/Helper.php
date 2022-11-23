@@ -66,3 +66,29 @@ if ( !function_exists( "check_active_event") ) {
         }
     }
 }
+
+if ( !function_exists( "format_array" ) ) {
+    function format_array( $array = [] ) {
+        if ( !empty( $array ) ) {
+
+            $arr = [];
+            foreach ( $array as $key => $value) {
+                $arr[] = $key;
+
+            }
+            return $arr;
+        }
+        return null;
+    }
+}
+
+if ( !function_exists( "check_brand" ) ) {
+    function check_brand( $keycheck,  $array = [] ) {
+        if ( !empty( $array  ) ) {
+            if ( in_array( $keycheck, $array ) ) {
+                return "checked";
+            }
+        }
+        return null;
+    }
+}

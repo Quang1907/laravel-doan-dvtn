@@ -22,6 +22,10 @@ class CategoryProductRepository {
         return $this->categoryProduct->create( $attribute );
     }
 
+    public function whereBrands( $id ) {
+        return $this->categoryProduct->find( $id );
+    }
+
     public function find( $id ) {
         return $this->categoryProduct->find( $id );
     }

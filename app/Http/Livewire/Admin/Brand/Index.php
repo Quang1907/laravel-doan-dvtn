@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Admin\Brand;
 
 use App\Models\Brand;
+use App\Models\CategoryProduct;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Support\Str;
@@ -11,18 +12,20 @@ class Index extends Component
 {
     use WithPagination;
 
-    public $name, $slug, $status, $brand_id;
+    public $name, $slug, $status, $brand_id, $category_id;
 
     public function rules() {
         return [
             "name" => "required|string",
             "slug" => "required|string",
+            "category_id" => "required",
         ];
     }
 
     protected $messages = [
         "name.required" => "Vui lòng không để trống tên",
-        "name.string" => "Tên phải là chuỗi ký tự",
+        "name.required" => "Vui lòng không để trống category",
+        "category_id.string" => "Tên phải là chuỗi ký tự",
         "slug.required" => "Vui lòng không để trống slug",
         "slug.string" => "Slug phải là chuỗi ký tự",
     ];
@@ -31,9 +34,11 @@ class Index extends Component
         $this->validate();
         $brand = [
             "name" => $this->name,
+            "category_id" => $this->category_id,
             "slug" => Str::slug( $this->slug ),
             "status" => ( $this->status == "on" ) ? 1 : 0,
         ];
+
         Brand::create( $brand );
         session()->flash( "message", "Brand Created Sucessfully" );
         $this->dispatchBrowserEvent( "close-modal" );
@@ -45,6 +50,7 @@ class Index extends Component
         $brand = Brand::findOrfail( $brand_id );
         $this->name = $brand->name;
         $this->slug = $brand->slug;
+        $this->category_id = $brand->category_id;
         $this->status = $brand->status;
         $this->brand_id = $brand_id;
     }
@@ -53,6 +59,7 @@ class Index extends Component
         $this->validate();
         $brand = [
             "name" => $this->name,
+            "category_id" => $this->category_id,
             "slug" => Str::slug( $this->slug ),
             "status" => ( $this->status == true ) ? 1 : 0,
         ];
@@ -77,8 +84,9 @@ class Index extends Component
 
     public function render()
     {
+        $categories = CategoryProduct::where( "status", true )->get();
         $brands = Brand::orderBy( "id" , "DESC" )->paginate( 10 );
-        return view('livewire.admin.brand.index' , [ 'brands' => $brands ] )
+        return view('livewire.admin.brand.index' , [ 'brands' => $brands, "categories" => $categories ] )
             ->extends( "layouts.admin_master" )
             ->section( "content" );
     }
@@ -96,5 +104,6 @@ class Index extends Component
         $this->slug = null;
         $this->start = null;
         $this->brand_id = null;
+        $this->category_id = null;
     }
 }

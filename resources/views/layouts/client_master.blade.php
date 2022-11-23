@@ -5,6 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="desciption" content="@yield( 'description' )">
+    <meta name="keywords" content="@yield( 'keywords' )">
+    <meta name="author" content="Quang CNTT">
+
     <title>@yield('title')</title>
     <link rel="stylesheet" href="{{ asset( 'css/client.css' ) }}">
     <link rel="stylesheet" href="{{ asset( 'js/slick/slick.css') }}">

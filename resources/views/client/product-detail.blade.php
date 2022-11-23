@@ -1,5 +1,7 @@
 @extends('layouts.client_master')
 @section('title', 'Trang chu')
+@section('description', $product->meta_description )
+@section('keywords', $product->meta_keyword )
 
 @section('styles')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.css"
@@ -17,18 +19,18 @@
                             @foreach ($product->productImages()->get() as $detail_key => $detail_image)
                                 <div x-show="image === {{ $detail_key }}"
                                     class="h-64 md:h-80 rounded-lg mb-4 flex items-center justify-center">
-                                    <img src="{{ asset($detail_image->image) }}" class="h-64 md:h-80" alt="">
+                                    <img src="{{ asset( $detail_image->image ) }}" class="h-64 md:h-80" alt="">
                                 </div>
                             @endforeach
                         </div>
 
                         <div class="flex -mx-2 mb-4">
-                            @foreach ($product->productImages()->get() as $list_key => $list_image)
+                            @foreach ( $product->productImages()->get() as $list_key => $list_image)
                                 <div class="flex-1 px-2">
                                     <button x-on:click="image = {{ $list_key }}"
                                         :class="{ 'ring-2 ring-indigo-300 ring-inset': image === {{ $list_key }} }"
-                                        class="w-full rounded-lg h-24 md:h-32 flex items-center justify-center">
-                                        <img src="{{ asset($list_image->image) }}" class="rounded-lg h-24 md:h-32"
+                                        class="w-full rounded-lg flex items-center justify-center">
+                                        <img src="{{ asset($list_image->image) }}" class="rounded-lg w-full"
                                             alt="">
                                     </button>
                                 </div>
@@ -37,10 +39,22 @@
                     </div>
                 </div>
                 <div class="md:flex-1 px-4">
-                    <p class="text-gray-500 text-sm"><a href="#" class="text-indigo-600 hover:underline">Category</a>
+                    <p class="text-gray-500 text-sm"><a href="#" class="text-indigo-600 hover:underline">{{ $product->category_products->name }}</a>
                     </p>
-                    <h2 class="mb-2 leading-tight tracking-tight font-bold text-gray-800 text-2xl md:text-3xl">
-                        {{ $product->name }}</h2>
+                    <div class="flex">
+                        <h2 class="mb-2 leading-tight tracking-tight font-bold text-gray-800 text-2xl md:text-3xl">
+                            {{ $product->name }}</h2>
+
+                        <button
+                            class="rounded-full w-7 h-7 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4  focus:bg-red-200 focus:text-red-700  ">
+                            <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                class="w-5 h-5" viewBox="0 0 24 24">
+                                <path
+                                    d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z">
+                                </path>
+                            </svg>
+                        </button>
+                    </div>
                     {{-- review and social --}}
                     <div class="flex mb-4">
                         <span class="flex items-center">
@@ -105,38 +119,31 @@
                         <div>
                             <div class="rounded-lg bg-gray-100 flex py-2 px-3">
                                 <span
-                                    class="font-bold text-indigo-600 text-3xl">{{ number_format($product->selling_price ?? $product->original_price) }}</span>
+                                    class="font-bold text-indigo-600 text-3xl">{{ number_format( $product->selling_price ?? $product->original_price) }}</span>
                                 <span class="text-indigo-400 mr-1 mt-1">VNĐ</span>
                             </div>
                         </div>
                         @if (!empty($product->selling_price))
                             <div class="flex-1">
                                 <p class="text-green-500 text-xl font-semibold">Save 12%</p>
-                                <del class="text-red-400 text-sm">{{ number_format($product->original_price) }} VND</del>
+                                <del class="text-red-400 text-sm">{{ number_format( $product->original_price ) }} VND</del>
                             </div>
                         @endif
                     </div>
 
                     <p class="text-gray-500">{{ $product->small_description }}</p>
 
-                    <div class="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
+                    <div class="flex items-center border-b-2 border-gray-100">
                         <div class="flex">
                             <span class="mr-3">Color</span>
-                            @foreach ($product->productColors()->get() as $color)
+                            @forelse ( $product->productColors()->get() as $color )
                                 <input type="radio"
                                     class="bg-{{ $color->code }}-500 border-2 border-gray-300 ml-1 rounded-full w-6 h-6 focus:outline-none focus:bg-{{ $color->code }}-600 focus:border-{{ $color->code }}-500"
                                     name="color" id="">
-                            @endforeach
+                            @empty
+                            <span>: no color</span>
+                            @endforelse
                         </div>
-                        <button
-                            class="rounded-full w-7 h-7 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4  focus:bg-red-200 focus:text-red-700  ">
-                            <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                class="w-5 h-5" viewBox="0 0 24 24">
-                                <path
-                                    d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z">
-                                </path>
-                            </svg>
-                        </button>
                     </div>
                     <div class="flex py-4 space-x-4">
                         <div class=" flex">
@@ -149,12 +156,33 @@
                         </div>
 
                         <button type="button"
-                            class=" px-6  font-semibold rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white">
+                            class="px-6 font-semibold rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white">
                             Add to Cart
                         </button>
                     </div>
                 </div>
             </div>
+
+                {{--  tabls  --}}
+                <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
+                    <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="myTab" data-tabs-toggle="#myTabContent" role="tablist">
+                        <li class="mr-2" role="presentation">
+                            <button class="inline-block p-4 rounded-t-lg border-b-2" id="profile-tab" data-tabs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Thông tin sản phẩm</button>
+                        </li>
+                        <li class="mr-2" role="presentation">
+                            <button class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="dashboard-tab" data-tabs-target="#dashboard" type="button" role="tab" aria-controls="dashboard" aria-selected="false">Đánh giá</button>
+                        </li>
+                    </ul>
+                </div>
+                <div id="myTabContent">
+                    <div class="hidden p-4 bg-gray-50 rounded-lg dark:bg-gray-800" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        <p class="text-sm text-gray-500 dark:text-gray-400">{!! $product->description !!}</p>
+                    </div>
+                    <div class="hidden p-4 bg-gray-50 rounded-lg dark:bg-gray-800" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
+                        <p class="text-sm text-gray-500 dark:text-gray-400">This is some placeholder content the <strong class="font-medium text-gray-800 dark:text-white">Dashboard tab's associated content</strong>. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling.</p>
+                    </div>
+                </div>
+
         </div>
     </section>
 @endsection

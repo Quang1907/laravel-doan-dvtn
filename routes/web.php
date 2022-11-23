@@ -22,9 +22,9 @@ Route::controller( HomeController::class )->group( function () {
     Route::get( "/hoat-dong/{slug?}", "categoryPost" )->name( "category.post.slug" );
     Route::get( "/hoat-dong/bai-viet/{slug}", "viewPost" )->name( "viewPost" );
 
-    Route::get( "san-pham", "shop" );
-    Route::get( "/san-pham/{slug}", "categoryProducts" )->name( "category.product.slug" );
-    Route::get( "/san-pham/{slug}/{product}", "viewProduct" )->name( "viewProduct" );
+    Route::get( "san-pham", "shop" )->name( "shop" );
+    Route::get( "/san-pham/{cateSlug}", "categoryProducts" )->name( "category.product.slug" );
+    Route::get( "/san-pham/{cateSlug}/{slugProduct}", "viewProduct" )->name( "viewProduct" );
 
     Route::get( "account", "account" )->name( "profile" )->middleware( "checkInfo" );
 
@@ -42,16 +42,16 @@ Route::view( "dang-ky" , "client.auth.register" )->name( "dangky" )->middleware(
 Route::post( "dang-ky", [ AuthController::class, "register" ] )->name( "account.register");
 Route::get( "vertify/email/{email}/{user}", [AuthController::class, "vertifyEmail"] )->name("account.vertifyEmail"); // ->middleware( "auth" )
 Route::post( "vertify/email/{user}", [ AuthController::class, "vertify" ] )->name( "account.vertify" );
-Route::view( "forget/password", "client.auth.forget_password" )->name( "forget.password" );
-Route::post( "forget/password", [ AuthController::class, "forget" ] )->name( "forget.password" );
-Route::get( "vertify/password/{user}",[ AuthController::class, "confirmMail"] )->name( "vertify.password" );
-Route::post( "vertify/password/{user}",   [ AuthController::class, "vertifyPassword" ]  )->name( "vertify.password" );
+// Route::view( "forget/password", "client.auth.forget_password" )->name( "forget.password" );
+// Route::post( "forget/password", [ AuthController::class, "forget" ] )->name( "forget.password" );
+// Route::get( "vertify/password/{user}",[ AuthController::class, "confirmMail"] )->name( "vertify.password" );
+// Route::post( "vertify/password/{user}",   [ AuthController::class, "vertifyPassword" ]  )->name( "vertify.password" );
 
 Route::group([ "middleware" => "auth", "prefix" => "account"],function () {
-    Route::view( "password" ,'client.auth.change_password' )->name( "account.changePassword" )->middleware( "checkInfo" );
-    Route::post( "password" , [ AuthController::class, "password" ] )->name( "account.changePassword" );
-    Route::view( "changeinfo" ,'client.auth.change_info' )->name( "account.changeinfo" )->middleware( "checkInfo" );
-    Route::post( "changeinfo" , [ AuthController::class, "info" ] )->name( "account.changeinfo" );
+    // Route::view( "password" ,'client.auth.change_password' )->name( "account.changePassword" )->middleware( "checkInfo" );
+    // Route::post( "password" , [ AuthController::class, "password" ] )->name( "account.changePassword" );
+    // Route::view( "changeinfo" ,'client.auth.change_info' )->name( "account.changeinfo" )->middleware( "checkInfo" );
+    // Route::post( "changeinfo" , [ AuthController::class, "info" ] )->name( "account.changeinfo" );
     Route::view( "confirm", "client.auth.confirm" );
     Route::post( "confirm/{user}", [ AuthController::class,  "confirm" ] )->name( "account.confirm" );
     Route::post( "changeAvata/{user}", [ AuthController::class, "changeAvata" ] )->name( "changeAvata" );
@@ -75,7 +75,9 @@ Route::group([ "prefix" => "admin",  "middleware" => "admin" ], function () {
     Route::post( "user/active", [ UserController::class, "active"] )->name( "user.active" );
 
     Route::resource( "category-posts", CategoryPostController::class );
+    Route::get( "category-products/brands/{category_id}", [ CategoryProductController::class, "brands" ] )->name( "brands.category");
     Route::resource( "category-products", CategoryProductController::class );
+
 
     Route::resource( "post", PostController::class );
     Route::post( "post/import", [ PostController::class, "uploadFile" ] )->name( "post.import" );

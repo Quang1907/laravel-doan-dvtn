@@ -45,7 +45,7 @@
                     <div class="tab-pane border p-3 active" id="home" role="tabpanel" aria-labelledby="home-tab">
                         <div class="mb-3">
                             <label for="" class="form-label">Select Category</label>
-                            <select class="form-control" name="category_id" id="">
+                            <select class="form-control" name="category_id" id="select_category">
                                 <option selected>Choose an category</option>
                                 @forelse ( $categories as $category )
                                     <option value="{{ $category->id }}" @if ( old( 'category_id', $product->category_id ) == $category->id ) selected @endif >{{ $category->name }}</option>
@@ -61,13 +61,8 @@
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Select Brand</label>
-                            <select class="form-control" name="brand" id="">
+                            <select class="form-control" name="brand" id="select_brands">
                                 <option selected>Choose an brand</option>
-                                @forelse ( $brands as $brand )
-                                    <option value="{{ $brand->id }}" @if ( old( 'brand', $product->brand ) == $brand->id ) selected @endif >{{ $brand->name }}</option>
-                                @empty
-                                    <option >Brand not found</option>
-                                @endforelse
                             </select>
                         </div>
                         <div class="mb-3">
@@ -75,8 +70,8 @@
                             <textarea class="form-control" name="small_description" id="small_description" rows="4">{{ old( 'small_description', $product->small_description ) }}</textarea>
                         </div>
                         <div class="mb-3">
-                            <label for="description" class="form-label">Description</label>
-                            <textarea class="form-control" name="description" id="description" rows="4">{{ old( 'description', $product->description ) }}</textarea>
+                            <label for="" class="form-label">Description</label>
+                            <textarea id="my-editor" name="description" class="form-control">{!! old( 'description', $product->description ) !!}</textarea>
                         </div>
                     </div>
                     <div class="tab-pane fade border p-3" id="seo-tag" role="tabpanel" aria-labelledby="seo-tag-tab">
@@ -129,24 +124,43 @@
                         </div>
                     </div>
                     <div class="tab-pane fade border p-3" id="product-image" role="tabpanel" aria-labelledby="product-image-tab">
-                        <div class="input-group">
-                            <span class="input-group-btn">
-                            <a id="lfm" data-input="thumbnail2" data-preview="holder2" class="btn btn-sm btn-primary text-white">
-                                <i class="fa fa-picture-o"></i> Choose
-                            </a>
-                            </span>
-                            <input id="thumbnail2" class="form-control"  value="{{ old( 'image', $product->image ) }}" type="hidden" name="image">
-                        </div>
-                        <div id="holder2" class="flex mb-2" style="margin-top:15px;max-height:100px;">
-                        </div>
-                        <div class="row p-2 border">
-                            <h3 class="w-100">Hình ảnh</h3>
-                            @foreach ( $product->productImages()->get() as $image )
-                                <div class="col-sm-2 text-center">
-                                    <img src="{{ asset( $image->image ) }}" class="w-100" alt="">
-                                    <a href="{{ route( 'product-image.delete', $image ) }}"><i class="fa-solid fa-xmark"></i></a>
+                        <div>
+                            <h3 class="w-100">Hình ảnh mô tả</h3>
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                <a id="lfm1" data-input="thumbnail1" data-preview="holder1" class="btn btn-sm btn-primary text-white">
+                                    <i class="fa fa-picture-o"></i> Choose
+                                </a>
+                                </span>
+                                <input id="thumbnail1" class="form-control"  value="{{ old( 'image', $product->image ) }}" type="hidden" name="image">
+                            </div>
+                            <div id="holder1" class="row mb-2" style="margin-left:10px; margin-top:15px;max-height:100px;">
+                                <div class="col-sm-2">
+                                    <img src="{{ old( 'image', $product->image ) }}" class="w-100 rounded-lg" alt="">
                                 </div>
-                            @endforeach
+                            </div>
+                        </div>
+                        <hr>
+                        <div>
+                            <h3 class="w-100">Hình ảnh chi tiết</h3>
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                <a id="lfm2" data-input="thumbnail2" data-preview="holder2" class="btn btn-sm btn-primary text-white">
+                                    <i class="fa fa-picture-o"></i> Choose
+                                </a>
+                                </span>
+                                <input id="thumbnail2" class="form-control"  value="{{ old( 'images' ) }}" type="hidden" name="images">
+                            </div>
+                            <div id="holder2" class="flex mb-2" style="margin-top:15px;max-height:100px;">
+                            </div>
+                            <div class="row p-2">
+                                @foreach ( $product->productImages()->get() as $imageDetail )
+                                    <div class="col-sm-2 text-center">
+                                        <img src="{{ asset( $imageDetail->image ) }}" class="w-100 rounded-lg" alt="">
+                                        <a href="{{ route( 'product-image.delete', $imageDetail ) }}"><i class="fa-solid fa-xmark"></i></a>
+                                    </div>
+                                @endforeach
+                            </div>
                         </div>
                     </div>
                     <div class="tab-pane fade border p-3 fw-bold" id="product-color" role="tabpanel" aria-labelledby="product-color-tab">
@@ -246,9 +260,11 @@
 @endsection
 
 @section('script')
+    <script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
     <script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
     <script>
-        $('#lfm').filemanager('image');
+        $('#lfm1').filemanager('image');
+        $('#lfm2').filemanager('images');
 
         var i = 1;
         $( "#newColor" ).click(function (e) {
@@ -282,6 +298,52 @@
                             '<input type="number" class="form-control" name="newQuantity[]" value="'+ quantity +'" >' +
                         '</label>' +
                     '</div>';
+        }
+
+
+        var options = {
+            filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
+            filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token=',
+            filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+            filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token='
+        };
+
+        CKEDITOR.replace('my-editor', options);
+
+        var old_select_category = $( "#select_category" ).find( ":selected").val();
+
+        if ( old_select_category != 0 ) {
+            find_brand_with_category( old_select_category );
+        }
+
+        $( "#select_category" ).change( function ( e ) {
+            e.preventDefault();
+            var category_id = $(this).find( ":selected" ).val();
+            find_brand_with_category( category_id );
+        } )
+
+        function find_brand_with_category( category_id ) {
+            $.ajax({
+                type: "get",
+                url: "{{ url( 'admin/category-products/brands/'  ) }}/" + category_id,
+                success: function ( response ) {
+                    var options = "<option selected>Choose an brand</option>";
+                    if ( (response.brands).length > 0 ) {
+                        options = "";
+                        var selected = "";
+                        var id_old = {{ old( 'brand') }}
+
+                        $.each( response.brands , function ( indexInArray, valueOfElement ) {
+                            if ( id_old == valueOfElement.id ) {
+                                selected = "selected";
+                            }
+                            options += "<option " +  selected + " value=" + valueOfElement.id + ">" + valueOfElement.name + "</option>";
+                        });
+                    }
+
+                    $( "#select_brands" ).html( options );
+                }
+            });
         }
     </script>
 

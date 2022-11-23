@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CategoryProduct;
+use App\Models\Brand;
+use App\Models\Color;
 use App\Models\Slider;
 use App\Services\CategoryPostService;
 use App\Services\CategoryProductService;
@@ -34,6 +35,7 @@ class HomeController extends Controller
         return view( "client.index" );
     }
 
+    // post by category or all post
     public function categoryPost( $slug = null ) {
         $sliders = Slider::where( "status", true )->get();
 
@@ -46,26 +48,32 @@ class HomeController extends Controller
         return view( "client.activity", compact( "posts", "sliders" ) );
     }
 
-    public function categoryProducts( $slug ){
-        $products =  $this->categoryProductService->categoryProductSlug( $slug );
-        $trendingProducts = $this->productService->trendingProducts();
-        $categoryProduct  = $this->categoryProductService->categorySlug( $slug );
-        $allCategoryProducts = $this->categoryProductService->allCateProduct();
-        return view( "client.product", compact( "products", 'trendingProducts', "categoryProduct", "allCategoryProducts" ) );
-    }
-
-    public function shop() {
-        $trendingProducts = $this->productService->trendingProducts();
-        $products = $this->productService->allProduct();
-        $allCategoryProducts = $this->categoryProductService->allCateProduct();
-        return view( "client.product", compact( "trendingProducts", "products", "allCategoryProducts" ) );
-    }
-
+    // show post detail
     public function viewPost( $slugPost ) {
         $post = $this->postService->slugPost( $slugPost );
         return view( "client.post", compact( "post" ) );
     }
 
+    // all products
+    public function shop() {
+        $trendingProducts = $this->productService->trendingProducts();
+        $products = $this->productService->allProduct();
+        $allCategoryProducts = $this->categoryProductService->allCateProduct();
+        $brands = Brand::all();
+        $colors = Color::all();
+        return view( "client.shop", compact( "trendingProducts", "products", "allCategoryProducts", "brands", "colors"  ) );
+    }
+
+    // products by category
+    public function categoryProducts( $slug ){
+        $trendingProducts = $this->productService->trendingProducts(); // product trending
+        $categoryProduct  = $this->categoryProductService->categorySlug( $slug ); // show category product
+        $allCategoryProducts = $this->categoryProductService->allCateProduct(); // show category list
+        $colors = Color::all();
+        return view( "client.product", compact( 'trendingProducts', "categoryProduct", "allCategoryProducts", "colors" ) );
+    }
+
+    // show product detail
     public function viewProduct( $slugCate, $slugProduct ) {
         $product = $this->productService->whereSlug( $slugProduct );
         return view( "client.product-detail", compact( "slugCate", "slugProduct", "product" ) );

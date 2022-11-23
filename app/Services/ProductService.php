@@ -28,9 +28,8 @@ class ProductService {
 
     public function create() {
         $categories = CategoryProduct::where("status", true)->get();
-        $brands = Brand::where("status", true)->get();
         $colors = Color::where( "status", true)->where( "product_id", "=", 0 )->get();
-        return view( "admin.product.create", compact( "categories", "brands", "colors" ) );
+        return view( "admin.product.create", compact( "categories", "colors" ) );
     }
 
     public function storeProduct( Request $request ) {
@@ -38,12 +37,15 @@ class ProductService {
         $request[ 'slug' ] = Str::slug( $request->name );
         $request[ 'trending' ] =  $this->checkBox($request[ 'trending' ]) ;
         $request[ 'status' ] =  $this->checkBox($request[ 'status' ]) ;
-        $product =  $category->products()->create( $request->all() );
-        $image = str_replace( $request->root(), "", $request->image );
-        $imageArr = explode( ",", $image );
+        $request[ 'image' ] = str_replace( $request->root(), "", $request->images );
 
-        foreach ( $imageArr as $key => $image) {
-            $product->productImages()->create( [ "product_id" => $product->id, 'image' =>  $image ] );
+        $product =  $category->products()->create( $request->all() );
+
+        $imageDetail = str_replace( $request->root(), "", $request->images );
+        $listImage = explode( ",", $imageDetail );
+
+        foreach ( $listImage as $key => $imageItem ) {
+            $product->productImages()->create( [ "product_id" => $product->id, 'image' =>  $imageItem ] );
         }
 
         if ( $request->colors ) {
@@ -57,7 +59,6 @@ class ProductService {
     public function editProduct( $id ) {
         $product = $this->productRepository->findOrFail( $id );
         $categories = CategoryProduct::where("status", true)->get();
-        $brands = Brand::where( "status", true)->get();
 
         $colorsArr = array();
         $product_colors  = $product->productColors->each( function ( $product_colors  ) use (&$colorsArr) {
@@ -67,7 +68,7 @@ class ProductService {
         $colors =  Color::where( "status", true)->where( "product_id", "=", 0 )->whereNotIn( "id", $colorsArr )->get();
         $colors_product = Color::where( "status", true)->where( "product_id", "=", $id )->whereNotIn( "id", $colorsArr )->get();
 
-        return view( "admin.product.edit", compact( "product", "categories", "brands", "colors", "product_colors", "colors_product" ) );
+        return view( "admin.product.edit", compact( "product", "categories", "colors", "product_colors", "colors_product" ) );
     }
 
     public function updateProduct( Request $request, $id ) {
@@ -75,12 +76,14 @@ class ProductService {
         $request[ 'slug' ] = Str::slug( $request->name );
         $request[ 'trending' ] =  $this->checkBox($request[ 'trending' ]) ;
         $request[ 'status' ] =  $this->checkBox($request[ 'status' ]) ;
+        $request[ 'image' ] = str_replace( $request->root(), "", $request->image );
 
         $product->update( $request->all() );
-        $image = str_replace( $request->root(), "", $request->image );
-        $imageArr = explode( ",", $image );
-        foreach ( $imageArr as $key => $image) {
-            $product->productImages()->create( [ "product_id" => $product->id, 'image' =>  $image ] );
+        $images = str_replace( $request->root(), "", $request->images );
+        $imageArr = explode( ",", $images );
+
+        foreach ( $imageArr as $key => $imageDetail ) {
+            $product->productImages()->create( [ "product_id" => $product->id, 'image' =>  $imageDetail ] );
         }
 
         $product->productColorTable()->delete();

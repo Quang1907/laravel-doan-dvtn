@@ -21,6 +21,7 @@
                         <tr>
                             <th scope="col">ID</th>
                             <th scope="col">Name</th>
+                            <th scope="col">Category</th>
                             <th scope="col">Status</th>
                             <th scope="col" class="text-center">Action</th>
                         </tr>
@@ -30,11 +31,12 @@
                             <tr>
                                 <td class="p-1">{{ $brand->id }}</td>
                             <td class="p-1">{{ $brand->name }}</td>
-                                <td class="p-1">{{ $brand->status == 1 ? "Visiblae" : "Hidden" }}</td>
-                                <td class="w-25 text-center p-1">
-                                    <a href="#" wire:click.prevent="editBrand({{ $brand->id }})" data-bs-toggle="modal" data-bs-target="#updateBrandModal" class="btn btn-sm btn-warning bg-warning text-white">Edit</a>
-                                    <a href="#" wire:click.prevent="deleteBrand({{ $brand->id }})" data-bs-toggle="modal" data-bs-target="#deleteBrandModal"  class="btn btn-sm btn-danger bg-danger text-white">Delete</a>
-                                </td>
+                            <td class="p-1">{{ $brand->category_products->name }}</td>
+                            <td class="p-1">{{ $brand->status == 1 ? "Visiblae" : "Hidden" }}</td>
+                            <td class="w-25 text-center p-1">
+                                <a href="#" wire:click.prevent="editBrand({{ $brand->id }})" data-bs-toggle="modal" data-bs-target="#updateBrandModal" class="btn btn-sm btn-warning bg-warning text-white">Edit</a>
+                                <a href="#" wire:click.prevent="deleteBrand({{ $brand->id }})" data-bs-toggle="modal" data-bs-target="#deleteBrandModal"  class="btn btn-sm btn-danger bg-danger text-white">Delete</a>
+                            </td>
                             </tr>
                         @empty
                             <tr>

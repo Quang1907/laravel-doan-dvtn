@@ -35,6 +35,15 @@ class CategoryProductController extends Controller
         return view( 'admin.category.product.create' , compact( "category_products" ) );
     }
 
+    public function brands( $category_id ) {
+        $category =  $this->categoryProductService->brands(  $category_id );
+        $brands = $category->brands()->get();
+        return response()->json([
+            "brands" => $brands
+        ]);
+    }
+
+
     /**
      * Store a newly created resource in storage.
      *

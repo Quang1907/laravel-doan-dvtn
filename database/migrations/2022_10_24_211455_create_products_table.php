@@ -18,13 +18,14 @@ class CreateProductsTable extends Migration
 
             $table->foreignId( "category_id" )->references( "id" )->on( "category_products" )->onDelete( "cascade" );
             $table->string( "name" );
+            $table->string( "image" )->nullable();
             $table->string( "slug" );
             $table->string( "brand" )->nullable();
             $table->string( "small_description" )->nullable();
             $table->longText( "description" );
 
             $table->integer( "original_price" );
-            $table->integer( "selling_price" );
+            $table->integer( "selling_price" )->nullable();
             $table->integer( "quantity" );
             $table->boolean( "trending" )->default( false )->commit( "1=trending, 0=not-trending" );
             $table->boolean( "status" )->default( false )->commit( "1=show, 0=visible" );

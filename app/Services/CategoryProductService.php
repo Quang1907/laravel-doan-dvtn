@@ -21,6 +21,10 @@ class CategoryProductService {
         return $this->categoryProductRepository->allCateProduct();
     }
 
+    public function brands( $category_id ) {
+        return $this->categoryProductRepository->whereBrands( $category_id );
+    }
+
     public function createCateProduct( Request $request ) {
         $request[ 'image' ] = str_replace( $request->root() . "/storage/", "", $request->image );
         $request["status"] = ( $request->status == "on" ) ? 1 : 0 ;

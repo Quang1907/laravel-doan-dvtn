@@ -44,8 +44,8 @@
                     <div class="tab-pane border p-3 active" id="home" role="tabpanel" aria-labelledby="home-tab">
                         <div class="mb-3">
                             <label for="" class="form-label">Select Category</label>
-                            <select class="form-control" name="category_id" id="">
-                                <option selected>Choose an category</option>
+                            <select class="form-control" name="category_id" id="select_category">
+                                <option selected value="0">Choose an category</option>
                                 @forelse ( $categories as $category )
                                     <option value="{{ $category->id }}" @if ( old( 'category_id', "" ) == $category->id ) selected @endif >{{ $category->name }}</option>
                                 @empty
@@ -60,13 +60,13 @@
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Select Brand</label>
-                            <select class="form-control" name="brand" id="">
+                            <select class="form-control" name="brand" id="select_brands">
                                 <option selected>Choose an brand</option>
-                                @forelse ( $brands as $brand )
+                                {{-- @forelse ( $brands as $brand )
                                     <option value="{{ $brand->id }}" @if ( old( 'brand', '' ) == $brand->id ) selected @endif >{{ $brand->name }}</option>
                                 @empty
                                     <option >Brand not found</option>
-                                @endforelse
+                                @endforelse --}}
                             </select>
                         </div>
                         <div class="mb-3">
@@ -74,8 +74,8 @@
                             <textarea class="form-control" name="small_description" id="small_description" rows="4">{{ old( 'small_description' ) }}</textarea>
                         </div>
                         <div class="mb-3">
-                            <label for="description" class="form-label">Description</label>
-                            <textarea class="form-control" name="description" id="description" rows="4">{{ old( 'description' ) }}</textarea>
+                            <label for="" class="form-label">Description</label>
+                            <textarea id="my-editor" name="description" class="form-control">{!! old('description') !!}</textarea>
                         </div>
                     </div>
                     <div class="tab-pane fade border p-3" id="seo-tag" role="tabpanel" aria-labelledby="seo-tag-tab">
@@ -97,15 +97,15 @@
                             <div class="mb-3 col-sm-4">
                                 <label for="original_price" class="form-label">Original Price</label>
                                 <input type="number"
-                                class="form-control" name="original_price" value="{{ old( 'original_price' ) }}"  id="original_price">
+                                class="form-control" name="original_price" value="{{ old( 'original_price', 0 ) }}"  id="original_price">
                             </div>
                             <div class="mb-3 col-sm-4">
                                 <label for="selling_price" class="form-label">Selling Price</label>
-                                <input type="number" class="form-control" value="{{ old( 'selling_price' ) }}" name="selling_price" id="selling_price">
+                                <input type="number" class="form-control" value="{{ old( 'selling_price', 0 ) }}" name="selling_price" id="selling_price">
                             </div>
                             <div class="mb-3 col-sm-4">
                                 <label for="quantity" class="form-label">Quantity</label>
-                                <input type="number" class="form-control" value="{{ old( 'quantity' ) }}" name="quantity" id="quantity">
+                                <input type="number" class="form-control" value="{{ old( 'quantity', 0 ) }}" name="quantity" id="quantity">
                             </div>
                             <div class="mb-3 mx-3 d-flex">
                                 <div class="custom-control custom-checkbox checkbox-success d-inline-block mr-3 mb-3">
@@ -120,18 +120,40 @@
                         </div>
                     </div>
                     <div class="tab-pane fade border p-3" id="product-image" role="tabpanel" aria-labelledby="product-image-tab">
-                        <div class="input-group">
-                            <span class="input-group-btn">
-                            <a id="lfm" data-input="thumbnail2" data-preview="holder2" class="btn btn-sm btn-primary text-white">
-                                <i class="fa fa-picture-o"></i> Choose
-                            </a>
-                            </span>
-                            <input id="thumbnail2" class="form-control" type="hidden" value="{{ old( 'image' ) }}" name="image" >
+                        <div>
+                            <label for="meta_title" class="form-label">Images Description</label>
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                    <a id="lfm1" data-input="thumbnail1" data-preview="holder1" class="btn btn-sm btn-primary text-white">
+                                        <i class="fa fa-picture-o"></i> Choose
+                                    </a>
+                                    </span>
+                                    <input id="thumbnail1" class="form-control" type="hidden" value="{{ old( 'image' ) }}" name="image" >
+                                </div>
+                                <div id="holder1" class="flex" style="margin-top:15px;max-height:100px;">
+                                    @if ( !empty( old( 'image' ) ) )
+                                        <img src="{{ asset( old( 'image' ) ) }}" width="80px" alt="">
+                                    @endif
+                            </div>
                         </div>
-                        <div id="holder2" class="flex" style="margin-top:15px;max-height:100px;">
-                            @if ( !empty( old( 'image' ) ) )
-                                <img src="{{ asset( old( 'image' ) ) }}" width="80px" alt="">
-                            @endif
+                        <div>
+                            <label for="meta_title" class="form-label">Images Detail</label>
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                    <a id="lfm2" data-input="thumbnail2" data-preview="holder2" class="btn btn-sm btn-primary text-white">
+                                        <i class="fa fa-picture-o"></i> Choose
+                                    </a>
+                                    </span>
+                                    <input id="thumbnail2" class="form-control" type="hidden" value="{{ old( 'images' ) }}" name="images" >
+                                </div>
+                                <div id="holder2" class="flex" style="margin-top:15px;max-height:100px;">
+                                    @if ( !empty( old( 'images' ) ) )
+                                        @php ( $olds = explode( ",", old( 'images' ) ))
+                                        @foreach ( $olds as $old )
+                                            <img src="{{ asset( $old ) }}" width="80px" alt="">
+                                        @endforeach
+                                    @endif
+                            </div>
                         </div>
                     </div>
                     <div class="tab-pane fade border p-3" id="product-color" role="tabpanel" aria-labelledby="product-color-tab">
@@ -165,8 +187,53 @@
 @endsection
 
 @section( 'script' )
+    <script src="//cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
     <script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
     <script>
-        $('#lfm').filemanager('image');
+        $('#lfm1').filemanager('image');
+        $('#lfm2').filemanager('image');
+
+        var options = {
+            filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
+            filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token=',
+            filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+            filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token='
+        };
+
+        CKEDITOR.replace('my-editor', options);
+
+        var old_select_category = $( "#select_category" ).find( ":selected").val();
+        if ( old_select_category != 0 ) {
+            find_brand_with_category( old_select_category );
+        }
+        $( "#select_category" ).change( function ( e ) {
+            e.preventDefault();
+            var category_id = $(this).find( ":selected" ).val();
+            find_brand_with_category( category_id );
+        } )
+
+        function find_brand_with_category( category_id ) {
+            $.ajax({
+                type: "get",
+                url: "{{ url( 'admin/category-products/brands/'  ) }}/" + category_id,
+                success: function ( response ) {
+                    var options = "<option selected>Choose an brand</option>";
+                    if ( (response.brands).length > 0 ) {
+                        options = "";
+                        var selected = "";
+                        var id_old = {{ old( 'brand') }}
+
+                        $.each( response.brands , function ( indexInArray, valueOfElement ) {
+                            if ( id_old == valueOfElement.id ) {
+                                selected = "selected";
+                            }
+                            options += "<option " +  selected + " value=" + valueOfElement.id + ">" + valueOfElement.name + "</option>";
+                        });
+                    }
+
+                    $( "#select_brands" ).html( options );
+                }
+            });
+        }
     </script>
 @endsection

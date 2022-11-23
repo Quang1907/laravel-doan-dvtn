@@ -13,6 +13,7 @@ class Product extends Model
         "name",
         "category_id",
         "slug",
+        "image",
         "brand",
         "small_description",
         "description",
@@ -40,5 +41,17 @@ class Product extends Model
 
     public function category_products() {
         return $this->belongsTo( CategoryProduct::class , "category_id",  "id" );
+    }
+
+    public function scopeFilter( $query ) {
+
+        if ( !empty( request()->brand ) ) {
+            $brands = [];
+            foreach ( request()->brand as $key => $value) {
+                $brands[] = $key;
+            }
+            $query->whereIn( "brand", $brands );
+
+        }
     }
 }
