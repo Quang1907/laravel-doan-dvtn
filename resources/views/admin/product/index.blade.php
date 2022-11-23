@@ -18,6 +18,7 @@
                         <tr>
                             <th>ID</th>
                             <th>Category</th>
+                            <th>Brand</th>
                             <th>Product</th>
                             <th>Price</th>
                             <th>Quantity</th>
@@ -30,11 +31,10 @@
                             <tr>
                                 <td>{{ $product->id }}</td>
                                 <td>
-                                    @if ( $product->category_products )
-                                        {{ $product->category_products->name }}
-                                    @else
-                                        {{ "No category" }}
-                                    @endif
+                                    {{ $product->category_products->name }}
+                                </td>
+                                <td>
+                                    {{ $product->productBrand->name ?? "no brand" }}
                                 </td>
                                 <td>{{ $product->name }}</td>
                                 <td>{{ $product->original_price }}</td>

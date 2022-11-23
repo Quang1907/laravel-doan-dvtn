@@ -149,6 +149,7 @@
                             </summary>
 
                             <form class="border-t border-gray-200 lg:border-t-0">
+                                {{-- Filter sort brand --}}
                                 <fieldset>
                                     <legend class="block w-full bg-gray-50 px-5 py-3 text-xs font-medium">
                                         Branch
@@ -168,29 +169,29 @@
                                         @endforelse
                                     </div>
                                 </fieldset>
+                                {{-- Filter sort price --}}
+                                <fieldset>
+                                    <legend class="block w-full bg-gray-50 px-5 py-3 text-xs font-medium">
+                                        Sort Price
+                                    </legend>
 
-                                <div>
-                                    <fieldset>
-                                        <legend class="block w-full bg-gray-50 px-5 py-3 text-xs font-medium">
-                                            Color
-                                        </legend>
-
-                                        <div class="space-y-2 px-5 pb-4">
-                                        @forelse ( $colors as $filterColor )
-                                            <div class="flex items-center">
-                                                <input id="{{ $filterColor->slug }}" type="checkbox" name="color[{{ $filterColor->slug }}]"
-                                                    class="h-5 w-5 rounded border-gray-300" />
-
-                                                <label for="{{ $filterColor->slug }}" class="ml-3 text-sm font-medium">
-                                                    {{ $filterColor->name }}
-                                                </label>
-                                            </div>
-                                        @empty
-                                        <span>No Color</span>
-                                        @endforelse
+                                    <div class="space-y-2 px-5 pb-4">
+                                        <div class="flex items-center">
+                                            <input id="hight_to_low" type="radio" value="hight_to_low" {{ request()->sort_price == "hight_to_low" ? "checked" : "" }} name="sort_price"
+                                                class="h-5 w-5 rounded border-gray-300" />
+                                            <label for="hight_to_low" class="ml-3 text-sm font-medium">
+                                                High to low
+                                            </label>
                                         </div>
-                                    </fieldset>
-                                </div>
+                                        <div class="flex items-center">
+                                            <input id="low_to_hight" type="radio" value="low_to_hight" {{ request()->sort_price == "low_to_hight" ? "checked" : "" }}   name="sort_price"
+                                                class="h-5 w-5 rounded border-gray-300" />
+                                            <label for="low_to_hight" class="ml-3 text-sm font-medium">
+                                                Low to hight
+                                            </label>
+                                        </div>
+                                    </div>
+                                </fieldset>
 
                                 <div class="flex justify-between border-t border-gray-200 px-5 py-3">
                                     <a href="{{ route( 'category.product.slug' , $categoryProduct->slug ) }}"

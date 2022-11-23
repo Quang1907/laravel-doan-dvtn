@@ -31,6 +31,10 @@ class Product extends Model
         return $this->hasMany( ProductImage::class, "product_id", "id" );
     }
 
+    public function productBrand() {
+        return $this->belongsTo( Brand::class, "brand", "id" );
+    }
+
     public function productColorTable() {
         return $this->hasMany( ProductColor::class, "product_id", "id" );
     }
@@ -47,11 +51,21 @@ class Product extends Model
 
         if ( !empty( request()->brand ) ) {
             $brands = [];
+
             foreach ( request()->brand as $key => $value) {
                 $brands[] = $key;
             }
+
             $query->whereIn( "brand", $brands );
 
+        }
+
+        if ( !empty( request()->color ) ) {
+            $colors = [];
+
+            foreach ( request()->color as $key => $value) {
+                $colors[] = $key;
+            }
         }
     }
 }
