@@ -13,8 +13,8 @@ class AddColumnCategoryIdToBrandsTable extends Migration
      */
     public function up()
     {
-        Schema::table( 'brands', function (Blueprint $table) {
-            $table->foreignId( "category_id" )->references( "id" )->on( "category_products" )->onDelete( "set null" );
+        Schema::table('brands', function (Blueprint $table) {
+            $table->foreignId( "brand_category_id" )->references( "id" )->on( "category_products" );
         });
     }
 

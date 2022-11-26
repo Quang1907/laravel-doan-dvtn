@@ -30,6 +30,6 @@ class CategoryProduct extends Model
     }
 
     public function brands() {
-        return $this->hasMany( Brand::class, "category_id", "id" )->where( "status", 1 );
+        return $this->hasMany( Brand::class, "brand_category_id", "id" )->where( "status", 1 );
     }
 }

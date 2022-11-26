@@ -10,13 +10,13 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="" class="form-label">Categories</label>
-                        <select wire:model.defer="category_id"  required id="" class="form-control">
+                        <select wire:model.defer="brand_category_id"  required id="" class="form-control">
                             <option value="">--Select Category--</option>
                             @foreach ( $categories as $category )
                                 <option value="{{  $category->id }}">{{ $category->name }}</option>
                             @endforeach
                         </select>
-                        @error( "category_id") <span class="text-danger">{{ $message }}</span> @enderror
+                        @error( "brand_category_id") <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
                     <div class="mb-3">
                         <label for="" class="form-label">Brand Name</label>
@@ -65,13 +65,13 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="" class="form-label">Categories</label>
-                            <select wire:model.defer="category_id"  required id="" class="form-control">
+                            <select wire:model.defer="brand_category_id"  required id="" class="form-control">
                                 <option value="">--Select Category--</option>
                                 @foreach ( $categories as $category )
                                     <option value="{{  $category->id }}">{{ $category->name }}</option>
                                 @endforeach
                             </select>
-                            @error( "category_id") <span class="text-danger">{{ $message }}</span> @enderror
+                            @error( "brand_category_id") <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                         <div class="mb-3">
                             <label for="" class="form-label">Brand Name</label>

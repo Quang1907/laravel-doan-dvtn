@@ -75,7 +75,7 @@
             <div class="sidebar-footer-content">
                 <ul class="d-flex">
                     <li>
-                        <a href="user-account-settings.html" data-toggle="tooltip" title="Profile settings"><i
+                        <a href="{{ route( "admin.setting" ) }}" data-toggle="tooltip" title="Profile settings"><i
                                 class="mdi mdi-settings"></i></a>
                     </li>
                     <li>

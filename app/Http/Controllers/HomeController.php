@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Brand;
 use App\Models\Color;
+use App\Models\Order;
 use App\Models\Slider;
 use App\Services\CategoryPostService;
 use App\Services\CategoryProductService;
@@ -73,10 +74,37 @@ class HomeController extends Controller
         return view( "client.product", compact( 'trendingProducts', "categoryProduct", "allCategoryProducts", "colors" ) );
     }
 
+    // wishlist product
+    public function wishlistProduct( ) {
+        return view( "client.product-wishlist" );
+    }
+
+    public function cartsProduct() {
+        return view( "client.product-cart" );
+    }
+
+    public function checkout() {
+        return view( "client.checkout" );
+    }
+
+    public function thankYou() {
+        return view( "client.thankyou" );
+    }
+
+    public function orders() {
+        $orders = Order::where( "user_id", auth()->user()->id )->orderBy( "created_at", "desc" )->paginate( 5 );
+        return view( "client.orders", compact( "orders" ) );
+    }
+
+    public function orderDetail( Order $order ) {
+        return view( "client.order-detail", compact( "order" ) );
+    }
+
     // show product detail
     public function viewProduct( $slugCate, $slugProduct ) {
         $product = $this->productService->whereSlug( $slugProduct );
-        return view( "client.product-detail", compact( "slugCate", "slugProduct", "product" ) );
+        return view( "client.product-detail", compact( "product" ) );
+        // return view( "client.product-detail", compact( "slugCate", "slugProduct", "product" ) );
     }
 
     public function account() {

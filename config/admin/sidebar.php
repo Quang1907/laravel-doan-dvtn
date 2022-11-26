@@ -31,6 +31,13 @@ return [
         ],
     ],
     [
+        "name" => "Orders",
+        "route" => "orders.index",
+        "id" => "",
+        "icon" => '<i class="fa-solid fa-signs-post" style="font-size:20px"></i>',
+        "parent" => "",
+    ],
+    [
         "name" => "Bài viết",
         "route" => "post.index",
         "id" => "",

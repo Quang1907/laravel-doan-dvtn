@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\Category;
 use App\Models\CategoryProduct;
 use App\Models\Post;
+use App\Models\Setting;
 use App\Repositories\CategoryPostReponsitory;
 use App\Repositories\CategoryProductRepository;
 use App\Repositories\PostReponsitory;
@@ -36,10 +37,12 @@ class AppServiceProvider extends ServiceProvider
         $categoryPosts =  ( new CategoryPostReponsitory( new Category ))->allCategory();
         $recent_posts = ( new PostReponsitory( new Post() ) )->orderByAndLimit( "DESC", 5 );
         $categoryProducts = ( new CategoryProductRepository( new CategoryProduct() ) )->allCateProduct();
+        $websiteSetting  = Setting::first();
         View::share([
             'categoryPosts'=> $categoryPosts,
             "recent_posts" => $recent_posts,
-            "categoryProducts" => $categoryProducts
+            "categoryProducts" => $categoryProducts,
+            "websiteSetting" => $websiteSetting,
         ]);
     }
 }

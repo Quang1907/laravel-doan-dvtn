@@ -3,8 +3,10 @@
 use App\Http\Controllers\Admin\CategoryPostController;
 use App\Http\Controllers\Admin\CategoryProductController;
 use App\Http\Controllers\Admin\ColorController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AuthController;
@@ -26,6 +28,15 @@ Route::controller( HomeController::class )->group( function () {
     Route::get( "/san-pham/{cateSlug}", "categoryProducts" )->name( "category.product.slug" );
     Route::get( "/san-pham/{cateSlug}/{slugProduct}", "viewProduct" )->name( "viewProduct" );
 
+    Route::middleware( ["auth"] )->group( function () {
+        Route::get( "wishlists", "wishlistProduct" )->name( "product.wishlist" );
+        Route::get( "carts", "cartsProduct" )->name( "product.cart" );
+        Route::get( "checkout", "checkout" )->name( "checkout" );
+        Route::get( "orders", "orders" )->name( "orders" );
+        Route::get( "order/{order}", "orderDetail" )->name( "order.detail" );
+        Route::get( "thank-you", "thankYou" )->name( "thank-you" );
+    });
+
     Route::get( "account", "account" )->name( "profile" )->middleware( "checkInfo" );
 
     Route::get( "lich",  "calendar" )->name( "calendar" );
@@ -42,16 +53,16 @@ Route::view( "dang-ky" , "client.auth.register" )->name( "dangky" )->middleware(
 Route::post( "dang-ky", [ AuthController::class, "register" ] )->name( "account.register");
 Route::get( "vertify/email/{email}/{user}", [AuthController::class, "vertifyEmail"] )->name("account.vertifyEmail"); // ->middleware( "auth" )
 Route::post( "vertify/email/{user}", [ AuthController::class, "vertify" ] )->name( "account.vertify" );
-// Route::view( "forget/password", "client.auth.forget_password" )->name( "forget.password" );
-// Route::post( "forget/password", [ AuthController::class, "forget" ] )->name( "forget.password" );
+Route::view( "forget/password", "client.auth.forget_password" )->name( "forget" );
+Route::post( "forget/password", [ AuthController::class, "forget" ] )->name( "forget.password" );
 // Route::get( "vertify/password/{user}",[ AuthController::class, "confirmMail"] )->name( "vertify.password" );
 // Route::post( "vertify/password/{user}",   [ AuthController::class, "vertifyPassword" ]  )->name( "vertify.password" );
 
 Route::group([ "middleware" => "auth", "prefix" => "account"],function () {
-    // Route::view( "password" ,'client.auth.change_password' )->name( "account.changePassword" )->middleware( "checkInfo" );
-    // Route::post( "password" , [ AuthController::class, "password" ] )->name( "account.changePassword" );
-    // Route::view( "changeinfo" ,'client.auth.change_info' )->name( "account.changeinfo" )->middleware( "checkInfo" );
-    // Route::post( "changeinfo" , [ AuthController::class, "info" ] )->name( "account.changeinfo" );
+    Route::view( "password" ,'client.auth.change_password' )->name( "account.changePassword" )->middleware( "checkInfo" );
+    Route::post( "password" , [ AuthController::class, "password" ] )->name( "account.postChangePassword" );
+    Route::view( "changeinfo" ,'client.auth.change_info' )->middleware( "checkInfo" )->name( "account.changeinfo" );
+    Route::post( "changeinfo" , [ AuthController::class, "info" ] )->name( "account.postChangeInfo" );
     Route::view( "confirm", "client.auth.confirm" );
     Route::post( "confirm/{user}", [ AuthController::class,  "confirm" ] )->name( "account.confirm" );
     Route::post( "changeAvata/{user}", [ AuthController::class, "changeAvata" ] )->name( "changeAvata" );
@@ -69,6 +80,9 @@ Auth::routes();
 Route::group([ "prefix" => "admin",  "middleware" => "admin" ], function () {
     Route::view( "/", "admin.index" );
 
+    Route::get( "setting", [ SettingController::class, "setting" ] )->name( "admin.setting" );
+    Route::post( "setting/store", [ SettingController::class, "store" ] )->name( "setting.store" );
+
     Route::resource( "user", UserController::class );
     Route::get( "user/restoreDelete/{user}", [ UserController::class, "restoreDelete" ] )->name( "user.restoreDelete" );
     Route::delete( "user/softDelete/{user}", [ UserController::class, "softDelete" ] )->name( "user.softDelete" );
@@ -77,7 +91,6 @@ Route::group([ "prefix" => "admin",  "middleware" => "admin" ], function () {
     Route::resource( "category-posts", CategoryPostController::class );
     Route::get( "category-products/brands/{category_id}", [ CategoryProductController::class, "brands" ] )->name( "brands.category");
     Route::resource( "category-products", CategoryProductController::class );
-
 
     Route::resource( "post", PostController::class );
     Route::post( "post/import", [ PostController::class, "uploadFile" ] )->name( "post.import" );
@@ -92,11 +105,15 @@ Route::group([ "prefix" => "admin",  "middleware" => "admin" ], function () {
     Route::get( "product-image/{id}/delete", [ ProductController::class, "deleteImage" ] )->name( "product-image.delete" );
     Route::resource( "color", ColorController::class );
     Route::get( "brand", App\Http\Livewire\Admin\Brand\Index::class )->name( "brand.index" );
+    Route::resource( "orders", OrderController::class);
+
+    Route::get( "invoice/{order}", [ OrderController::class, "viewInvoice" ])->name( "viewInvoice" );
+    Route::get( "invoice/{order}/generateInvoice", [ OrderController::class, "generateInvoice" ])->name( "generateInvoice" );
 
     Route::resource( "slider", SliderController::class );
 });
 
 // fileManager
-Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
-    \UniSharp\LaravelFilemanager\Lfm::routes();
-});
+// Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
+//     \UniSharp\LaravelFilemanager\Lfm::routes();
+// });

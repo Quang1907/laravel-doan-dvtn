@@ -9,3 +9,5 @@ schedule cron job
 soft delete
 upload google drive
 API
+livewire
+PDF

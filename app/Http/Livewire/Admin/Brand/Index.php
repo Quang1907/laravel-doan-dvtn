@@ -12,20 +12,20 @@ class Index extends Component
 {
     use WithPagination;
 
-    public $name, $slug, $status, $brand_id, $category_id;
+    public $name, $slug, $status, $brand_id, $brand_category_id;
 
     public function rules() {
         return [
             "name" => "required|string",
             "slug" => "required|string",
-            "category_id" => "required",
+            "brand_category_id" => "required",
         ];
     }
 
     protected $messages = [
         "name.required" => "Vui lòng không để trống tên",
         "name.required" => "Vui lòng không để trống category",
-        "category_id.string" => "Tên phải là chuỗi ký tự",
+        "brand_category_id.string" => "Tên phải là chuỗi ký tự",
         "slug.required" => "Vui lòng không để trống slug",
         "slug.string" => "Slug phải là chuỗi ký tự",
     ];
@@ -34,7 +34,7 @@ class Index extends Component
         $this->validate();
         $brand = [
             "name" => $this->name,
-            "category_id" => $this->category_id,
+            "brand_category_id" => $this->brand_category_id,
             "slug" => Str::slug( $this->slug ),
             "status" => ( $this->status == "on" ) ? 1 : 0,
         ];
@@ -50,7 +50,7 @@ class Index extends Component
         $brand = Brand::findOrfail( $brand_id );
         $this->name = $brand->name;
         $this->slug = $brand->slug;
-        $this->category_id = $brand->category_id;
+        $this->brand_category_id = $brand->brand_category_id;
         $this->status = $brand->status;
         $this->brand_id = $brand_id;
     }
@@ -59,7 +59,7 @@ class Index extends Component
         $this->validate();
         $brand = [
             "name" => $this->name,
-            "category_id" => $this->category_id,
+            "brand_category_id" => $this->brand_category_id,
             "slug" => Str::slug( $this->slug ),
             "status" => ( $this->status == true ) ? 1 : 0,
         ];
@@ -104,6 +104,6 @@ class Index extends Component
         $this->slug = null;
         $this->start = null;
         $this->brand_id = null;
-        $this->category_id = null;
+        $this->brand_category_id = null;
     }
 }

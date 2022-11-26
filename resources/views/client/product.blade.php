@@ -1,11 +1,13 @@
 @extends('layouts.client_master')
-@section('title', 'Trang chu')
+@section('title', 'Cửa hàng')
 
 @section('styles')
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
 @endsection
 
 @section('content')
+    @include( "layouts.inc.client.navbar_shop" )
+
     <!-- /navigation -->
     <div class="header has-text-centered">
         <div class="container">

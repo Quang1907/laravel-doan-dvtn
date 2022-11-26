@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="https://unpkg.com/flowbite@1.5.3/dist/flowbite.min.css" />
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @yield( 'styles' )
-
+    @livewireStyles
 </head>
 
 <body>
@@ -55,6 +55,31 @@
 
     @include('sweetalert::alert')
     @yield( 'script' )
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        // alert wishlist product detail
+        window.addEventListener('message', event => {
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+                })
+
+                Toast.fire({
+                icon: event.detail.type,
+                title: event.detail.text
+                })
+            })
+    </script>
+
+    @livewireScripts
 
 </body>
 </html>

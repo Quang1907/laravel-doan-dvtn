@@ -33,7 +33,7 @@
                 <label for="remember" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Ghi nhớ tài
                     khoản.</label>
             </div>
-            <a href="{{ route( 'forget.password' ) }}" class="text-sm text-blue-700 hover:underline dark:text-blue-500">Quên mật khẩu?</a>
+            <a href="{{ route( 'forget' ) }}" class="text-sm text-blue-700 hover:underline dark:text-blue-500">Quên mật khẩu?</a>
         </div>
         <div class="text-right">
             <a href="{{ url( 'auth/github' ) }}" class="text-white bg-[#24292F] hover:bg-[#24292F]/90 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-[#050708]/30 mr-2 mb-2">

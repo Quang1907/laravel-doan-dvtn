@@ -101,6 +101,7 @@
                                     </div>
                                 </div>
                             </div>
+                            {{-- change password --}}
                             <div class="hidden" id="tab-settings">
                                 <div class="bg-white p-3 rounded-sm">
                                     <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
@@ -115,7 +116,7 @@
                                     </div>
                                     <div class="text-gray-700">
                                         <div class="m-auto max-w-3xl">
-                                            <form action="{{ route( 'account.changeinfo' ) }}" method="post" class="mt-5">
+                                            <form action="{{ route( 'account.postChangeInfo' ) }}" method="post" class="mt-5">
                                                 @csrf
                                                 <x-account.divInput type="text" name="name" label="Họ và tên" value="{{ \Auth::user()->name }}" />
                                                 <div class="relative z-0 mb-6 w-full group">
@@ -136,6 +137,7 @@
                                     </div>
                                 </div>
                             </div>
+                            {{-- change info --}}
                             <div class="hidden" id="tab-options">
                                 <div class="bg-white p-3 rounded-sm">
                                     <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8">
@@ -150,7 +152,7 @@
                                     </div>
                                     <div class="text-gray-700 mt-3">
                                         <div class="m-auto max-w-3xl">
-                                            <form action="{{ route( 'account.changePassword' ) }}" method="post">
+                                            <form action="{{ route( 'account.postChangePassword' ) }}" method="post">
                                                 @csrf
                                                 <div class="mb-6">
                                                     <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Mật khẩu mới</label>

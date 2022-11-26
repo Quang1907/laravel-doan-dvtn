@@ -20,7 +20,7 @@ class ProductRepository {
     }
 
     public function trending() {
-        return $this->product->with( "productImages", "category_products" )->where( "trending", true )->limit( 10 )->get();
+        return $this->product->with( "productImages", "category_products" )->where( "trending", true )->take( 10 )->get();
     }
 
     public function slug( $slug ) {

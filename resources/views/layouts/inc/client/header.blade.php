@@ -2,8 +2,7 @@
     <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl px-4 md:px-6 py-2.5">
         <a href="{{ route( 'home' ) }}" class="flex items-center md:m-auto">
             <img src="{{ asset('images/logo/huyhieudoan.png') }}" class="mr-3 h-20 sm:h-25" alt="Flowbite Logo">
-            <span class="self-center text-white text-xl font-semibold whitespace-nowrap dark:text-white">Đoàn Viên Thanh
-                Niên</span>
+            <span class="self-center text-white text-xl font-semibold whitespace-nowrap dark:text-white">{{ $websiteSetting->website_name ?? "Đoàn viên thanh niên" }}</span>
         </a>
 
         <button data-collapse-toggle="mega-menu-full" id="button-nav" type="button"

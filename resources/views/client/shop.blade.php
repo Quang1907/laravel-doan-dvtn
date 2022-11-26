@@ -6,6 +6,8 @@
 @endsection
 
 @section('content')
+    @include( "layouts.inc.client.navbar_shop" )
+
     <!-- /navigation -->
     <div class="header has-text-centered">
         <div class="container">
