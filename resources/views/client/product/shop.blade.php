@@ -7,7 +7,6 @@
 
 @section('content')
     @include( "layouts.inc.client.navbar_shop" )
-
     <!-- /navigation -->
     <div class="header has-text-centered">
         <div class="container">
@@ -134,143 +133,41 @@
             </div>
         </section>
 
-        {{-- List Products --}}
+        {{-- Products by categories --}}
         <section>
-            <div class="mx-auto max-w-screen-xl px-4 py-12 sm:px-6 lg:px-8">
-                <div class="grid grid-cols-1 gap-4 lg:grid-cols-4 lg:items-start">
-                    {{-- filter  --}}
-                    <div class="lg:sticky lg:top-4">
-                        <details open class="overflow-hidden rounded border border-gray-200">
-                            <summary class="flex items-center justify-between bg-gray-100 px-5 py-3 lg:hidden">
-                                <span class="text-sm font-medium"> Toggle Filters </span>
-                                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M4 6h16M4 12h16M4 18h16" />
-                                </svg>
-                            </summary>
-
-                            <form class="border-t border-gray-200 lg:border-t-0">
-                                {{-- Filter sort brand --}}
-                                <fieldset>
-                                    <legend class="block w-full bg-gray-50 px-5 py-3 text-xs font-medium">
-                                        Branch
-                                    </legend>
-
-                                    <div class="space-y-2 px-5 pb-4">
-                                        @forelse ( $categoryProduct->brands()->get() as $filterBrand )
-                                            <div class="flex items-center">
-                                                <input id="{{ $filterBrand->slug }}" type="checkbox" {{ check_brand( $filterBrand->id, format_array( request()->brand ) ) }} name="brand[{{ $filterBrand->id }}]"
-                                                    class="h-5 w-5 rounded border-gray-300" />
-                                                <label for="{{ $filterBrand->slug }}" class="ml-3 text-sm font-medium">
-                                                    {{ $filterBrand->name }}
-                                                </label>
-                                            </div>
-                                        @empty
-                                        <span>No brand</span>
-                                        @endforelse
+            @foreach ( $allCategoryProducts as $cateProducts )
+                @if ( count( $cateProducts->products ) > 0 )
+                    <div class="bg-gray-100">
+                        <h2 class="text-2xl p-3 mb-2 uppercase rounded-lg bg-blue-500 text-white"><a href="{{ route( 'category.product.slug', $cateProducts->slug ) }}">{{ $cateProducts->name }}</a></h2>
+                        <div class="px-10 pb-3 grid gap-10 lg:grid-cols-3 xl:grid-cols-4 sm:grid-cols-2">
+                            @foreach ( $cateProducts->products()->limit( 8 )->get() as $cateProduct )
+                                <div
+                                class="max-w-xs rounded-md overflow-hidden shadow-lg hover:scale-105 transition duration-500 cursor-pointer">
+                                    <div>
+                                        <a href="{{ route( 'viewProduct', [ $cateProducts->slug, $cateProduct->slug ]  ) }}">
+                                            <img src="{{ $cateProduct->image }}"
+                                                alt="" />
+                                        </a>
                                     </div>
-                                </fieldset>
-                                {{-- Filter sort price --}}
-                                <fieldset>
-                                    <legend class="block w-full bg-gray-50 px-5 py-3 text-xs font-medium">
-                                        Sort Price
-                                    </legend>
-
-                                    <div class="space-y-2 px-5 pb-4">
-                                        <div class="flex items-center">
-                                            <input id="hight_to_low" type="radio" value="hight_to_low" {{ request()->sort_price == "hight_to_low" ? "checked" : "" }} name="sort_price"
-                                                class="h-5 w-5 rounded border-gray-300" />
-                                            <label for="hight_to_low" class="ml-3 text-sm font-medium">
-                                                High to low
-                                            </label>
-                                        </div>
-                                        <div class="flex items-center">
-                                            <input id="low_to_hight" type="radio" value="low_to_hight" {{ request()->sort_price == "low_to_hight" ? "checked" : "" }}   name="sort_price"
-                                                class="h-5 w-5 rounded border-gray-300" />
-                                            <label for="low_to_hight" class="ml-3 text-sm font-medium">
-                                                Low to hight
-                                            </label>
-                                        </div>
-                                    </div>
-                                </fieldset>
-
-                                <div class="flex justify-between border-t border-gray-200 px-5 py-3">
-                                    <a href="{{ route( 'category.product.slug' , $categoryProduct->slug ) }}"
-                                        class="rounded text-xs font-medium text-gray-600 underline">
-                                        Reset All
-                                    </a>
-
-                                    <button type="submit"
-                                        class="rounded bg-blue-600 px-5 py-3 text-xs font-medium text-white">
-                                        Apply Filters
-                                    </button>
-                                </div>
-                            </form>
-                        </details>
-                    </div>
-
-                    {{-- product detail --}}
-                    <div class="lg:col-span-3">
-                        <h3>Hiển thị: {{ !empty( $categoryProduct->name ) ? $categoryProduct->name : 'Tất cả sản phẩm' }}</h3>
-                        @php( $pagiProducts = $categoryProduct->products()->filter()->paginate( 9 ) )
-                        <div
-                            class="mt-4 grid grid-cols-1 gap-px border border-gray-200 bg-gray-200 sm:grid-cols-2 lg:grid-cols-3">
-                            @if ( !empty( $categoryProduct->products ) )
-                                @forelse ( $pagiProducts as $product )
-                                    <a href="{{ route( 'viewProduct', [ $product->category_products->slug, $product->slug ]) }}" class="relative block bg-white h-full">
-                                        <button type="button"
-                                            class="absolute right-4 top-4 rounded-full bg-black p-2 text-white">
-                                            <span class="sr-only">Wishlist</span>
-                                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                                xmlns="http://www.w3.org/2000/svg">
+                                    <div class="py-4 px-4 bg-white">
+                                        <h3 class="text-md font-semibold text-gray-600">{{ $cateProduct->name }}</h3>
+                                        <p class="mt-4 text-lg font-thin">{{ number_format( $cateProduct->selling_price == 0 ? $cateProduct->original_price : $cateProduct->selling_price ) }} VNĐ</p>
+                                        <span
+                                            class="flex items-center justify-center mt-4 w-full bg-blue-400 hover:bg-blue-500 py-1 rounded">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-sm font-medium text-white"
+                                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
-                                                </path>
+                                                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                                             </svg>
-                                        </button>
-                                        <img alt="Toy" src="{{ $product->first()->image }}"
-                                            class="mt-0 w-full object-contain" />
-                                        <div class="p-2">
-                                            <span
-                                                class="inline-block bg-blue-400 px-3 py-1 text-xs font-medium text-white rounded">
-                                                New
-                                            </span>
-
-                                            <h3 class="mt-4 text-lg font-bold">{{ $product->name }}</h3>
-
-                                            <p class="mt-2 text-sm font-medium text-gray-600">
-                                                {{ number_format( $product->original_price ) }} VNĐ
-                                                <del class="text-red-500">
-                                                    {{ number_format( $product->selling_price ) ?? "" }} VNĐ
-                                                </del>
-                                            </p>
-
-
-                                            <button type="button"
-                                                class="mt-4 flex w-full items-center justify-center rounded-sm bg-blue-500 hover:bg-blue-600  px-8 py-2">
-                                                <span class="text-sm font-medium text-white"> Add to Cart </span>
-
-                                                <svg class="ml-1.5 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg"
-                                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                        d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                                                </svg>
-                                            </button>
-                                        </div>
-                                    </a>
-                                @empty
-                                    <h3 class="text-1xl font-bold"> Hien tai chua co san pham
-                                        {{ !empty( $categoryProduct->name ) ? $categoryProduct->name : '' }}</h3>
-                                @endforelse
-                            @endif
-                        </div>
-                        <div class="row">
-                            {{ $pagiProducts->links('vendor.pagination.client') }}
+                                            <button class="font-semibold text-white">Add to Basket</button>
+                                        </span>
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
-                </div>
-            </div>
+                @endif
+            @endforeach
         </section>
 
         {{-- List Image category --}}
@@ -326,9 +223,9 @@
                 },
             },
         })
+
         var swiper = new Swiper(".mySwiper", {
             slidesPerView: 1,
-            loop: true,
             spaceBetween: 0,
             pagination: {
                 el: ".swiper-pagination",
@@ -337,15 +234,19 @@
             breakpoints: {
                 "@0.00": {
                     slidesPerView: 2,
+                    spaceBetween: 10,
                 },
                 "@0.75": {
                     slidesPerView: 3,
+                    spaceBetween: 20,
                 },
                 "@1.00": {
                     slidesPerView: 4,
+                    spaceBetween: 40,
                 },
                 "@1.50": {
                     slidesPerView: 8,
+                    spaceBetween: 50,
                 },
             },
         });

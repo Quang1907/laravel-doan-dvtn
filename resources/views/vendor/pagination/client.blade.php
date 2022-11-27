@@ -1,5 +1,5 @@
-@if ($paginator->hasPages())
-    <ul class="pagination justify-content-center mt-4">
+@if ( $paginator->hasPages() )
+    <ul class="pagination justify-content-center my-4">
         @if ($paginator->onFirstPage())
             <li class="page-item disabled" aria-disabled="true" aria-label="@lang('pagination.previous')">
                 <span class="page-link" aria-hidden="true">«</span>

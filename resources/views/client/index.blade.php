@@ -120,60 +120,29 @@
                         </div>
                     </article>
                 </div>
+
                 <div class="column is-4-widescreen is-6-desktop mb-5">
                     <h2 class="h5 section-title">Trending Post</h2>
-
-                    <article class="card mb-5">
-                        <div class="card-body is-flex">
-                            <img class="card-img-sm" src="images/post/post-3.jpg">
-                            <div class="ml-3">
-                                <h4><a href="post-details.html" class="post-title">Advice From a Twenty Something</a></h4>
-                                <ul class="card-meta mt-2">
-                                    <li class="list-inline-item mb-0">
-                                        <i class="ti-calendar"></i>14 jan, 2020
-                                    </li>
-                                    <li class="list-inline-item mb-0">
-                                        <i class="ti-timer"></i>2 Min To Read
-                                    </li>
-                                </ul>
+                    @forelse ( $trending_post as $trending_post_item )
+                        <article class="card mb-5">
+                            <div class="card-body is-flex">
+                                <img class="card-img-sm" src="{{ url_image( $trending_post_item->image ) }}">
+                                <div class="ml-3">
+                                    <h4><a href="{{ route( 'viewPost', $trending_post_item->slug ) }}" class="post-title">{{ $trending_post_item->title }}</a></h4>
+                                    <ul class="card-meta mt-2">
+                                        <li class="list-inline-item mb-0">
+                                            <i class="ti-calendar"></i>{{ $trending_post_item->created_at->format( "d-m-Y h:i A" ) }}
+                                        </li>
+                                        <li class="list-inline-item mb-0">
+                                            <i class="ti-timer"></i>{{ format_date( $trending_post_item->created_at ) }}
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
-                        </div>
-                    </article>
-
-                    <article class="card mb-5">
-                        <div class="card-body is-flex">
-                            <img class="card-img-sm" src="images/post/post-2.jpg">
-                            <div class="ml-3">
-                                <h4><a href="post-details.html" class="post-title">The Design Files - Homes Minimalist</a>
-                                </h4>
-                                <ul class="card-meta mt-2">
-                                    <li class="list-inline-item mb-0">
-                                        <i class="ti-calendar"></i>14 jan, 2020
-                                    </li>
-                                    <li class="list-inline-item mb-0">
-                                        <i class="ti-timer"></i>2 Min To Read
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="card mb-5">
-                        <div class="card-body is-flex">
-                            <img class="card-img-sm" src="images/post/post-4.jpg">
-                            <div class="ml-3">
-                                <h4><a href="post-details.html" class="post-title">The Skinny Confidential</a></h4>
-                                <ul class="card-meta mt-2">
-                                    <li class="list-inline-item mb-0">
-                                        <i class="ti-calendar"></i>14 jan, 2020
-                                    </li>
-                                    <li class="list-inline-item mb-0">
-                                        <i class="ti-timer"></i>2 Min To Read
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </article>
+                        </article>
+                    @empty
+                        Hiện chưa có bài viết nổi bật
+                    @endforelse
                 </div>
 
                 <div class="column is-4-widescreen mb-5">
@@ -224,40 +193,41 @@
             <div class="columns is-multiline is-desktop is-justify-content-center">
                 <div class="column is-8-desktop mb-5">
                     <h2 class="h5 section-title">Recent Post</h2>
-                    <article class="card mb-4">
-                        <div class="post-slider">
-                            <img src="images/post/post-10.jpg" class="card-img-top" alt="post-thumb">
-                            <img src="images/post/post-1.jpg" class="card-img-top" alt="post-thumb">
-                        </div>
-                        <div class="card-body">
-                            <h3 class="mb-3"><a class="post-title" href="post-elements.html">Elements That You Can Use
-                                    In This Template.</a></h3>
-                            <ul class="card-meta list-inline">
-                                <li class="list-inline-item">
-                                    <a href="author-single.html" class="card-meta-author">
-                                        <img src="images/john-doe.jpg" alt="John Doe">
-                                        <span>John Doe</span>
-                                    </a>
-                                </li>
-                                <li class="list-inline-item">
-                                    <i class="ti-timer"></i>3 Min To Read
-                                </li>
-                                <li class="list-inline-item">
-                                    <i class="ti-calendar"></i>15 jan, 2020
-                                </li>
-                                <li class="list-inline-item">
-                                    <ul class="card-meta-tag list-inline">
-                                        <li class="list-inline-item"><a href="tags.html">Demo</a></li>
-                                        <li class="list-inline-item"><a href="tags.html">Elements</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                            <p>Heading example Here is example of hedings. You can use this heading by following markdownify
-                                rules. For example: use # for heading 1 and use ###### for heading 6.</p>
-                            <a href="post-elements.html" class="btn btn-outline-primary">Read More</a>
-                        </div>
-                    </article>
-
+                    @forelse ( $allPosts as $postItem )
+                        <article class="card mb-4">
+                            <div class="post-slider">
+                                <img src="{{ url_image( $postItem->image ) }}" class="card-img-top" alt="post-thumb">
+                            </div>
+                            <div class="card-body">
+                                <h3 class="mb-3"><a class="post-title" href="{{ route( 'viewPost', $postItem->slug ) }}">{{ $postItem->title }}</a></h3>
+                                <ul class="card-meta list-inline">
+                                    <li class="list-inline-item">
+                                        <button type="button" class="card-meta-author">
+                                            <img src="{{ url_image( $postItem->user->avata ) }}">
+                                            <span>{{ $postItem->user->name }}</span>
+                                        </button>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <i class="ti-timer"></i>{{ format_date( $postItem->created_at ) }}
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <i class="ti-calendar"></i>{{ $postItem->created_at->format( "d-m-Y" ) }}
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <ul class="card-meta-tag list-inline">
+                                            @foreach ( $postItem->categories as $category )
+                                                <li class="list-inline-item"><a href="">{{ $category->name }}</a></li>
+                                            @endforeach
+                                        </ul>
+                                    </li>
+                                </ul>
+                                <div class="showContent">{!! $postItem->content !!}</div>
+                                <a href="{{ route( 'viewPost', $postItem->slug ) }}" class="mt-3 btn bg-primary hover:text-blue-100 text-white">Xem thêm</a>
+                            </div>
+                        </article>
+                    @empty
+                        Hiện tại chưa có bài viết
+                    @endforelse
                     <ul class="pagination justify-content-center">
                         <li class="page-item page-item active ">
                             <a href="#!" class="page-link">1</a>

@@ -25,6 +25,10 @@ class PostService {
         return $this->postReponsitory->all();
     }
 
+    public function trending() {
+        return $this->postReponsitory->trending();
+    }
+
     public function slugPost( $slug ) {
         return $this->postReponsitory->where( "slug", $slug );
     }
@@ -45,6 +49,7 @@ class PostService {
             $data = $request->all();
             $data['slug'] = Str::slug( $data["title"] );
             $data['user_id'] = auth()->user()->id;
+            $data['trending_post'] = !empty( $data[ 'trending_post' ] ) ? true : false;
 
             $image = $request->file("image");
 
@@ -75,7 +80,7 @@ class PostService {
         $data = $request->all();
         $data['slug'] = Str::slug( $data["title"] );
         $data['user_id'] = auth()->user()->id;
-
+        $data['trending_post'] = !empty( $data[ 'trending_post' ] ) ? true : false;
         $image = $request->file("image");
 
         if ( !empty( $image ) ) {

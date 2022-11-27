@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\CategoryPostController;
 use App\Http\Controllers\Admin\CategoryProductController;
 use App\Http\Controllers\Admin\ColorController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\ProductController;
@@ -78,7 +79,7 @@ Auth::routes();
 
 // admin
 Route::group([ "prefix" => "admin",  "middleware" => "admin" ], function () {
-    Route::view( "/", "admin.index" );
+    Route::get( "/", [ DashboardController::class, "index" ] );
 
     Route::get( "setting", [ SettingController::class, "setting" ] )->name( "admin.setting" );
     Route::post( "setting/store", [ SettingController::class, "store" ] )->name( "setting.store" );

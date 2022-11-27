@@ -18,8 +18,8 @@
         <div id="mega-menu-full"
             class="hidden md:flex justify-between items-center w-full  md:w-auto md:order-1 md:m-auto">
             <ul
-                class="flex flex-col pl-4 items-center  bg-gray-50 rounded-lg border border-gray-100 md:flex-row md:space-x-2 sm:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-                <li>
+                class="flex flex-col pl-4 items-center bg-gray-50 rounded-lg border border-gray-100 md:flex-row md:space-x-2 sm:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+                <li class="py-2">
                     <a href="{{ route( 'home' ) }}" class="block py-2 px-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Trang chủ</a>
                 </li>
                 <li>
@@ -82,58 +82,65 @@
                         </ul>
                     </div>
                 </li>
-                <li class="flex">
+                <li>
                     @guest
                         @if (Route::has('dangnhap'))
                             <a class="nav-link hover:bg-blue-700 bg-blue-600 text-white py-2 px-3 rounded mr-4 my-2" href="{{ route( 'dangnhap' ) }}">{{ __('Đăng nhập') }}</a>
                         @endif
                     @else
-                        <div class="flex items-center md:order-2">
-                            <button type="button" id="profileUser"
-                                class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
-                                <img id="avata" alt="Photo by aldi sigun on Unsplash" src="{{ url_image( Auth::user()->avata ) }}" class="mx-auto object-cover rounded-full h-[40px] bg-white w-[40px]" />
-                            </button>
-                            <div class="flex justify-start px-2">
-                                <span clspanss="block relative">
-                                </span>
-                            </div>
-                            <div class="z-50 absolute mt-[230px] right-0 mr-20 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                                id="user-dropdown">
-                                <div class="py-3 px-4">
-                                    <span
-                                        class="block text-sm text-gray-900 dark:text-white m-0"> {{ Auth::user()->name }}</span>
-                                    <span
-                                        class="block text-sm font-medium text-gray-500 truncate dark:text-gray-400"> {{ Auth::user()->email }}</span>
-                                </div>
-                                <ul class="py-1" aria-labelledby="user-menu-button">
-                                    @if ( Auth::user()->admin == true)
-                                        <li>
-                                            <a href="{{ url( 'admin' ) }}"
-                                                class="block py-2 px-4 text-sm text-red-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Trang
-                                                quản lý</a>
-                                        </li>
-                                    @endif
+                        <button type="button" id="profileUser" data-dropdown-toggle="dropdownAvata"
+                            class="nav_div inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+                            <img id="avata" alt="Photo by aldi sigun on Unsplash" src="{{ url_image( Auth::user()->avata ) }}" class="mx-auto object-cover rounded-full h-[40px] bg-white w-[40px]" />
+                        </button>
+                        <!-- Dropdown menu -->
+                        <div id="dropdownAvata" class="hidden z-10 w-44 font-normal bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600" style="margin-top: -10px !important ">
+                            <ul class="py-1" aria-labelledby="user-menu-button">
+                                @if ( Auth::user()->admin == true)
                                     <li>
-                                        <a href="{{ route( 'profile' ) }}"
-                                            class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Trang
-                                            cá nhân</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route( 'calendar' ) }}"
-                                            class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                                            Lịch hoạt động
+                                        <a href="{{ url( 'admin' ) }}"
+                                            class="block py-2 px-4 text-sm text-red-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                            <i class="fa-solid fa-gear"></i> Trang quản lý
                                         </a>
                                     </li>
-                                    <li>
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                            @csrf
-                                            <button
-                                            class="block py-2 px-4 w-full text-left text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
-                                            Đăng xuất</button>
-                                        </form>
-                                    </li>
-                                </ul>
-                            </div>
+                                @endif
+                                <li>
+                                    <a href="{{ route( 'profile' ) }}"
+                                        class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                        <i class="fa-solid fa-user"></i> Trang cá nhân</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route( 'calendar' ) }}"
+                                        class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                        <i class="fa-solid fa-calendar-days"></i> Lịch hoạt động
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route( 'product.wishlist' ) }}"
+                                        class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                        <i class="fa-solid fa-heart"></i> Product Wishlists
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route( 'product.cart' ) }}"
+                                        class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                        <i class="fa-solid fa-cart-shopping"></i> Carts
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route( 'orders' ) }}"
+                                        class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                        <i class="fa-solid fa-bag-shopping"></i> Orders
+                                    </a>
+                                </li>
+                                <li class="border-t">
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                        <button
+                                        class="block py-2 px-4 w-full text-left text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                        Đăng xuất</button>
+                                    </form>
+                                </li>
+                            </ul>
                         </div>
                     @endguest
                 </li>

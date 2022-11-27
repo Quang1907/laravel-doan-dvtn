@@ -33,7 +33,9 @@ class HomeController extends Controller
     }
 
     public function home() {
-        return view( "client.index" );
+        $trending_post = $this->postService->trending();
+        $allPosts = $this->postService->allPost();
+        return view( "client.index", compact( "trending_post", "allPosts" ) );
     }
 
     // post by category or all post
@@ -62,7 +64,7 @@ class HomeController extends Controller
         $allCategoryProducts = $this->categoryProductService->allCateProduct();
         $brands = Brand::all();
         $colors = Color::all();
-        return view( "client.shop", compact( "trendingProducts", "products", "allCategoryProducts", "brands", "colors"  ) );
+        return view( "client.product.shop", compact( "trendingProducts", "products", "allCategoryProducts", "brands", "colors"  ) );
     }
 
     // products by category
@@ -71,20 +73,20 @@ class HomeController extends Controller
         $categoryProduct  = $this->categoryProductService->categorySlug( $slug ); // show category product
         $allCategoryProducts = $this->categoryProductService->allCateProduct(); // show category list
         $colors = Color::all();
-        return view( "client.product", compact( 'trendingProducts', "categoryProduct", "allCategoryProducts", "colors" ) );
+        return view( "client.product.product", compact( 'trendingProducts', "categoryProduct", "allCategoryProducts", "colors" ) );
     }
 
     // wishlist product
     public function wishlistProduct( ) {
-        return view( "client.product-wishlist" );
+        return view( "client.product.product-wishlist" );
     }
 
     public function cartsProduct() {
-        return view( "client.product-cart" );
+        return view( "client.product.product-cart" );
     }
 
     public function checkout() {
-        return view( "client.checkout" );
+        return view( "client.product.checkout" );
     }
 
     public function thankYou() {
@@ -93,17 +95,17 @@ class HomeController extends Controller
 
     public function orders() {
         $orders = Order::where( "user_id", auth()->user()->id )->orderBy( "created_at", "desc" )->paginate( 5 );
-        return view( "client.orders", compact( "orders" ) );
+        return view( "client.product.orders", compact( "orders" ) );
     }
 
     public function orderDetail( Order $order ) {
-        return view( "client.order-detail", compact( "order" ) );
+        return view( "client.product.order-detail", compact( "order" ) );
     }
 
     // show product detail
     public function viewProduct( $slugCate, $slugProduct ) {
         $product = $this->productService->whereSlug( $slugProduct );
-        return view( "client.product-detail", compact( "product" ) );
+        return view( "client.product.product-detail", compact( "product" ) );
         // return view( "client.product-detail", compact( "slugCate", "slugProduct", "product" ) );
     }
 

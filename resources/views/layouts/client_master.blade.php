@@ -36,7 +36,6 @@
     <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>
     <script src="{{ asset( 'js/slick/slick.min.js') }}"></script>
     <script src="{{ asset( 'js/instafeed/instafeed.min.js' ) }}"></script>
-    <script src="{{ asset( 'js/click.js' ) }}"></script>
     <script src="https://unpkg.com/flowbite@1.5.3/dist/flowbite.js"></script>
 
     <!--Start of Tawk.to Script-->
@@ -78,7 +77,6 @@
                 })
             })
     </script>
-
     @livewireScripts
 
 </body>

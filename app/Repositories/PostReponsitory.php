@@ -15,6 +15,10 @@ class PostReponsitory {
         self::$posts = $post;
     }
 
+    public function trending() {
+        return $this->post->where( "trending_post", true )->with( "categories" )->take( 3 )->get();
+    }
+
     public function all() {
         return $this->post->orderBy( "id", "DESC" )->search()->with( "categories" )->paginate( 5 );
     }

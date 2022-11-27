@@ -51,10 +51,10 @@
                                     <img src="{{ url_image( $post->image ) }}" class="card-img-top" alt="post-thumb">
                                 </div>
                                 <div class="card-body">
-                                    <h3 class="mb-3"><a class="post-title" href="#">{{ $post->title }}</a></h3>
+                                    <h3 class="mb-3"><a class="post-title" href="{{ route( 'viewPost', $post->slug ) }}">{{ $post->title }}</a></h3>
                                     <ul class="card-meta list-inline">
                                         <li class="list-inline-item">
-                                            <button href="#" class="card-meta-author">
+                                            <button type="button" class="card-meta-author">
                                                 <img src="{{ url_image( $post->user->avata ) }}">
                                                 <span>{{ $post->user->name }}</span>
                                             </button>

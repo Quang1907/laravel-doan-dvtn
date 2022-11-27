@@ -2,9 +2,11 @@
 
 namespace App\Http\Livewire\Client\Checkout;
 
+use App\Mail\PlaceOrderMailable;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 use Illuminate\Support\Str;
 
@@ -50,7 +52,7 @@ class CheckoutShow extends Component
 
     public function placeOrder() {
         $this->validate();
-        $order  = Order::create([
+        $order = Order::create([
             "user_id" => auth()->user()->id,
             "tracking_no" => "funda-" . Str::random(10),
             "fullname" => $this->fullname,
@@ -62,6 +64,7 @@ class CheckoutShow extends Component
             "payment_mode" =>  $this->payment_mode,
             "payment_id" => $this->payment_id,
         ]);
+
         foreach ( $this->carts as $cartItem ) {
             $price = $cartItem->product->selling_price ?? $cartItem->product->original_price;
             OrderItem::create([
@@ -73,8 +76,16 @@ class CheckoutShow extends Component
             ]);
             if ( $cartItem->product_color_id != null ) {
                 $cartItem->productColorTable()->where( "id", $cartItem->product_color_id )->decrement( "quantity", $cartItem->quantity );
+            } else {
+                $cartItem->product()->where( "id", $cartItem->product_id )->decrement( "quantity", $cartItem->quantity );
             }
-            $cartItem->product()->where( "id", $cartItem->product_id )->decrement( "quantity", $cartItem->quantity );
+        }
+
+        try {
+            $order = Order::findOrfail( $order->id );
+            Mail::to( "$order->email" )->send( new PlaceOrderMailable( $order ) );
+        } catch (\Throwable $th) {
+            //throw $th;
         }
         return $order;
     }
@@ -108,6 +119,7 @@ class CheckoutShow extends Component
         $this->email = auth()->user()->email;
         $this->phonenumber = auth()->user()->phonenumber;
         $this->address = auth()->user()->address;
+
         $this->carts = Cart::where( "user_id", auth()->user()->id )->with( "product" )->get();
         $this->totalProductAmount();
         return view('livewire.client.checkout.checkout-show',[

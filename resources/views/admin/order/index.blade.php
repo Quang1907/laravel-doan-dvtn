@@ -59,7 +59,7 @@
                             @endforeach
                             </tbody>
                         </table>
-                        {{ $orders->appends( request()->all() )->links("vendor.pagination.bootstrap-4") }}
+                        {{ $orders->appends( request()->all() )->links("vendor.pagination.client") }}
                     </div>
                 </div>
             </div>

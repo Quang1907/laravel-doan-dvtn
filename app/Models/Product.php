@@ -60,12 +60,18 @@ class Product extends Model
 
         }
 
-        if ( !empty( request()->color ) ) {
-            $colors = [];
-
-            foreach ( request()->color as $key => $value) {
-                $colors[] = $key;
-            }
+        if (  $search = request()->search ) {
+            $query->where( "name", "like", "%". $search ."%" );
         }
+
+        if ( $sort_price = request()->sort_price )  {
+            if ( $sort_price == "hight_to_low" ) {
+                $orderBy = "DESC";
+            } else {
+                $orderBy = "ASC";
+            }
+            $query->orderBy( "original_price", $orderBy );
+        }
+        return $query;
     }
 }

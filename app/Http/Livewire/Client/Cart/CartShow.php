@@ -10,15 +10,16 @@ class CartShow extends Component
     public $carts;
 
     public function removeCart( $cartId ) {
-        $cart = Cart::find( $cartId );
-        $this->dispatchBrowserEvent('message',[
-            'text' => "Remove product from cart",
-            'type' => "success",
-            'status' => "202",
-        ]);
-        $this->emit( "CartAddedUpdated" );
-
-        return $cart->delete();
+        $cart = Cart::find( $cartId )->first();
+        if ( $cart ) {
+            $cart->delete();
+            $this->dispatchBrowserEvent('message',[
+                'text' => "Remove product from cart",
+                'type' => "success",
+                'status' => "202",
+            ]);
+            return $this->emit( "CartAddedUpdated" );
+        }
     }
 
     public function decrementQuantity( $cartId ) {
