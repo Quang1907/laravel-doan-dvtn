@@ -69,6 +69,16 @@
                                 <input type="checkbox" class="custom-control-input" id="trending_post" @if ( $post->trending_post == true ) checked @endif name="trending_post">
                                 <label class="custom-control-label" for="trending_post">Treding</label>
                             </div>
+
+                            <div class="custom-control custom-checkbox checkbox-success d-inline-block mr-3 mb-3">
+                                <input type="checkbox" class="custom-control-input" id="hot_news" @if ( $post->trending_post == true ) checked @endif name="hot_news">
+                                <label class="custom-control-label" for="hot_news">Hot News</label>
+                            </div>
+
+                            <div class="custom-control custom-checkbox checkbox-success d-inline-block mr-3 mb-3">
+                                <input type="checkbox" class="custom-control-input" id="popular_post" @if ( $post->trending_post == true ) checked @endif name="popular_post">
+                                <label class="custom-control-label" for="popular_post">Popular</label>
+                            </div>
                         </div>
                         <div>
                             <?php

@@ -58,7 +58,7 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         // alert wishlist product detail
-        window.addEventListener('message', event => {
+        window.addEventListener( 'message', event => {
             const Toast = Swal.mixin({
                 toast: true,
                 position: 'top-end',
@@ -77,6 +77,7 @@
                 })
             })
     </script>
+
     @livewireScripts
 
 </body>

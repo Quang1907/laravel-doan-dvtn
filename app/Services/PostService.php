@@ -29,6 +29,14 @@ class PostService {
         return $this->postReponsitory->trending();
     }
 
+    public function popular_post() {
+        return $this->postReponsitory->popular_post();
+    }
+
+    public function hot_news() {
+        return $this->postReponsitory->hot_news();
+    }
+
     public function slugPost( $slug ) {
         return $this->postReponsitory->where( "slug", $slug );
     }
@@ -44,13 +52,13 @@ class PostService {
 
     public function createPost( Request $request ) {
         DB::beginTransaction();
-
         try {
             $data = $request->all();
             $data['slug'] = Str::slug( $data["title"] );
             $data['user_id'] = auth()->user()->id;
-            $data['trending_post'] = !empty( $data[ 'trending_post' ] ) ? true : false;
-
+            $data['trending_post'] = $this->checkOn( $request->trending_post );
+            $data['hot_news'] = $this->checkOn( $request->hot_news );
+            $data['popular_post'] = $this->checkOn(  $request->popular_post );
             $image = $request->file("image");
 
             if ( $request->googleDrive ) {
@@ -61,7 +69,6 @@ class PostService {
                 $image->storeAs( "public", $fileName);
                 $data['image'] = $fileName;
             }
-
             $data = $this->postReponsitory->create( $data );
 
             $data->categories()->attach( $request->category_id );
@@ -80,7 +87,11 @@ class PostService {
         $data = $request->all();
         $data['slug'] = Str::slug( $data["title"] );
         $data['user_id'] = auth()->user()->id;
-        $data['trending_post'] = !empty( $data[ 'trending_post' ] ) ? true : false;
+
+        $data['trending_post'] = $this->checkOn( $request->trending_post );
+        $data['hot_news'] = $this->checkOn( $request->hot_news );
+        $data['popular_post'] = $this->checkOn(  $request->popular_post );
+
         $image = $request->file("image");
 
         if ( !empty( $image ) ) {
@@ -112,5 +123,9 @@ class PostService {
 
     public function recentPost( $limit = 3 ) {
         return $this->postReponsitory->orderByAndLimit( "DESC", $limit );
+    }
+
+    public function checkOn( $field ) {
+        return !empty( $field ) ? 1 : 0;
     }
 }

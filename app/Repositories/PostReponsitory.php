@@ -16,7 +16,15 @@ class PostReponsitory {
     }
 
     public function trending() {
-        return $this->post->where( "trending_post", true )->with( "categories" )->take( 3 )->get();
+        return $this->post->where( "trending_post", true )->with( "categories" )->take( 5 )->get();
+    }
+
+    public function popular_post() {
+        return $this->post->where( "popular_post", true )->with( "categories" )->take( 2 )->get();
+    }
+
+    public function hot_news() {
+        return $this->post->where( "hot_news", true )->with( "categories" )->take( 2 )->get();
     }
 
     public function all() {

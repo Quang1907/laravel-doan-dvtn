@@ -66,6 +66,7 @@
                 stroke-width="2" />
         </svg>
     </div>
+
     <div class="flex shadow-md">
         <div class="w-full bg-white px-10 py-10">
             <div class="flex justify-between border-b pb-8">

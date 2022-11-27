@@ -143,7 +143,6 @@
             autoplayTimeout: 3000,
             smartSpeed: 450
         })
-
         $(function() {
             $.fn.limit = function($n) {
                 this.each(function() {

@@ -59,8 +59,18 @@
                         </div>
                         <div class="mb-3 mx-3 d-flex">
                             <div class="custom-control custom-checkbox checkbox-success d-inline-block mr-3 mb-3">
-                                <input type="checkbox" class="custom-control-input" id="trending_post" @if ( old( 'trending_post' ) == "on" ) checked @endif name="trending_post">
+                                <input type="checkbox" class="custom-control-input" id="trending_post" @if ( old( 'trending_post' ) == true ) checked @endif name="trending_post">
                                 <label class="custom-control-label" for="trending_post">Treding</label>
+                            </div>
+
+                            <div class="custom-control custom-checkbox checkbox-success d-inline-block mr-3 mb-3">
+                                <input type="checkbox" class="custom-control-input" id="hot_news" @if ( old( 'hot_news' ) == true ) checked @endif name="hot_news">
+                                <label class="custom-control-label" for="hot_news">Hot News</label>
+                            </div>
+
+                            <div class="custom-control custom-checkbox checkbox-success d-inline-block mr-3 mb-3">
+                                <input type="checkbox" class="custom-control-input" id="popular_post" @if ( old( 'popular_post' ) == true ) checked @endif name="popular_post">
+                                <label class="custom-control-label" for="popular_post">Popular</label>
                             </div>
                         </div>
                         <div>

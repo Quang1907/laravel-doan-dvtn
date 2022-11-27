@@ -54,7 +54,7 @@ class CategoryPostService {
     public function update( Request $request,  $category  ) {
         $request[ 'image' ] = str_replace( $request->root(), "", $request->image );
         $request[ "status" ] = ( $request->status == "on" ) ? 1 : 0 ;
-        $request[ "slug" ] =  Str::slug( $request->slug );
+        $request[ "slug" ] =  Str::slug( $request->name );
 
         return $this->categoryReponsitory->update( $request->all(), $category );
     }

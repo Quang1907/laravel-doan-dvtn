@@ -49,6 +49,9 @@
                             <a href="{{ route( "orders.index" ) }}" class="text-white">View</a>
                         </div>
                     </div>
+                    <div class="col-sm-12">
+                        <canvas id="orders"></canvas>
+                    </div>
                 </div>
             </div>
             <hr>
@@ -97,6 +100,9 @@
                             <a href="{{ route( "product.index" ) }}" class="text-white">View</a>
                         </div>
                     </div>
+                    <div class="col-sm-4">
+                        <canvas id="products"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
@@ -105,4 +111,92 @@
 @endsection
 
 @section('script')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+
+    // order chart
+    var _ydata = JSON.parse( '{!! json_encode( $monthsOrder ) !!}' );
+    var _xdata = JSON.parse( '{!! json_encode( $monthOrderCount ) !!}' );
+
+    const ctx = document.getElementById('orders');
+    new Chart( ctx , {
+        type: 'bar',
+        data: {
+            labels: _ydata,
+            datasets: [{
+                label: 'Orders',
+                data: _xdata,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 205, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(201, 203, 207, 0.2)'
+                ],
+                borderColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 159, 64)',
+                    'rgb(255, 205, 86)',
+                    'rgb(75, 192, 192)',
+                    'rgb(54, 162, 235)',
+                    'rgb(153, 102, 255)',
+                    'rgb(201, 203, 207)'
+                    ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+
+    // product chart
+    var _ydata = JSON.parse( '{!! json_encode( $monthsProduct ) !!}' );
+    var _xdata = JSON.parse( '{!! json_encode( $monthProductCount ) !!}' );
+
+    const products = document.getElementById('products');
+    new Chart( products , {
+        type: 'line',
+        data: {
+            labels: _ydata,
+            datasets: [{
+                label: 'Products',
+                data: _xdata,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 205, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(201, 203, 207, 0.2)'
+                ],
+                borderColor: [
+                    'rgb(255, 99, 132)',
+                    'rgb(255, 159, 64)',
+                    'rgb(255, 205, 86)',
+                    'rgb(75, 192, 192)',
+                    'rgb(54, 162, 235)',
+                    'rgb(153, 102, 255)',
+                    'rgb(201, 203, 207)'
+                    ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
 @endsection

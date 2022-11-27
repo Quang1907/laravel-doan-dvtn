@@ -35,7 +35,9 @@ class HomeController extends Controller
     public function home() {
         $trending_post = $this->postService->trending();
         $allPosts = $this->postService->allPost();
-        return view( "client.index", compact( "trending_post", "allPosts" ) );
+        $popular_posts = $this->postService->popular_post();
+        $hot_news = $this->postService->hot_news();
+        return view( "client.index", compact( "trending_post", "allPosts", "hot_news", "popular_posts" ) );
     }
 
     // post by category or all post

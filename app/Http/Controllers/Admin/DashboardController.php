@@ -29,6 +29,37 @@ class DashboardController extends Controller
         $totalAdmin = User::where( "admin", 1 )->where( "manager", auth()->user()->id )->count();
         $totalUser = User::where( "admin", 0 )->where( "manager", auth()->user()->id )->count();
 
-        return view( "admin.index", compact( "totalOrders", "totalProducts", "yearOrders", "monthOrders", 'todayOrders', "totalPosts", "allUsers", "totalAdmin", "totalUser" ) );
+        $orders = Order::select( "id", "created_at" )->orderBy( "created_at", "ASC" )->get()->groupBy( function( $orders ) {
+            return Carbon::parse( $orders[ "created_at" ] )->format( "M");
+        });
+
+        $monthsOrder = $monthOrderCount = [];
+        foreach ( $orders as $month => $values ) {
+            $monthsOrder[] = $month;
+            $monthOrderCount[] = $values->count();
+        }
+
+        $products = Product::select( "id", "created_at" )->orderBy( "created_at", "ASC" )->get()->groupBy( function( $products ) {
+            return Carbon::parse( $products[ "created_at" ] )->format( "M");
+        });
+
+        $monthsProduct = $monthProductCount = [];
+        foreach ( $products as $month => $values ) {
+            $monthsProduct[] = $month;
+            $monthProductCount[] = $values->count();
+        }
+
+        return view( "admin.index", compact(
+            "totalOrders",
+            "totalProducts",
+            "yearOrders",
+            "monthOrders",
+            'todayOrders',
+            "totalPosts",
+            "allUsers",
+            "totalAdmin",
+            "totalUser",
+            "monthsOrder", "monthsProduct",
+            "monthOrderCount", "monthProductCount" ) );
     }
 }

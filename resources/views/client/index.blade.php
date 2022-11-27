@@ -9,21 +9,12 @@
                 <div class="column is-9-widescreen">
                     <h1 class="mb-6 h1 text-black">What Would You <br> Like To Read Today?</h1>
                     <ul class="widget-list-inline mb-4">
-                        <li class="list-inline-item"><a href="tags.html">City</a></li>
-                        <li class="list-inline-item"><a href="tags.html">Color</a></li>
-                        <li class="list-inline-item"><a href="tags.html">Creative</a></li>
-                        <li class="list-inline-item"><a href="tags.html">Decorate</a></li>
-                        <li class="list-inline-item"><a href="tags.html">Demo</a></li>
-                        <li class="list-inline-item"><a href="tags.html">Elements</a></li>
-                        <li class="list-inline-item"><a href="tags.html">Fish</a></li>
-                        <li class="list-inline-item"><a href="tags.html">Food</a></li>
-                        <li class="list-inline-item"><a href="tags.html">Nice</a></li>
-                        <li class="list-inline-item"><a href="tags.html">Recipe</a></li>
-                        <li class="list-inline-item"><a href="tags.html">Season</a></li>
-                        <li class="list-inline-item"><a href="tags.html">Taste</a></li>
-                        <li class="list-inline-item"><a href="tags.html">Tasty</a></li>
-                        <li class="list-inline-item"><a href="tags.html">Vlog</a></li>
-                        <li class="list-inline-item"><a href="tags.html">Wow</a></li>
+                        @foreach ( $categoryPosts as $tagPost )
+                            <li class="list-inline-item"><a href="{{ route( 'category.post.slug', $tagPost->slug ) }}">{{ $tagPost->name }}</a></li>
+                        @endforeach
+                        @foreach ( $categoryProducts as $tagProduct )
+                            <li class="list-inline-item"><a href="{{ route( 'category.product.slug', $tagProduct->slug ) }}">{{ $tagProduct->name }}</a></li>
+                        @endforeach
                     </ul>
                 </div>
             </div>
@@ -84,43 +75,46 @@
     <section class="section pb-0">
         <div class="container">
             <div class="columns is-desktop is-multiline">
+                {{-- host new  --}}
                 <div class="column is-4-widescreen is-6-desktop mb-5">
-                    <h2 class="h5 section-title">Editors Pick</h2>
-                    <article class="card">
-                        <div class="post-slider slider-sm">
-                            <img src="images/post/post-1.jpg" class="card-img-top" alt="post-thumb">
-                        </div>
-
-                        <div class="card-body">
-                            <h3 class="h4 mb-3"><a class="post-title" href="post-details.html">Use apples to give your
-                                    bakes caramel and a moist texture</a></h3>
-                            <ul class="card-meta list-inline">
-                                <li class="list-inline-item">
-                                    <a href="author-single.html" class="card-meta-author">
-                                        <img src="images/john-doe.jpg">
-                                        <span>Charls Xaviar</span>
-                                    </a>
-                                </li>
-                                <li class="list-inline-item">
-                                    <i class="ti-timer"></i>2 Min To Read
-                                </li>
-                                <li class="list-inline-item">
-                                    <i class="ti-calendar"></i>14 jan, 2020
-                                </li>
-                                <li class="list-inline-item">
-                                    <ul class="card-meta-tag list-inline">
-                                        <li class="list-inline-item"><a href="tags.html">Color</a></li>
-                                        <li class="list-inline-item"><a href="tags.html">Recipe</a></li>
-                                        <li class="list-inline-item"><a href="tags.html">Fish</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                            <p>It’s no secret that the digital industry is booming. From exciting startups to …</p>
-                            <a href="post-details.html" class="btn btn-outline-primary">Read More</a>
-                        </div>
-                    </article>
+                    <h2 class="h5 section-title">host news</h2>
+                    @forelse ( $hot_news as $hot_new )
+                        <article class="card mb-4">
+                            <div class="post-slider">
+                                <img src="{{ url_image( $hot_new->image ) }}" class="card-img-top" alt="post-thumb">
+                            </div>
+                            <div class="card-body">
+                                <h3 class="mb-3"><a class="post-title" href="{{ route( 'viewPost', $hot_new->slug ) }}">{{ $hot_new->title }}</a></h3>
+                                <ul class="card-meta list-inline">
+                                    <li class="list-inline-item">
+                                        <button href="#" class="card-meta-author">
+                                            <img src="{{ url_image( $hot_new->user->avata ) }}">
+                                            <span>{{ $hot_new->user->name }}</span>
+                                        </button>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <i class="ti-timer"></i>{{ format_date( $hot_new->created_at ) }}
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <i class="ti-calendar"></i>{{ $hot_new->created_at->format( "d-m-Y" ) }}
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <ul class="card-meta-tag list-inline">
+                                            @foreach ( $hot_new->categories as $category )
+                                                <li class="list-inline-item"><a href="{{ route( 'category.post.slug', $category->slug ) }}">{{ $category->name }}</a></li>
+                                            @endforeach
+                                        </ul>
+                                    </li>
+                                </ul>
+                                <div class="showContent">{!! $hot_new->content !!}</div>
+                                <a href="{{ route( 'viewPost', $hot_new->slug ) }}" class="mt-3 btn bg-primary hover:text-blue-100 text-white">Xem thêm</a>
+                            </div>
+                        </article>
+                    @empty
+                    <span> Hiện tại chưa có bài viết</span>
+                    @endforelse
                 </div>
-
+                {{-- trending post --}}
                 <div class="column is-4-widescreen is-6-desktop mb-5">
                     <h2 class="h5 section-title">Trending Post</h2>
                     @forelse ( $trending_post as $trending_post_item )
@@ -144,42 +138,44 @@
                         Hiện chưa có bài viết nổi bật
                     @endforelse
                 </div>
-
+                {{-- populer post  --}}
                 <div class="column is-4-widescreen mb-5">
                     <h2 class="h5 section-title">Popular Post</h2>
-
-                    <article class="card">
-                        <div class="post-slider slider-sm">
-                            <img src="images/post/post-5.jpg" class="card-img-top" alt="post-thumb">
-                        </div>
-                        <div class="card-body">
-                            <h3 class="h4 mb-3"><a class="post-title" href="post-details.html">How To Make Cupcakes and
-                                    Cashmere Recipe At Home</a></h3>
-                            <ul class="card-meta list-inline">
-                                <li class="list-inline-item">
-                                    <a href="author-single.html" class="card-meta-author">
-                                        <img src="images/kate-stone.jpg" alt="Kate Stone">
-                                        <span>Kate Stone</span>
-                                    </a>
-                                </li>
-                                <li class="list-inline-item">
-                                    <i class="ti-timer"></i>2 Min To Read
-                                </li>
-                                <li class="list-inline-item">
-                                    <i class="ti-calendar"></i>14 jan, 2020
-                                </li>
-                                <li class="list-inline-item">
-                                    <ul class="card-meta-tag list-inline">
-                                        <li class="list-inline-item"><a href="tags.html">City</a></li>
-                                        <li class="list-inline-item"><a href="tags.html">Food</a></li>
-                                        <li class="list-inline-item"><a href="tags.html">Taste</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                            <p>It’s no secret that the digital industry is booming. From exciting startups to …</p>
-                            <a href="post-details.html" class="btn btn-outline-primary">Read More</a>
-                        </div>
-                    </article>
+                    @forelse ( $popular_posts as $popular_post )
+                        <article class="card mb-4">
+                            <div class="post-slider">
+                                <img src="{{ url_image( $popular_post->image ) }}" class="card-img-top" alt="post-thumb">
+                            </div>
+                            <div class="card-body">
+                                <h3 class="mb-3"><a class="post-title" href="{{ route( 'viewPost', $popular_post->slug ) }}">{{ $popular_post->title }}</a></h3>
+                                <ul class="card-meta list-inline">
+                                    <li class="list-inline-item">
+                                        <button href="#" class="card-meta-author">
+                                            <img src="{{ url_image( $popular_post->user->avata ) }}">
+                                            <span>{{ $popular_post->user->name }}</span>
+                                        </button>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <i class="ti-timer"></i>{{ format_date( $popular_post->created_at ) }}
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <i class="ti-calendar"></i>{{ $popular_post->created_at->format( "d-m-Y" ) }}
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <ul class="card-meta-tag list-inline">
+                                            @foreach ( $popular_post->categories as $category )
+                                                <li class="list-inline-item"><a href="{{ route( 'category.post.slug', $category->slug ) }}">{{ $category->name }}</a></li>
+                                            @endforeach
+                                        </ul>
+                                    </li>
+                                </ul>
+                                <div class="showContent">{!! $popular_post->content !!}</div>
+                                <a href="{{ route( 'viewPost', $popular_post->slug ) }}" class="mt-3 btn bg-primary hover:text-blue-100 text-white">Xem thêm</a>
+                            </div>
+                        </article>
+                    @empty
+                        <span> Hiện tại chưa có bài viết</span>
+                    @endforelse
                 </div>
                 <div class="column is-12">
                     <div class="border-bottom border-default"></div>
@@ -188,11 +184,11 @@
         </div>
     </section>
 
-    <section class="section-sm">
+    <section class="section">
         <div class="container">
             <div class="columns is-multiline is-desktop is-justify-content-center">
                 <div class="column is-8-desktop mb-5">
-                    <h2 class="h5 section-title">Recent Post</h2>
+                    <h2 class="h5 section-title">BÀI ĐĂNG GẦN ĐÂY</h2>
                     @forelse ( $allPosts as $postItem )
                         <article class="card mb-4">
                             <div class="post-slider">
@@ -228,20 +224,33 @@
                     @empty
                         Hiện tại chưa có bài viết
                     @endforelse
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item page-item active ">
-                            <a href="#!" class="page-link">1</a>
-                        </li>
-                        <li class="page-item">
-                            <a href="#!" class="page-link">2</a>
-                        </li>
-                        <li class="page-item">
-                            <a href="#!" class="page-link">&raquo;</a>
-                        </li>
-                    </ul>
+                    {{ $allPosts->appends( request()->all() )->links( "vendor.pagination.client" ) }}
                 </div>
                 @include( "layouts.inc.client.right-sidebar")
             </div>
         </div>
     </section>
 @endsection
+
+@section( 'script' )
+<script>
+    $(function() {
+        $.fn.limit = function($n) {
+            this.each(function() {
+                var allText = $(this).html();
+                var tLength = $(this).html().length;
+                var startText = allText.slice(0, $n);
+                if (tLength >= $n) {
+                    $(this).html(startText + '...');
+                } else {
+                    $(this).html(startText);
+                };
+            });
+
+            return this;
+        }
+        $('.showContent').limit(100);
+    });
+</script>
+@endsection
+
