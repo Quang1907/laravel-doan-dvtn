@@ -67,7 +67,7 @@ class UserController extends Controller
         $allow_absence =  UserEvents::where( "user_id", $user->id )->where( "refuse", true )->where( "allow_absence", true )->filter()->count();
         $absentArr = [ $allow_absence, $refuce ];
 
-        $rank = 0;
+        $rank = "";
         if ( $events > 0 ) {
             $rank = number_format( ( ( $participate * 100  ) / $events ), 2 );
         }

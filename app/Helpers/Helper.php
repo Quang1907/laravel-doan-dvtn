@@ -95,6 +95,7 @@ if ( !function_exists( "check_brand" ) ) {
 
 if ( !function_exists( "score_rating" ) ) {
     function score_rating( $rank ) {
+        if ( empty( $rank ) ) return "Chưa có dữ liệu";
         if ( $rank <= config( "admin.rank.medium" ) ) {
             return "Yếu";
         } elseif( $rank <= config( "admin.rank.good" ) ) {
@@ -103,7 +104,7 @@ if ( !function_exists( "score_rating" ) ) {
             return "Khá";
         } elseif( $rank < config( "admin.rank.excellent" ) ) {
             return "Giỏi";
-        } else {
+        } elseif( $rank == config( "admin.rank.excellent" ) ) {
             return "Xuất sắc";
         }
     }
