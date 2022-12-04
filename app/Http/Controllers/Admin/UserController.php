@@ -57,17 +57,20 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show( User $user ) {
-        $events = UserEvents::where( "user_id", $user->id )->count();
-        $participate = UserEvents::where( "user_id", $user->id )->where( "active", true )->count();
-        $notEngaged = UserEvents::where( "user_id", $user->id )->where( "active", false )->where( "refuse", false )->count();
+        $events = UserEvents::where( "user_id", $user->id )->filter()->count();
+        $participate = UserEvents::where( "user_id", $user->id )->where( "active", true )->filter()->count();
+        $notEngaged = UserEvents::where( "user_id", $user->id )->where( "active", false )->where( "refuse", false )->filter()->count();
 
         $eventArr = [ $events, $participate, $notEngaged ];
 
-        $refuce =  UserEvents::where( "user_id", $user->id )->where( "refuse", true )->where( "allow_absence", 2 )->count();
-        $allow_absence =  UserEvents::where( "user_id", $user->id )->where( "refuse", true )->where( "allow_absence", true )->count();
+        $refuce =  UserEvents::where( "user_id", $user->id )->where( "refuse", true )->where( "allow_absence", 2 )->filter()->count();
+        $allow_absence =  UserEvents::where( "user_id", $user->id )->where( "refuse", true )->where( "allow_absence", true )->filter()->count();
         $absentArr = [ $allow_absence, $refuce ];
 
-        $rank = number_format( ( ( $participate * 100  ) / $events ), 2 );
+        $rank = 0;
+        if ( $events > 0 ) {
+            $rank = number_format( ( ( $participate * 100  ) / $events ), 2 );
+        }
 
         return view( "admin.user.detail", compact( "user", "eventArr", "absentArr", "rank" ) );
 

@@ -15,6 +15,23 @@
         </div>
         </p>
         <div>
+        <div class="m-4">
+            <form action="" method="get">
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for="">Start Date</label>
+                        <input type="date" name="startDate" value="{{ request()->startDate ?? date( 'Y-m-d' )  }}" class="form-control">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="">End Date</label>
+                        <input type="date" name="endDate" value="{{ request()->endDate ?? date( 'Y-m-d' )  }}" class="form-control">
+                    </div>
+                    <div class="col-md-6 mt-6">
+                        <button class="btn btn-primary" >Filter</button>
+                    </div>
+                </div>
+            </form>
+        </div>
             <div class="d-flex flex-column px-4 py-6 shadow bg-white rounded space-y-6 mb-2 mx-4">
                 <div class="d-flex justify-content-between">
                     <h3 class="text-xl dark:text-white font-semibold leading-5 text-gray-800">User Detail</h3>

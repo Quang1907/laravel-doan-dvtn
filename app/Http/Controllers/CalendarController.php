@@ -23,7 +23,7 @@ class CalendarController extends Controller
         $users = $this->userService->allManager();
 
         $eventArr = array();
-        $findUserCreate = DB::table("users_events")->where("user_create", "=", auth()->user()->id )->get()->unique( "event_id" );
+        $findUserCreate = UserEvents::where("user_create", "=", auth()->user()->id )->get()->unique( "event_id" );
         foreach ( $findUserCreate as $key => $value ) {
             array_push($eventArr, $value->event_id);
         }
@@ -66,7 +66,7 @@ class CalendarController extends Controller
         $listUser = $request->user_id;
         foreach ( $listUser as $id ) {
             if ( $id != 0 ) {
-                DB::table( "users_events" )->insert( [
+                UserEvents::create( [
                     "user_id" => $id,
                     "user_create" => auth()->user()->id,
                     "event_id" => $booking->id,
@@ -74,7 +74,7 @@ class CalendarController extends Controller
             } else {
                 $users = $this->userService->allManager();
                 foreach ( $users as $user ) {
-                    DB::table( "users_events" )->insert( [
+                    UserEvents::create( [
                         "user_id" => $user->id ,
                         "user_create" => auth()->user()->id,
                         "event_id" => $booking->id,
@@ -126,7 +126,7 @@ class CalendarController extends Controller
     public function timekeeping() {
         $this->authorize( 'view', new Event );
         $eventArr = array();
-        $findUserCreate = DB::table("users_events")->where("user_create", "=", auth()->user()->id )->get()->unique( "event_id" );
+        $findUserCreate = UserEvents::where("user_create", "=", auth()->user()->id )->get()->unique( "event_id" );
         foreach ( $findUserCreate as $key => $value ) {
             array_push($eventArr, $value->event_id);
         }
@@ -144,10 +144,10 @@ class CalendarController extends Controller
         $setActive = $request->inactive == "on" ? false : true;
         if ( is_array( $userArr ) ) {
             foreach ( $userArr as $user_id  ) {
-                DB::table( "users_events" )->where( "user_id", $user_id )->where( "event_id", $request->event )->update( [ "active" => $setActive ] );
+                UserEvents::where( "user_id", $user_id )->where( "event_id", $request->event )->update( [ "active" => $setActive ] );
             }
         } else {
-            DB::table( "users_events" )->where( "user_id", $userArr )->update( [ "active" => $setActive ] );
+            UserEvents::where( "user_id", $userArr )->update( [ "active" => $setActive ] );
         }
 
         Alert::toast("Cập nhật thành công","success" );

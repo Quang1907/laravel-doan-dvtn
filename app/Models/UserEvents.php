@@ -18,4 +18,12 @@ class UserEvents extends Model
     public function event() {
         return $this->belongsTo( Event::class, "event_id", "id" );
     }
+
+    public function scopeFilter( $query ) {
+        if ( request()->startDate && request()->endDate ) {
+            $query->whereHas( "event", function ( $query ) {
+                $query->whereBetween( "start", [  date( request()->startDate ), date( request()->endDate ) ] );
+            });
+        }
+    }
 }
