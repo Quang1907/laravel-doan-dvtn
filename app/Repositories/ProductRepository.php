@@ -12,7 +12,7 @@ class ProductRepository {
     }
 
     public function all() {
-        return $this->product->orderBy( "id", "DESC" )->with( "category_products" )->paginate( 5 );
+        return $this->product->where( "user_id", auth()->user()->id )->orderBy( "id", "DESC" )->with( "category_products" )->paginate( 5 );
     }
 
     public function findOrFail( $id ) {

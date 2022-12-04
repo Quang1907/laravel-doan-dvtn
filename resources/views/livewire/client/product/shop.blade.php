@@ -140,11 +140,11 @@
                                 <div>
                                     <a
                                         href="{{ route('viewProduct', [$cateProducts->slug, $cateProduct->slug]) }}">
-                                        <img src="{{ $cateProduct->image }}" alt="" />
+                                        <img src="{{ $cateProduct->image }}" alt="" class="h-56 m-auto" />
                                     </a>
                                 </div>
                                 <div class="py-4 px-4 bg-white">
-                                    <h3 class="text-md font-semibold text-gray-600">{{ $cateProduct->name }}</h3>
+                                    <h3 class="text-md font-semibold text-gray-600 h-10">{{ $cateProduct->name }}</h3>
                                     <p class="mt-4 text-lg font-thin">
                                         {{ number_format($cateProduct->selling_price == 0 ? $cateProduct->original_price : $cateProduct->selling_price) }}
                                         VNĐ</p>
@@ -169,7 +169,7 @@
         {{-- List Image category --}}
         <div class="swiper mySwiper">
             <div class="swiper-wrapper">
-                {{-- @foreach ( $allCategoryProducts as $allCategoryProduct )
+                @foreach ( $allCategoryProducts as $allCategoryProduct )
                     <div class="swiper-slide">
                         <div class="relative p-4 w-full bg-white rounded-lg overflow-hidden flex flex-col justify-center items-center "
                             style="min-height: 160px">
@@ -183,7 +183,7 @@
                             </h2>
                         </div>
                     </div>
-                @endforeach --}}
+                @endforeach
             </div>
             <div class="swiper-pagination"></div>
         </div>

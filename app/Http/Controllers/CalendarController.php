@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\UserEvents;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -11,12 +12,14 @@ use RealRashid\SweetAlert\Facades\Alert;
 class CalendarController extends Controller
 {
     protected $userService = null;
+
     public function __construct( UserService $userService )
     {
         $this->userService = $userService;
     }
 
     public function index() {
+
         $users = $this->userService->allManager();
 
         $eventArr = array();
@@ -24,6 +27,7 @@ class CalendarController extends Controller
         foreach ( $findUserCreate as $key => $value ) {
             array_push($eventArr, $value->event_id);
         }
+
         $bookings = Event::whereIn("id", $eventArr)->get( [ "id", "title", "start", "content", "end" ] );
 
         $events = array();
@@ -119,7 +123,8 @@ class CalendarController extends Controller
         return $id;
     }
 
-    public function timekeeping(){
+    public function timekeeping() {
+        $this->authorize( 'view', new Event );
         $eventArr = array();
         $findUserCreate = DB::table("users_events")->where("user_create", "=", auth()->user()->id )->get()->unique( "event_id" );
         foreach ( $findUserCreate as $key => $value ) {
@@ -147,5 +152,39 @@ class CalendarController extends Controller
 
         Alert::toast("Cập nhật thành công","success" );
         return back();
+    }
+
+    public function refuse() {
+        $data  = array();
+        if ( !empty( request()->action ) && !empty( request()->user_id ) &&  !empty( request()->event_id ) ) {
+            if ( request()->action == "doNotAllow" ) {
+                Alert::toast( "Không được phép vắng mặt", "success" );
+                $data = [
+                    "allow_absence" => 2,
+                ];
+            } elseif ( request()->action == "allow" && !empty( request()->user_replace ) ){
+                $data = [
+                    "allow_absence" => 1,
+                ];
+                $user = UserEvents::where( "user_id", request()->user_replace )->where( "event_id" , request()->event_id )->count();
+                if (  $user == 0  ) {
+                    Alert::toast( "Cho phép vắng mặt thành công", "success" );
+                    UserEvents::create( [
+                        "user_id" => request()->user_replace,
+                        "event_id" => request()->event_id ,
+                        "user_create" => auth()->user()->id ,
+                    ] );
+                } else {
+                    Alert::toast( "Đoàn viên đã tham gia trong sự kiện", "warning" );
+                    return redirect()->back();
+                }
+            }
+
+            UserEvents::where( "user_id", request()->user_id )->where( "event_id", request()->event_id )->update(  $data ) ;
+            return redirect()->route( "user_event.refuse" );
+        }
+        $users = $this->userService->allManager();
+        $refuses = UserEvents::where( "user_create", auth()->user()->id )->where( "refuse", true )->with( "user" )->get();
+        return view( "admin.schedule.refuse", compact( "refuses", "users" ) );
     }
 }

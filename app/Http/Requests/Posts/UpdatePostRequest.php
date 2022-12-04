@@ -29,6 +29,7 @@ class UpdatePostRequest extends FormRequest
             "category_id" => "required",
         ];
     }
+    
     public function messages()
     {
         return [

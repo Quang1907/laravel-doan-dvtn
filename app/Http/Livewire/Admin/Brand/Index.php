@@ -102,7 +102,7 @@ class Index extends Component
     public function resetInput() {
         $this->name = null;
         $this->slug = null;
-        $this->start = null;
+        $this->status = null;
         $this->brand_id = null;
         $this->brand_category_id = null;
     }

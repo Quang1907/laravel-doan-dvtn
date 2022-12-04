@@ -23,11 +23,11 @@ class CategoryProductRepository {
     }
 
     public function whereBrands( $id ) {
-        return $this->categoryProduct->find( $id );
+        return $this->categoryProduct->findOrFail( $id );
     }
 
     public function find( $id ) {
-        return $this->categoryProduct->find( $id );
+        return $this->categoryProduct->findOrFail( $id );
     }
 
     public function allCategory() {
@@ -35,7 +35,7 @@ class CategoryProductRepository {
     }
 
     public function updateCategoryProduct( $attribute, $id ) {
-        $find = $this->categoryProduct->where( "id", $id)->first();
+        $find = $this->categoryProduct->where( "id", $id)->firstOrFail();
         return $find->update( $attribute );
     }
 
@@ -44,11 +44,11 @@ class CategoryProductRepository {
     }
 
     public function categorySlug( $slug ) {
-        return $this->categoryProduct->where( "slug", $slug )->first();
+        return $this->categoryProduct->where( "slug", $slug )->firstOrFail();
     }
 
     public function cateProductSlug( $slug ) {
-        $cate = $this->categoryProduct->where( "slug", $slug )->first();
+        $cate = $this->categoryProduct->where( "slug", $slug )->firstOrFail();
         return $cate->products()->with( "category_products", "productImages" )->paginate( 10 );
     }
 }

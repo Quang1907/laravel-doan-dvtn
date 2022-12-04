@@ -27,14 +27,17 @@
                                 @endforeach
                             </ul>
                         </li>
+                        <li>
+                            <div class="fb-share-button" data-href="https://thanhnien.vn/so-gd-dt-tphcm-dieu-chinh-cho-hoc-sinh-nghi-tet-nguyen-dan-het-mung-6-tet-post1528176.html" data-layout="box_count" data-size="small"><a target="_blank" href="https://thanhnien.vn/so-gd-dt-tphcm-dieu-chinh-cho-hoc-sinh-nghi-tet-nguyen-dan-het-mung-6-tet-post1528176.html" class="fb-xfbml-parse-ignore">Chia sẻ</a></div>
+                            <div id="fb-root"></div>
+                            <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v15.0&appId=5844891918862709&autoLogAppEvents=1" nonce="9OVdVQWH"></script>
+                        </li>
                     </ul>
                     <div class="content">
                         {!! $post->content !!}
                     </div>
                 </article>
-
             </div>
-
             {{-- comment --}}
             <section class="column is-9-desktop mt-4 bg-white dark:bg-gray-900 py-8 lg:py-16">
                 <div class="mx-auto px-4">
@@ -54,6 +57,7 @@
                         </div>
                         <button class="btn btn-primary bg-primary" type="submit">Comment Now</button>
                     </form>
+
                     @forelse ( $comments as $commentItem )
                         @if ( !$commentItem->parent_id )
                             <article class="mt-3 text-base bg-white rounded-lg dark:bg-gray-900">

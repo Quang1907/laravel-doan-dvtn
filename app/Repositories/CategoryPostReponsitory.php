@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Category;
+use App\Models\CategoryPosts;
 
 class CategoryPostReponsitory {
     protected $category = null;
@@ -36,11 +37,13 @@ class CategoryPostReponsitory {
     }
 
     public function whereCate( $id ) {
-        return Category::with('posts')->find( $id );
+        return Category::with([ 'posts' => function ( $query ) {
+            return $query->orderBy( "created_at", "desc" );
+        }])->findOrFail( $id );
     }
 
     public function whereSlug( $slug ) {
-        return $this->category->where( "slug", $slug )->first();
+        return $this->category->where( "slug", $slug )->firstOrFail();
     }
 
     public function find( $id ) {

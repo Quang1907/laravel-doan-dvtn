@@ -242,8 +242,8 @@
                                                 </path>
                                             </svg>
                                         </button>
-                                        <img alt="Toy" src="{{ $product->first()->image }}"
-                                            class="mt-0 w-full object-contain" />
+                                        <img alt="Toy" src="{{ asset( $product->image ) }}"
+                                            class="mt-0 w-full object-contain h-56 " />
                                         <div class="p-2">
                                             <span
                                                 class="inline-block bg-blue-400 px-3 py-1 text-xs font-medium text-white rounded">

@@ -23,6 +23,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
+        $this->authorize( "view", new User );
         $users = $this->userService->listUser();
         return view("admin.user.index", compact("users") );
     }
@@ -33,6 +34,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create() {
+        $this->authorize( "create", new User );
         $roles = Role::all();
         return view( "admin.user.create", compact( "roles" ) );
     }
@@ -54,7 +56,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(User $user) {
-        return view( "admin.user.show", compact( "user") );
+        return view( "admin.user.detail", compact( "user") );
     }
 
     /**
@@ -64,6 +66,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(User $user) {
+        $this->authorize( "update", new User );
         $roles = Role::all();
         return view( "admin.user.edit", compact( "user", "roles") );
     }
@@ -76,6 +79,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update( UpdateUserRequest $request, User $user) {
+        $request[ 'admin' ] = ( $request->role_id == config( "admin.role.role_id" ) ) ? false : true ;
         $user->update( $request->all() );
         return back()->with( "message", "User Updated Successfully");
     }
@@ -87,6 +91,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(User $user) {
+        $this->authorize( "delete", new User );
         $user->delete();
         return redirect()->route( "user.index" )->with( "message", "User Updated Successfully");
     }

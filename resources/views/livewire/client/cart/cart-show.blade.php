@@ -124,7 +124,7 @@
                                 </svg>
                             </button>
                         </div>
-                        @php( $price = $cartItem->product->selling_price ?? $cartItem->product->original_price )
+                        @php( $price = $cartItem->product->selling_price != 0 ? $cartItem->product->selling_price : $cartItem->product->original_price )
                         @php( $total += $cartItem->quantity * $price )
                         <span class="text-center w-1/5 font-semibold text-sm">{{ number_format( $price )  }} VND</span>
                         <span class="text-center w-1/5 font-semibold text-sm">{{ number_format( $cartItem->quantity * $price ) }} VND</span>

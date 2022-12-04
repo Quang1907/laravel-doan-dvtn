@@ -67,7 +67,7 @@
         </svg>
     </div>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 mb-6">
         <div class="flex flex-col md:flex-row -mx-4">
             <div class="md:flex-1 px-4">
                 <div x-data="{ image: 1 }" x-cloak>
@@ -95,7 +95,7 @@
                 </div>
             </div>
             <div class="md:flex-1 px-4">
-                <p class="text-gray-500 text-sm"><a href="#" class="text-indigo-600 hover:underline">{{ $product->category_products->name }}</a>
+                <p class="text-gray-500 text-sm"><a href="{{ route( 'category.product.slug',  $product->category_products->slug ) }}" class="text-indigo-600 hover:underline">{{ $product->category_products->name }}</a>
                 </p>
                 <div class="flex">
                     <h2 class="mb-2 leading-tight tracking-tight font-bold text-gray-800 text-2xl md:text-3xl">
@@ -183,14 +183,13 @@
                 <div class="flex items-center space-x-4 my-4">
                     <div>
                         <div class="rounded-lg bg-gray-100 flex py-2 px-3">
-                            <span
-                                class="font-bold text-indigo-600 text-3xl">{{ number_format( $product->selling_price ?? $product->original_price) }}</span>
+                            <span class="font-bold text-indigo-600 text-3xl">{{ number_format( $product->selling_price !== 0 ?  $product->selling_price :  $product->original_price  )  }}</span>
                             <span class="text-indigo-400 mr-1 mt-1">VNĐ</span>
                         </div>
                     </div>
                     @if ( !empty( $product->selling_price ) )
                         <div class="flex-1">
-                            <p class="text-green-500 text-xl font-semibold">Save 12%</p>
+                            <p class="text-green-500 text-xl font-semibold">Save {{ number_format( ( ( $product->selling_price - $product->original_price ) / $product->original_price )  * 100 , 2) }}%</p>
                             <del class="text-red-400 text-sm">{{ number_format( $product->original_price ) }} VND</del>
                         </div>
                     @endif
@@ -259,7 +258,7 @@
                 </li>
             </ul>
         </div>
-        <div id="myTabContent">
+        <div id="myTabContent" wire:ignore>
             <div class="hidden p-4 bg-gray-50 rounded-lg dark:bg-gray-800" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                 <p class="text-sm text-gray-500 dark:text-gray-400">{!! $product->description !!}</p>
             </div>

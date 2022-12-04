@@ -1,5 +1,6 @@
 <section>
     @include( "layouts.inc.client.navbar_shop" )
+    @php( $totalProductAmount = 0 )
    <!-- /navigation -->
     <div class="header has-text-centered">
         <div class="container">
@@ -145,11 +146,15 @@
                         <li class="grid grid-cols-6 gap-2 border-b-1">
                             <div class="col-span-1 self-center">
                                 <img src="{{ asset( $cartItem->product->image ) }}" alt="Product" class="rounded w-14">
+
                             </div>
                             <div class="flex flex-col col-span-3 pt-2">
                                 <a class="uppercase" href="{{ route( 'viewProduct', [ $cartItem->product->category_products->slug, $cartItem->product->slug ]  ) }}">
                                     <span class="text-gray-600 text-md font-semi-bold">{{ $cartItem->product->name }}</span>
                                 </a>
+                                @php( $price = $cartItem->product->selling_price != 0 ? $cartItem->product->selling_price : $cartItem->product->original_price )
+                                @php( $totalProductAmount += $cartItem->quantity * $price )
+                                <span> {{ $cartItem->quantity }} x {{ number_format( $price ) }} VND</span>
                             </div>
                         </li>
                     @endforeach

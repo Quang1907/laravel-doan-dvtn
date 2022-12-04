@@ -9,7 +9,7 @@ class Category extends Model
 {
     use HasFactory;
 
-    protected $fillable = [ "name", "slug", "description", "status", "image", "meta_title", "meta_description", "meta_keyword", "parent_id"];
+    protected $fillable = [ "name", "slug", "description", "status", "image", "meta_title", "meta_description", "meta_keyword", "parent_id" ];
 
     public function posts()
     {
@@ -29,7 +29,7 @@ class Category extends Model
         return $query;
     }
 
-    public function products() {
-        return $this->hasMany( Product::class, "category_id", "id" );
-    }
+    // public function products() {
+    //     return $this->hasMany( Product::class, "category_id", "id" );
+    // }
 }

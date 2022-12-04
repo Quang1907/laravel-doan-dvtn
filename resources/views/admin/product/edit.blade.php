@@ -136,7 +136,7 @@
                             </div>
                             <div id="holder1" class="row mb-2" style="margin-left:10px; margin-top:15px;max-height:100px;">
                                 <div class="col-sm-2">
-                                    <img src="{{ old( 'image', $product->image ) }}" class="w-100 rounded-lg" alt="">
+                                    <img src="{{ asset( old( 'image', $product->image ) ) }}" class="w-50 rounded-lg" alt="">
                                 </div>
                             </div>
                         </div>

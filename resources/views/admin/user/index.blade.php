@@ -10,9 +10,9 @@
                 </div>
             </div>
 
-           <div class="mt-4 mx-4">
-            <x-errors.any></x-errors.any>
-           </div>
+            <div class="mt-4 mx-4">
+                <x-errors.any></x-errors.any>
+            </div>
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-12 col-md-9">
@@ -81,13 +81,13 @@
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->role->name }}</td>
                                     <td>
-                                       <ul>
+                                        <ul>
                                         @foreach ( $user->role->permissions as $permission )
                                             <li>
                                                 {{ $permission->name }}
                                             </li>
                                         @endforeach
-                                       </ul>
+                                        </ul>
                                     </td>
                                     <td class="text-center my-auto">
                                         <i class="@if ( $user->is_active ) text-success @else text-danger @endif fa-regular fa-circle-dot"></i>

@@ -148,8 +148,7 @@ class UserService {
         if ( !empty( $user ) ) {
             $this->userReponsitory->update( $data, $user );
             dispatch( new SendEmail( $user ) );
-            return redirect()->route( "vertify.password", $user );
-            // return view( "client.auth.vertify_password", compact( "user" ) );
+            return redirect()->route( "vertify.password.view", $user );
         }
         return back()->with( ["message" => "Khong tim thay email cua ban"] )->withInput();
     }

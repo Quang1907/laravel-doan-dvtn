@@ -32,7 +32,7 @@ class PostReponsitory {
     }
 
     public function pagination( $number ) {
-        return self::$posts->search()->paginate( $number );
+        return self::$posts->where( "user_id", auth()->user()->id )->search()->paginate( $number );
     }
 
     public function create( $attributes ) {

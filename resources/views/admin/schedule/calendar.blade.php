@@ -150,7 +150,6 @@
                         dataType: 'json',
                         data: { title, start, content, end, user_id },
                         success : function ( response ) {
-                            console.log(response.content);
                             Swal.fire( "Event created successfully!", response , "success");
                             $( '#calendar' ).fullCalendar('renderEvent', {
                                 'id' : response.id,
@@ -187,6 +186,7 @@
                     success : function ( response ) {
                         Swal.fire("Good job!", response , "success");
                     },
+
                     error   : function ( error ) {
                         var message = error.responseJSON;
                         if ( message ) {
@@ -198,8 +198,8 @@
 
             eventClick: function ( event ) {
                 var html = '<h3 class="p-0 m-0">Tên hoạt động: '+ event.title +'</h3>'+
-                    '<h3 class="p-0 m-0">Thoi gian bat dau: '+  $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss") +'</h3>'+
-                    '<h3 class="p-0 m-0">Thoi gian ket thuc: '+  $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss") +'</h3>'+
+                    '<h4 class="p-0 m-0">Thời gian bắt đầu: '+  $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss") +'</h4>'+
+                    '<h4 class="p-0 m-0">Thời gian kết thúc: '+  $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss") +'</h4>'+
                     event.content;
                 $("#show-content").html( html );
 

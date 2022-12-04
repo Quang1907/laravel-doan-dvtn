@@ -18,7 +18,6 @@ use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-
 // view client
 Route::controller( HomeController::class )->group( function () {
     Route::get( "/", "home" )->name( "home" );
@@ -36,11 +35,12 @@ Route::controller( HomeController::class )->group( function () {
         Route::get( "orders", "orders" )->name( "orders" );
         Route::get( "order/{order}", "orderDetail" )->name( "order.detail" );
         Route::get( "thank-you", "thankYou" )->name( "thank-you" );
+        Route::get( "lich",  "calendar" )->name( "calendar" );
+        Route::get( "refuse", "refuse" )->name( "refuse" );
     });
 
     Route::get( "account", "account" )->name( "profile" )->middleware( "checkInfo" );
 
-    Route::get( "lich",  "calendar" )->name( "calendar" );
 }) ;
 
 
@@ -50,14 +50,14 @@ Route::view( "sipping-wheel", "client.game.sipping-wheel");
 // account
 Route::view( "dang-nhap", "client.auth.login" )->name( "dangnhap" )->middleware( "checkAuth" );
 Route::post( "dang-nhap" , [ AuthController::class,  "checkLogin" ] )->name("account.checkLogin");
-Route::view( "dang-ky" , "client.auth.register" )->name( "dangky" )->middleware( "checkAuth" );
+Route::view( "dang-ky" ,  [ AuthController::class,  "dangky" ] )->name( "dangky" )->middleware( "checkAuth" );
 Route::post( "dang-ky", [ AuthController::class, "register" ] )->name( "account.register");
 Route::get( "vertify/email/{email}/{user}", [AuthController::class, "vertifyEmail"] )->name("account.vertifyEmail"); // ->middleware( "auth" )
 Route::post( "vertify/email/{user}", [ AuthController::class, "vertify" ] )->name( "account.vertify" );
 Route::view( "forget/password", "client.auth.forget_password" )->name( "forget" );
 Route::post( "forget/password", [ AuthController::class, "forget" ] )->name( "forget.password" );
-// Route::get( "vertify/password/{user}",[ AuthController::class, "confirmMail"] )->name( "vertify.password" );
-// Route::post( "vertify/password/{user}",   [ AuthController::class, "vertifyPassword" ]  )->name( "vertify.password" );
+Route::get( "vertify/password/{user}",[ AuthController::class, "confirmMail"] )->name( "vertify.password.view" );
+Route::post( "vertify/password/{user}",   [ AuthController::class, "vertifyPassword" ]  )->name( "vertify.password" );
 
 Route::group([ "middleware" => "auth", "prefix" => "account"],function () {
     Route::view( "password" ,'client.auth.change_password' )->name( "account.changePassword" )->middleware( "checkInfo" );
@@ -101,6 +101,7 @@ Route::group([ "prefix" => "admin",  "middleware" => "admin" ], function () {
     Route::get( "timkeeping", [ CalendarController::class,"timekeeping" ] )->name( "timkeeping" );
     Route::get( "timkeeping/{event}", [ CalendarController::class, "showEvent" ] )->name( "timkeeping.detail" );
     Route::post( "timekeeping/active", [ CalendarController::class, "active"])->name( "user_event.active" );
+    Route::get( "timekeeping/refuse", [ CalendarController::class, "refuse"])->name( "user_event.refuse" );
 
     Route::resource( "product", ProductController::class );
     Route::get( "product-image/{id}/delete", [ ProductController::class, "deleteImage" ] )->name( "product-image.delete" );

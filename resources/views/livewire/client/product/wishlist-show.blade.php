@@ -94,7 +94,7 @@
                             </div>
                         </div>
                         <div class="flex justify-center w-1/5">
-                            <span>{{ number_format( $wishlistItem->product->selling_price ?? $wishlistItem->product->original_price )  }} VND</span>
+                            <span>{{ number_format( $wishlistItem->product->selling_price !=0 ? $wishlistItem->product->selling_price : $wishlistItem->product->original_price )  }} VND</span>
                         </div>
                         <div class="flex justify-center w-1/5">
                             <button wire:click="removeWishlistItem({{ $wishlistItem->id }})"

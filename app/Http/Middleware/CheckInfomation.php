@@ -16,7 +16,7 @@ class CheckInfomation
      */
     public function handle(Request $request, Closure $next)
     {
-        if ( !auth()->user() || !auth()->user()->phonenumber || !auth()->user()->birthday || !auth()->user()->password || !auth()->user()->address ) {
+        if ( !( auth()->user() ) || !auth()->user()->phonenumber || !auth()->user()->birthday || !auth()->user()->password || !auth()->user()->address ) {
             return redirect( "account/confirm" );
         }
 

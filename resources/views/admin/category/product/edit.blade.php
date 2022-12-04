@@ -39,7 +39,7 @@
                             <input id="thumbnail2" class="form-control"  value="{{ old( 'image', $category->image ) }}" type="hidden" name="image" multiple>
                         </div>
                         <div id="holder2" class="flex" style="margin-top:15px;max-height:100px;">
-                            <img src="{{ url_image( $category->image ) }}" width="100px" alt="">
+                            <img src="{{ url_image( $category->image ) }}" height="100px" alt="">
                         </div>
 
                         <div class="col-sm-6 mt-4">

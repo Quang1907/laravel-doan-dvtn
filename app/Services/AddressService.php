@@ -8,7 +8,7 @@ class AddressService {
 
     public $addressService = null;
 
-public function __construct( AddressRepository $addressService ) {
+    public function __construct( AddressRepository $addressService ) {
         $this->addressService = $addressService;
     }
 

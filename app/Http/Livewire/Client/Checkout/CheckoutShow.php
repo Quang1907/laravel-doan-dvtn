@@ -60,7 +60,7 @@ class CheckoutShow extends Component
             "email" => $this->email,
             "pincode" => $this->pincode,
             "address" => $this->address,
-            "status_message" => "in progress",
+            "status_message" => "In progress",
             "payment_mode" =>  $this->payment_mode,
             "payment_id" => $this->payment_id,
         ]);
@@ -91,7 +91,7 @@ class CheckoutShow extends Component
     }
 
     public function codOrder() {
-        $this->payment_mode = "cash on delivery";
+        $this->payment_mode = "Cash on delivery";
         $codOrder = $this->placeOrder();
         if ( $codOrder ) {
             Cart::where( "user_id", auth()->user()->id )->delete();

@@ -9,12 +9,15 @@
 @endsection
 
 @section('content')
-    <div class="flex justify-center mt-3">
-        <h4 class="max-w-sm text-center font-bold mt-1">Chú thích :</h4>
-        <div class="py-3 px-5 mx-2 bg-blue-500 0 rounded"></div><span class="text-blue-500"> Chưa diễn ra</span>
-        <div class="py-3 px-5 mx-2  bg-yellow-500 rounded"></div><span class="text-yellow-500"> Đang diễn ra</span>
-        <div class="py-3 px-5 mx-2  bg-green-500 rounded"></div><span class="text-green-500"> Có tham gia</span>
-        <div class="py-3 px-5 mx-2  bg-red-500 rounded"></div><span class="text-red-500"> Không tham gia</span>
+    <h4 class="flex justify-center font-bold mt-1 uppercase text-2xl">Chú thích</h4>
+    <div class="m-3 grid grid-cols-3 gap-y-4 lg:grid-cols-5 xl:grid-cols-7 md:grid-cols-4">
+        <div class="py-3 px-5 mx-2 bg-blue-500 0 rounded"><span class="text-white"> Chưa diễn ra</span></div>
+        <div class="py-3 px-5 mx-2  bg-yellow-500 rounded"><span class="text-white"> Đang diễn ra</span></div>
+        <div class="py-3 px-5 mx-2  bg-green-500 rounded"><span class="text-white"> Có tham gia</span></div>
+        <div class="py-3 px-5 mx-2  bg-red-500 rounded"><span class="text-white"> Không tham gia</span></div>
+        <div class="py-3 px-5 mx-2  bg-gray-500 rounded"><span class="text-white"> Đang xin phép</span></div>
+        <div class="py-3 px-5 mx-2  bg-pink-500 rounded"><span class="text-white"> Được phép vắng</span></div>
+        <div class="py-3 px-5 mx-2 bg-violet-500 rounded"><span class="text-white"> Không vắng</span></div>
     </div>
 
     <h1 class="text-3xl uppercase text-center font-bold mt-2">Lịch hoạt động</h1>
@@ -60,6 +63,7 @@
                     class="flex items-center p-3 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
                     <button data-modal-toggle="defaultModal" type="button"
                         class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">Close</button>
+                    <div id="btn"></div>
                 </div>
             </div>
         </div>
@@ -78,7 +82,9 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <script>
+
         $(document).ready(function() {
+
             $('.category').select2();
             $(".select2-container").css("width", "750px");
 
@@ -101,14 +107,32 @@
                 events: bookings,
                 eventClick: function( event ) {
 
+                    now = moment().format( "Y-MM-DD HH:mm:ss" );
+
+                    start = $.fullCalendar.formatDate( event.start, "Y-MM-DD HH:mm:ss"  );
+
+                    var refuse = "";
+
+                    if ( now < start  ) {
+                        if ( event.refuse == 0 ) {
+                            refuse = "<button id='refuse' onclick='refuse(" + event.id + ", " + event.user_id + ", 1 )' class='text-white bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-yellow-600 dark:hover:bg-yellow-500 dark:focus:ring-yellow-600'>Xin vắng</button>";
+                        } else {
+                            refuse = "<button id='refuse' onclick='refuse(" + event.id + ", " + event.user_id + ", 0 )' class='text-white bg-yellow-500 hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-yellow-600 dark:hover:bg-yellow-500 dark:focus:ring-yellow-600'>Huỷ xin vắng</button>";
+                        }
+                        $( "#btn" ).html( refuse );
+                    } else {
+                        $( "#refuse" ).remove();
+                    }
+
                     $("#btnModal").click();
+
                     var html = '<p class="p-0 m-0">Điểm danh: ' + checkActive( event ) + '</p>' +
-                        '<p class="p-0 m-0">Tên hoạt động: ' + event.title + '</p>' +
+                        '<p class="p-0 m-0">Tên hoạt động: <span class="font-bold">' + event.title + '</span></p>' +
                         '<p class="p-0 m-0">Thời gian bắt đầu: ' + $.fullCalendar.formatDate(event
                             .start, "Y-MM-DD HH:mm:ss") + '</p>' +
                         '<p class="p-0 m-0">Thời gian kết thúc: ' + $.fullCalendar.formatDate(event.end,
                             "Y-MM-DD HH:mm:ss") + '</p>' +
-                        '<h3 class="p-0 m-0">Nội dung hoạt động: </h2> ' + event.content;
+                        '<h3 class="p-0 m-0">Nội dung hoạt động: </h2>' + event.content + "";
                     $("#show-content").html(html);
                 },
             });
@@ -116,7 +140,62 @@
             function checkActive( check ) {
                 return ( check.active == true ) ? '<span class="text-xs px-3 bg-green-200 text-green-800 rounded-full">Đã tham gia</span>' : '<span class="text-xs px-3 bg-red-200 text-red-800 rounded-full">Chưa tham gia</span>';
             }
+
         });
+
+        async function refuse( id, user_id, status ) {
+            status = status == 1 ? "yes" : "cancel";
+            const text = await Swal.fire({
+                input: 'textarea',
+                inputLabel: 'Message',
+                inputPlaceholder: 'Lý do xin vắng mặt',
+                inputAttributes: {
+                    'aria-label': 'Type your message here'
+                },
+                showCancelButton: true
+            })
+
+            if ( text.value ) {
+
+                $.ajax({
+                    type: "get",
+                    url: "{{ route( 'refuse' ) }}",
+                    data: { "event_id" : id , "user_id" : user_id, "status" : status, "content_refuse" : text.value },
+                    success: function ( response ) {
+                        console.log(response);
+
+                        if ( response.status == 202 ) {
+                            Swal.fire({
+                                title: 'Thông báo.',
+                                text: response.message,
+                                icon: 'success',
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Vâng'
+                                }).then((result) => {
+                                if (result.isConfirmed) {
+                                    location.reload();
+                                }
+                            })
+                        }
+                        if ( response.status == 404 ) {
+                            Swal.fire({
+                                title: 'Thông báo.',
+                                text: response.message,
+                                icon: 'warning',
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Vâng'
+                                }).then((result) => {
+                                if (result.isConfirmed) {
+                                    location.reload();
+                                }
+                            })
+                        }
+                    }
+                });
+            }
+        }
     </script>
 
 @endsection

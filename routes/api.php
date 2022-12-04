@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\ApiAddressController;
+use App\Http\Controllers\Api\AddressApiController;
 use App\Http\Controllers\Api\ApiUserManagerController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -21,9 +21,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::group([ "prefix" => "address" ], function () {
-    Route::get( "province", [ ApiAddressController::class, "province" ])->name( "api.province" );
-    Route::get( "district", [ ApiAddressController::class, "district" ])->name( "api.district" );
-    Route::get( "ward", [ ApiAddressController::class, "ward" ])->name( "api.ward" );
+    Route::get( "province", [ AddressApiController::class, "province" ])->name( "api.province" );
+    Route::get( "district", [ AddressApiController::class, "district" ])->name( "api.district" );
+    Route::get( "ward", [ AddressApiController::class, "ward" ])->name( "api.ward" );
 });
 
 Route::get( "userManager", [ ApiUserManagerController::class, "admin" ])->name( "api.userManager" );

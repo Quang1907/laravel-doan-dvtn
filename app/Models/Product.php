@@ -24,7 +24,8 @@ class Product extends Model
         "status",
         "meta_title",
         "meta_description",
-        "meta_keyword"
+        "meta_keyword",
+        "user_id",
     ];
 
     public function productImages() {

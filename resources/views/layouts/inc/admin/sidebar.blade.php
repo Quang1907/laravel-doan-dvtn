@@ -26,7 +26,7 @@
                                         </a>
                                     </li>
                                     @foreach ( config('admin.sidebar') as $menu )
-                                        @if (!empty($menu['parent']))
+                                        @if (!empty( $menu['parent'] ) )
                                             <li class="has-sub">
                                                 <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#{{ $menu[ 'id' ] }}"
                                                     aria-expanded="false" aria-controls="email">
@@ -36,12 +36,12 @@
                                             </li>
                                             <ul class="collapse" id="{{ $menu[ 'id' ] }}">
                                                 <div class="sub-menu">
-                                                    @foreach ($menu['parent'] as $menuParent)
-                                                    <li>
-                                                    <a class="sidenav-item-link collapse" href="{{ route( $menuParent['route'] ) }}">
-                                                            <span class="nav-text">{{ $menuParent['name'] }}</span>
-                                                        </a>
-                                                    </li>
+                                                    @foreach ( $menu['parent'] as $menuParent )
+                                                        <li>
+                                                            <a class="sidenav-item-link collapse" href="{{ route( $menuParent['route'] ) }}">
+                                                                <span class="nav-text">{{ $menuParent['name'] }}</span>
+                                                            </a>
+                                                        </li>
                                                     @endforeach
                                                 </div>
                                             </ul>
@@ -54,6 +54,30 @@
                                             </li>
                                         @endif
                                     @endforeach
+                                    @can( "view", new App\Models\Event )
+                                        <li>
+                                            <a class="sidenav-item-link" href="{{ route( 'calendar.index' ) }}">
+                                                <i class="fa-solid fa-thumbtack" style="font-size:20px"></i>
+                                                <span class="nav-text">Nhiệm vụ</span>
+                                            </a>
+                                        </li>
+                                    @endcan
+                                    @can( "view", new App\Models\User )
+                                        <li>
+                                            <a class="sidenav-item-link" href="{{ route( 'user.index' ) }}">
+                                                <i class="fa-solid fa-user" style="font-size:20px"></i>
+                                                <span class="nav-text">Người dùng</span>
+                                            </a>
+                                        </li>
+                                    @endcan
+                                @can( "view", new App\Models\Event )
+                                        <li>
+                                            <a class="sidenav-item-link" href="{{ route( 'timkeeping' ) }}">
+                                                <i class="fa-solid fa-file-pen" style="font-size:20px"></i>
+                                                <span class="nav-text">Chấm công</span>
+                                            </a>
+                                        </li>
+                                    @endcan
                                 </ul>
                             </div>
                         </div>

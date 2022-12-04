@@ -37,7 +37,8 @@ class ProductService {
         $request[ 'slug' ] = Str::slug( $request->name );
         $request[ 'trending' ] =  $this->checkBox($request[ 'trending' ]) ;
         $request[ 'status' ] =  $this->checkBox($request[ 'status' ]) ;
-        $request[ 'image' ] = str_replace( $request->root(), "", $request->images );
+        $request[ 'image' ] = str_replace( $request->root(), "", $request->image );
+        $request[ 'user_id' ] = auth()->user()->id;
 
         $product =  $category->products()->create( $request->all() );
 
@@ -79,11 +80,13 @@ class ProductService {
         $request[ 'image' ] = str_replace( $request->root(), "", $request->image );
 
         $product->update( $request->all() );
-        $images = str_replace( $request->root(), "", $request->images );
-        $imageArr = explode( ",", $images );
+        if ( !empty( $request->images ) ) {
+            $images = str_replace( $request->root(), "", $request->images );
+            $imageArr = explode( ",", $images );
 
-        foreach ( $imageArr as $key => $imageDetail ) {
-            $product->productImages()->create( [ "product_id" => $product->id, 'image' =>  $imageDetail ] );
+            foreach ( $imageArr as $key => $imageDetail ) {
+                $product->productImages()->create( [ "product_id" => $product->id, 'image' =>  $imageDetail ] );
+            }
         }
 
         $product->productColorTable()->delete();

@@ -6,6 +6,7 @@ use App\Models\Brand;
 use App\Models\Color;
 use App\Models\Order;
 use App\Models\Slider;
+use App\Models\UserEvents;
 use App\Services\CategoryPostService;
 use App\Services\CategoryProductService;
 use App\Services\PostService;
@@ -75,7 +76,7 @@ class HomeController extends Controller
         $categoryProduct  = $this->categoryProductService->categorySlug( $slug ); // show category product
         $allCategoryProducts = $this->categoryProductService->allCateProduct(); // show category list
         $colors = Color::all();
-        return view( "client.product.product", compact( 'trendingProducts', "categoryProduct", "allCategoryProducts", "colors" ) );
+        return view( "client.product.index", compact( 'trendingProducts', "categoryProduct", "allCategoryProducts", "colors" ) );
     }
 
     // wishlist product
@@ -118,8 +119,8 @@ class HomeController extends Controller
     public function calendar() {
         $eventArr = array();
         $bookings = DB::table( "users_events" )->join( "events", "event_id", "id" )->where( "user_id", auth()->user()->id )->get();
-        $events = array();
 
+        $events = array();
         foreach ( $bookings as $booking ) {
             $color = null;
             $textColor = null;
@@ -138,13 +139,35 @@ class HomeController extends Controller
                     $color = "yellow";
                     $textColor = "red";
                 }else {
-                    $color = "blue";
-                    $textColor = "yellow";
+                    if ( $booking->refuse == true  ) {
+                        if ( $booking->allow_absence == true ) {
+                            $color = "pink";
+                            $textColor = "red";
+                        }
+
+                        if ( empty( $booking->allow_absence ) ) {
+                            $color = "gray";
+                            $textColor = "white";
+                        }
+
+                        if (  $booking->allow_absence == 2 ) {
+                            $color = "rgb(139 92 246)";
+                            $textColor = "white";
+                        }
+
+                    } else {
+                        $color = "blue";
+                        $textColor = "yellow";
+                    }
+
                 }
             }
 
             $events[] = [
                 "id" => $booking->id,
+                "user_id" => $booking->user_id,
+                // "refuse" => $booking->refuse,
+                // "allow_absence" => $booking->allow_absence,
                 "title" =>  $booking->title,
                 "start" =>  $booking->start,
                 "content" =>  $booking->content,
@@ -152,8 +175,36 @@ class HomeController extends Controller
                 "color" => $color,
                 "textColor" => $textColor,
                 "active" => $booking->active,
+                "refuse" => $booking->refuse,
             ];
         }
         return view( "client.calendar", compact( 'events' ) );
+    }
+
+    public function refuse() {
+        $event_id = request()->event_id;
+        $user_id = request()->user_id;
+        $content_refuse = request()->content_refuse;
+        $event = UserEvents::where( "event_id", $event_id )->where( "user_id", $user_id );
+
+        if ( request()->status == "yes" ) {
+            $check = UserEvents::where( "user_id", $user_id )->where( "refuse", true )->count();
+            if ( $check >= 3 ) {
+                return response()->json( [
+                    "status" => 404,
+                    "message" => "Bạn đã xin vắng quá 3 lần.",
+                ]);
+            }
+            $event->update([ "refuse" => true, "content_refuse" => $content_refuse ]);
+            $message = "Xin vắng thành công";
+        } else {
+            $event->update([ "refuse" => false, "content_refuse" => $content_refuse ]);
+            $message = "Huỷ xin vắng thành công";
+        }
+
+        return response()->json( [
+            "status" => 202,
+            "message" => $message,
+        ]);
     }
 }

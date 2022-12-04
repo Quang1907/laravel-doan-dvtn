@@ -42,7 +42,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        $this->authorize("create", Post::class );
+        $this->authorize( "create", Post::class );
         $categories = $this->categoryPostService->allCategory();
         return view("admin.post.create", compact("categories"));
     }

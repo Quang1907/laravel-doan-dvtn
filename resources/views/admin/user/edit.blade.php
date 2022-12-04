@@ -9,7 +9,7 @@
                 </div>
             </div>
             <div class="card-body">
-                <x-errors.any/>
+                <x-message/>
 
                 <form action="{{ route('user.update', $user) }}" method="post">
                     @csrf

@@ -65,25 +65,4 @@ return [
         "icon" => '<i class="fa-brands fa-slack" style="font-size:20px"></i>',
         "parent" => "",
     ],
-    [
-        "name" => "Người dùng",
-        "route" => "user.index",
-        "id" => "",
-        "icon" => '<i class="fa-solid fa-user" style="font-size:20px"></i>',
-        "parent" => "",
-    ],
-    [
-        "name" => "Nhiệm vụ",
-        "route" => "calendar.index",
-        "id" => "",
-        "icon" => '<i class="fa-solid fa-thumbtack" style="font-size:20px"></i>',
-        "parent" => "",
-    ],
-    [
-        "name" => "Chấm công",
-        "route" => "timkeeping",
-        "id" => "",
-        "icon" => '<i class="fa-solid fa-file-pen" style="font-size:20px"></i>',
-        "parent" => "",
-    ],
 ];

@@ -191,7 +191,7 @@
     <script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
     <script>
         $('#lfm1').filemanager('image');
-        $('#lfm2').filemanager('image');
+        $('#lfm2').filemanager('images');
 
         var options = {
             filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',

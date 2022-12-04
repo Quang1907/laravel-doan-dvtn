@@ -23,10 +23,12 @@ class AuthController extends Controller
         return $this->userService->checkLogin( $request );
     }
 
+    public function dangky() {
+        return view( " client.auth.register" );
+    }
+
     public function register( UserRegisterRequest $request ) {
         return $this->userService->register( $request );
-
-        // return view( "client.auth.vertify_email", compact( "user" ));
     }
 
     public function password( ChangePasswordRequest $request ) {
@@ -61,7 +63,7 @@ class AuthController extends Controller
     }
 
     public function confirmMail( User $user ) {
-        return view("client.auth.vertify_email",compact( "user" ) );
+        return view( "client.auth.vertify_password", compact( "user" ) );
     }
 
     public function vertifyPassword( Request $request, User $user ) {
