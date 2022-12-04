@@ -72,7 +72,7 @@
                                     @endcan
                                 @can( "view", new App\Models\Event )
                                         <li>
-                                            <a class="sidenav-item-link" href="{{ route( 'timkeeping' ) }}">
+                                            <a class="sidenav-item-link" href="{{ route( 'timekeeping' ) }}">
                                                 <i class="fa-solid fa-file-pen" style="font-size:20px"></i>
                                                 <span class="nav-text">Chấm công</span>
                                             </a>

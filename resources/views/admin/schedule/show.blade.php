@@ -14,9 +14,9 @@
             <div class="w-full lg:w-5/6">
                 <div class="border rounded-md mb-3 bg-white">
                     <div class="text-center flex justify-center">
-                        <h2 class="text-lg w-full font-semibold py-2">Thông tin hoạt động</h2>
-                        <div class="m-3">
-                            <a href="{{ route( 'timkeeping' ) }}" class=" text-white bg-green-500 p-2 text-center align-items-center rounded-lg"><i class="fa-solid fa-backward-step"></i></a>
+                        <div class="m-3 d-flex justify-content-between">
+                            <h2 class="text-lg w-full font-semibold py-2">Thông tin hoạt động</h2>
+                            <a href="{{ route( 'timekeeping' ) }}" class="btn btn-primary h-100"><i class="fa-solid fa-backward-step"></i></a>
                         </div>
                     </div>
                     <div class="m-3">

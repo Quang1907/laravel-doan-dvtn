@@ -97,8 +97,9 @@
                                             <form action="{{ route('user.destroy', $user ) }}" method="post">
                                                 @csrf
                                                 @method("delete")
-                                                <a href="{{ route('user.edit', $user) }}" class="btn btn-sm btn-warning text-white">Edit</a>
-                                                <button type="submit" onclick="return confirm( 'Bạn có muốn tiếp tục?' ) " class="btn btn-sm btn-danger bg-danger">Delete</button>
+                                                <a href="{{ route( 'user.show', $user ) }}"  class="btn btn-sm btn-primary"><i class="fa-regular fa-eye"></i></a>
+                                                <a href="{{ route('user.edit', $user) }}" class="btn btn-sm btn-warning text-white"><i class="fa-regular fa-pen-to-square"></i></a>
+                                                <button type="submit" onclick="return confirm( 'Bạn có muốn tiếp tục?' ) " class="btn btn-sm btn-danger bg-danger"><i class="fa-solid fa-circle-xmark"></i></button>
                                             </form>
                                         @else
                                             <form action="{{ route( 'user.softDelete', $user ) }}" method="post">

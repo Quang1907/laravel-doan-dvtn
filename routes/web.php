@@ -98,8 +98,8 @@ Route::group([ "prefix" => "admin",  "middleware" => "admin" ], function () {
     Route::get( "export/post", [ PostController::class, "exportFile" ] )->name( "post.export" );
 
     Route::resource( "calendar", CalendarController::class );
-    Route::get( "timkeeping", [ CalendarController::class,"timekeeping" ] )->name( "timkeeping" );
-    Route::get( "timkeeping/{event}", [ CalendarController::class, "showEvent" ] )->name( "timkeeping.detail" );
+    Route::get( "timekeeping", [ CalendarController::class,"timekeeping" ] )->name( "timekeeping" );
+    Route::get( "timekeeping/{event}", [ CalendarController::class, "showEvent" ] )->name( "timekeeping.detail" );
     Route::post( "timekeeping/active", [ CalendarController::class, "active"])->name( "user_event.active" );
     Route::get( "timekeeping/refuse", [ CalendarController::class, "refuse"])->name( "user_event.refuse" );
 

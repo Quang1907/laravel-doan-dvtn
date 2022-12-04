@@ -7,6 +7,7 @@ use App\Http\Requests\User\CreateUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Models\Role;
 use App\Models\User;
+use App\Models\UserEvents;
 use App\Services\UserService;
 use Illuminate\Http\Request;
 
@@ -55,8 +56,21 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user) {
-        return view( "admin.user.detail", compact( "user") );
+    public function show( User $user ) {
+        $events = UserEvents::where( "user_id", $user->id )->count();
+        $participate = UserEvents::where( "user_id", $user->id )->where( "active", true )->count();
+        $notEngaged = UserEvents::where( "user_id", $user->id )->where( "active", false )->where( "refuse", false )->count();
+
+        $eventArr = [ $events, $participate, $notEngaged ];
+
+        $refuce =  UserEvents::where( "user_id", $user->id )->where( "refuse", true )->where( "allow_absence", 2 )->count();
+        $allow_absence =  UserEvents::where( "user_id", $user->id )->where( "refuse", true )->where( "allow_absence", true )->count();
+        $absentArr = [ $allow_absence, $refuce ];
+
+        $rank = number_format( ( ( $participate * 100  ) / $events ), 2 );
+
+        return view( "admin.user.detail", compact( "user", "eventArr", "absentArr", "rank" ) );
+
     }
 
     /**

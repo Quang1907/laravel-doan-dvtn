@@ -28,28 +28,33 @@
                         <span class="d-none d-lg-inline-block">{{ Auth::user()->name }}</span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right">
-                        <li>
-                            <a class="dropdown-link-item" href="user-profile.html">
-                                <i class="mdi mdi-account-outline"></i>
-                                <span class="nav-text">My Profile</span>
+                        <li class="my-2">
+                            <a href="{{ route( 'profile' ) }}"
+                                class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                <i class="fa-solid fa-user"></i> Trang cá nhân</a>
+                        </li>
+                        <li class="my-2">
+                            <a href="{{ route( 'calendar' ) }}"
+                                class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                <i class="fa-solid fa-calendar-days"></i> Lịch hoạt động
                             </a>
                         </li>
-                        <li>
-                            <a class="dropdown-link-item" href="email-inbox.html">
-                                <i class="mdi mdi-email-outline"></i>
-                                <span class="nav-text">Message</span>
-                                <span class="badge badge-pill badge-primary">24</span>
+                        <li class="my-2">
+                            <a href="{{ route( 'product.wishlist' ) }}"
+                                class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                <i class="fa-solid fa-heart"></i> Product Wishlists
                             </a>
                         </li>
-                        <li>
-                            <a class="dropdown-link-item" href="user-activities.html">
-                                <i class="mdi mdi-diamond-stone"></i>
-                                <span class="nav-text">Activitise</span></a>
+                        <li class="my-2">
+                            <a href="{{ route( 'product.cart' ) }}"
+                                class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                <i class="fa-solid fa-cart-shopping"></i> Carts
+                            </a>
                         </li>
-                        <li>
-                            <a class="dropdown-link-item" href="user-account-settings.html">
-                                <i class="mdi mdi-settings"></i>
-                                <span class="nav-text">Account Setting</span>
+                        <li class="my-2">
+                            <a href="{{ route( 'orders' ) }}"
+                                class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                                <i class="fa-solid fa-bag-shopping"></i> Orders
                             </a>
                         </li>
                         <li class="dropdown-footer py-1">

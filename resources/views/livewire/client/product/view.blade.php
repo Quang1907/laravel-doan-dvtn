@@ -189,7 +189,7 @@
                     </div>
                     @if ( !empty( $product->selling_price ) )
                         <div class="flex-1">
-                            <p class="text-green-500 text-xl font-semibold">Save {{ number_format( ( ( $product->selling_price - $product->original_price ) / $product->original_price )  * 100 , 2) }}%</p>
+                            <p class="text-green-500 text-xl font-semibold">Save {{ number_format( ( ( $product->selling_price - $product->original_price ) / $product->original_price )  * 100 , 2 ) }}%</p>
                             <del class="text-red-400 text-sm">{{ number_format( $product->original_price ) }} VND</del>
                         </div>
                     @endif

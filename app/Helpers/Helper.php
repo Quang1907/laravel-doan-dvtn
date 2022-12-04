@@ -93,3 +93,18 @@ if ( !function_exists( "check_brand" ) ) {
     }
 }
 
+if ( !function_exists( "score_rating" ) ) {
+    function score_rating( $rank ) {
+        if ( $rank <= config( "admin.rank.medium" ) ) {
+            return "Yếu";
+        } elseif( $rank <= config( "admin.rank.good" ) ) {
+            return "Trung bình";
+        } elseif( $rank <= config( "admin.rank.veryGood" ) ) {
+            return "Khá";
+        } elseif( $rank < config( "admin.rank.excellent" ) ) {
+            return "Giỏi";
+        } else {
+            return "Xuất sắc";
+        }
+    }
+}

@@ -12,7 +12,7 @@
             <div class="w-full lg:w-5/6">
                 <div class="bg-white shadow-md rounded p-4">
                     <div class="d-float text-right mb-3">
-                        <a href="{{ route( 'timkeeping' ) }}" class="button btn btn-success">Back</a>
+                        <a href="{{ route( 'timekeeping' ) }}" class="button btn btn-success">Back</a>
                     </div>
                     <table class="min-w-max w-full table-auto" id="timekeeping">
                         <thead>

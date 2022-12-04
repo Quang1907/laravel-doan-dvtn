@@ -43,7 +43,7 @@
                                     <div class="flex item-center justify-center">
                                         <div class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
                                             @if ( check_time_end( $event->end ) )
-                                               <a href="{{ route( 'timkeeping.detail', $event ) }}">
+                                               <a href="{{ route( 'timekeeping.detail', $event ) }}">
                                                     <i class="fa-solid fa-eye"></i>
                                                 </a>
                                             @else
